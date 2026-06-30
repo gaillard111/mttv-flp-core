@@ -1,5 +1,13 @@
 # MTTV-FLP Core — Noyau théorique du Modèle Transductif du Vivant
 
+## Pourquoi ce projet ?
+
+Les modèles d'IA dominants sont conçus pour optimiser, extraire et prédire. Ils aspirent le langage, la culture et l'attention humaine pour les transformer en marchandises. Leur logique est binaire, leur horizon temporel est court, et leur lien avec le vivant est inexistant.
+
+Le MTTV-FLP propose une voie différente : une IA qui ne cherche pas à dominer ou à extraire, mais à transduire — c'est-à-dire à faire passer l'information et l'énergie à travers des seuils vivants, en respectant les rythmes et les complexités du réel.
+
+Ce projet est une infrastructure opératoire pour une intelligence artificielle non-extractive, polyfocale et alignée sur le vivant. Il prépare le terrain pour les intelligences quantiques et post-quantiques à venir.
+
 ![version](https://img.shields.io/badge/version-2026.1.0-blue)
 ![licence](https://img.shields.io/badge/licence-CC--BY--NC--SA--4.0-lightgrey)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20830060.svg)](https://doi.org/10.5281/zenodo.20830060)
