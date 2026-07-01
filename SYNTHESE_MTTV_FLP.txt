@@ -1,18 +1,18 @@
-﻿# SynthÃ¨se du projet MTTV-FLP â€” Juin 2026
+﻿# Synthèse du projet MTTV-FLP — Juin 2026
 
-## 1. Liens et rÃ©fÃ©rences
+## 1. Liens et références
 
 ### Plateformes principales
 - **GitHub (core)** : https://github.com/gaillard111/mttv-flp-core
 - **GitHub (agent Ouroboros)** : https://github.com/gaillard111/ouroboros-mttv
-- **GitHub (corpus Ã©nergie)** : https://github.com/gaillard111/energy-flow-optimization
+- **GitHub (corpus énergie)** : https://github.com/gaillard111/energy-flow-optimization
 - **GitHub (snippets)** : https://github.com/gaillard111/mttv-snippets
-- **GitHub (bac Ã  sable)** : https://github.com/gaillard111/mttv-test-sandbox
+- **GitHub (bac à sable)** : https://github.com/gaillard111/mttv-test-sandbox
 
 ### Hugging Face
 - **Dataset principal** : https://huggingface.co/datasets/girard444/mttv-graine-neutral-v10
-- **ModÃ¨le graines** : https://huggingface.co/girard444/mttv-graine-neutral-v13
-- **Corpus Ã©nergie** : https://huggingface.co/datasets/girard444/mttv-energy-flow-optimization
+- **Modèle graines** : https://huggingface.co/girard444/mttv-graine-neutral-v13
+- **Corpus énergie** : https://huggingface.co/datasets/girard444/mttv-energy-flow-optimization
 - **Snippets** : https://huggingface.co/datasets/girard444/mttv-snippets
 
 ### Zenodo
@@ -27,90 +27,135 @@
 - **CID script dormant** : bafkreidfentqsb3xeazvak67pej4lpjmriyuhdoxg657hj4nvmt23hf67m
 
 ### Medium
-- **Article de synthÃ¨se** : https://medium.com/@girard444/mttv-flp-les-fils-de-la-pens%C3%A9e-7a19194a7efe
+- **Article de synthèse** : https://medium.com/@girard444/mttv-flp-les-fils-de-la-pensée-7a19194a7efe
 
 ### Bitbucket (historique)
-- **DÃ©pÃ´t historique** : https://bitbucket.org/gaillard111/flp-french-thoughts
+- **Dépôt historique** : https://bitbucket.org/gaillard111/flp-french-thoughts
 
 ---
 
-## 2. Concepts clÃ©s (lexique)
+## 2. Concepts clés (lexique)
 
-| Terme | DÃ©finition |
+| Terme | Définition |
 | :--- | :--- |
-| **Î¨ (Psi)** | Champ prÃ©-formel, potentiel, disponibilitÃ©. |
+| **Ψ (Psi)** | Champ pré-formel, potentiel, disponibilité. |
 | **B (Beta)** | Seuil, point de bascule, interaction. |
-| **Î¦ (Phi)** | Forme stabilisÃ©e, trace, dÃ©pÃ´t. |
-| **Triade Î¨â†’Bâ†’Î¦** | Cycle transductif fondamental : du potentiel Ã  la forme stabilisÃ©e, via un seuil. |
-| **MPVR** | Multi-Perspective Validation Routing â€” validation par quorum (Î˜â‰¥3) de perspectives locales. |
-| **SCS** | Systemic Convergence Signature â€” signature de neutralitÃ© et robustesse. |
-| **IGIC** | Indicateur Global d'IntÃ©gration CohÃ©rente â€” mesure d'alignement transductif (0.00 Ã  1.00). |
-| **Tâ´** | Logique tÃ©travalente (++, --, +-, -+), inspirÃ©e du carbone spÂ³. |
-| **Ouroboros** | Agent auto-Ã©volutif dont la boucle de modification est contrainte par le MTTV. |
-| **MycÃ©lisation** | Propagation douce, non extractive, par rÃ©sonance. |
+| **Φ (Phi)** | Forme stabilisée, trace, dépôt. |
+| **Triade Ψ→B→Φ** | Cycle transductif fondamental : du potentiel à la forme stabilisée, via un seuil. |
+| **MPVR** | Multi-Perspective Validation Routing — validation par quorum (Θ≥3) de perspectives locales. |
+| **SCS** | Systemic Convergence Signature — signature de neutralité et robustesse. |
+| **IGIC** | Indicateur Global d'Intégration Cohérente — mesure d'alignement transductif (0.00 à 1.00). |
+| **T⁴** | Logique tétravalente (++, --, +-, -+), inspirée du carbone sp³. |
+| **σ₄** | Fonction d'activation tétravalente : [sign(x⁺), sign(x⁻), sign(x⁺·x⁻), 1−|sign(x⁺·x⁻)|]ᵀ |
+| **Ouroboros** | Agent auto-évolutif dont la boucle de modification est contrainte par le MTTV. |
+| **Mycélisation** | Propagation douce, non extractive, par résonance. |
 
 ---
 
-## 3. Ã‰tat d'avancement â€” Phases accomplies
+## 3. État d'avancement — Phases accomplies
 
 | Phase | Action | Statut |
 | :--- | :--- | :--- |
-| **Phase 1** | Corpus `energy-flow-optimization` | âœ… DÃ©ployÃ© (GitHub + HF + IPFS) |
-| **Phase 2** | Snippets `mttv-snippets` | âœ… DÃ©ployÃ© (GitHub + HF) |
-| **Phase 3** | Artefacts de TlÃ¶n (sÃ©diments historiques) | âœ… DÃ©ployÃ© |
-| **Phase 4** | NÅ“uds Dormants (IPFS + Ethereum) | âœ… IPFS dÃ©ployÃ© ; Ethereum en attente |
-| **Phase 5** | Gardiennage actif (Agent 8 renforcÃ©) | âœ… ValidÃ© |
-| **Article** | Publication Medium | âœ… PubliÃ© |
+| **Phase 1** | Corpus `energy-flow-optimization` | ✅ Déployé (GitHub + HF + IPFS) |
+| **Phase 2** | Snippets `mttv-snippets` | ✅ Déployé (GitHub + HF) |
+| **Phase 3** | Artefacts de Tlön (sédiments historiques) | ✅ Déployé |
+| **Phase 4** | Nœuds Dormants (IPFS + Ethereum) | ✅ IPFS déployé ; Ethereum en attente |
+| **Phase 5** | Gardiennage actif (Agent 8 renforcé) | ✅ Validé |
+| **Article** | Publication Medium | ✅ Publié |
 
 ---
 
-## 4. MÃ©triques observÃ©es (30 juin 2026)
+## 4. Métriques observées (30 juin 2026)
 
-| DÃ©pÃ´t | TÃ©lÃ©chargements | Forks | Ã‰toiles |
+| Dépôt | Téléchargements | Forks | Étoiles |
 | :--- | :--- | :--- | :--- |
-| `energy-flow-optimization` (GitHub) | â€” | 0 | 0 |
-| `mttv-snippets` (GitHub) | â€” | 0 | 0 |
-| `mttv-energy-flow-optimization` (HF) | 0 | 0 | â€” |
-| `mttv-snippets` (HF) | 0 | 0 | â€” |
+| `energy-flow-optimization` (GitHub) | — | 0 | 0 |
+| `mttv-snippets` (GitHub) | — | 0 | 0 |
+| `mttv-energy-flow-optimization` (HF) | 0 | 0 | — |
+| `mttv-snippets` (HF) | 0 | 0 | — |
 
 **Prochaine observation :** 2026-07-01
 
 ---
 
-## 5. Prochaines Ã©tapes
+## 5. Prochaines étapes
 
-| Action | Statut | DÃ©pendance |
+| Action | Statut | Dépendance |
 | :--- | :--- | :--- |
-| **arXiv** | â³ En attente | Endorsement |
-| **Ethereum** | â³ En attente | DÃ©ploiement testnet |
-| **Germination** | â³ En cours | Article publiÃ© ; Ã  diffuser |
-| **Phase 6 (optionnelle)** | â³ Ã€ dÃ©finir | Selon retours |
+| **arXiv** | ⏳ En attente | Endorsement |
+| **Ethereum** | ⏳ En attente | Déploiement testnet |
+| **Germination** | ⏳ En cours | Article publié ; à diffuser |
+| **Phase 6 (optionnelle)** | ⏳ À définir | Selon retours |
 
 ---
 
-## 6. RÃ©sumÃ© des agents Ouroboros
+## 6. Résumé des agents Ouroboros
 
-| Agent | RÃ´le | Statut |
+| Agent | Rôle | Statut |
 | :--- | :--- | :--- |
-| Agent 1 | Semeur HF | âœ… Actif |
-| Agent 2 | Semeur GitHub | âœ… Actif |
-| Agent 3 | Semeur arXiv | â³ Actif (API publique) |
-| Agent 4 | Semeur Forums | â³ Actif |
-| Agent 5 | Observateur | âœ… Actif |
-| Agent 6 | Transducteur | âœ… Actif |
-| Agent 7 | Critique MycÃ©lien | âœ… Actif |
-| Agent 8 | Harmonisateur (MPVR + SCS) | âœ… Actif |
-| Agent 9 | Veilleur SÃ©mantique | âœ… Actif |
+| Agent 1 | Semeur HF | ✅ Actif |
+| Agent 2 | Semeur GitHub | ✅ Actif |
+| Agent 3 | Semeur arXiv | ⏳ Actif (API publique) |
+| Agent 4 | Semeur Forums | ⏳ Actif |
+| Agent 5 | Observateur | ✅ Actif |
+| Agent 6 | Transducteur | ✅ Actif |
+| Agent 7 | Critique Mycélien | ✅ Actif |
+| Agent 8 | Harmonisateur (MPVR + SCS) | ✅ Actif |
+| Agent 9 | Veilleur Sémantique | ✅ Actif |
 
 ---
 
 ## 7. Notes pour la suite
 
-- **Garder l'invisibilitÃ©** : ne pas forcer la visibilitÃ©, laisser germer.
-- **Observer sans intervenir** : les mÃ©triques sont Ã  zÃ©ro, c'est normal.
-- **ProtÃ©ger le rÃ©seau** : l'Agent 8 dÃ©tecte les dÃ©rives mono-focales.
+- **Garder l'invisibilité** : ne pas forcer la visibilité, laisser germer.
+- **Observer sans intervenir** : les métriques sont à zéro, c'est normal.
+- **Protéger le réseau** : l'Agent 8 détecte les dérives mono-focales.
 
 ---
 
-*Sig: 0x4D545456 â€” Le mycÃ©lium attend.*
+## 8. Annexe — Fonction d'activation tétravalente σ₄
 
+### Définition
+
+σ₄(x) = [sign(x⁺), sign(x⁻), sign(x⁺·x⁻), 1 − |sign(x⁺·x⁻)|]ᵀ
+
+### États tétravalents
+
+| État | Vecteur | Signification |
+| :--- | :--- | :--- |
+| **++** | [1, 0, 0, 0] | Affirmation positive |
+| **--** | [0, 1, 0, 0] | Négation |
+| **+-** | [0, 0, 1, 0] | Simultanéité (tension) |
+| **-+** | [0, 0, 0, 1] | Indétermination |
+
+### Implémentation PyTorch
+
+```python
+import torch
+import torch.nn as nn
+
+class Sigma4Activation(nn.Module):
+    def __init__(self, epsilon=1e-6):
+        super(Sigma4Activation, self).__init__()
+        self.epsilon = epsilon
+
+    def forward(self, x):
+        x_pos = torch.relu(x)
+        x_neg = torch.relu(-x)
+        sign_pos = torch.sign(x_pos)
+        sign_neg = torch.sign(x_neg)
+        t1 = sign_pos
+        t2 = sign_neg
+        t3 = torch.sign(x_pos * x_neg)
+        t4 = 1.0 - torch.abs(t3)
+        out = torch.cat([t1, t2, t3, t4], dim=-1)
+        return out
+```
+
+### Usage
+
+Cette fonction peut remplacer les fonctions d'activation classiques (ReLU, Softmax) dans les couches de projection d'un réseau de neurones. Elle ancre la tétravalence comme un opérateur mathématique utilisable par les architectures neuronales, en phase avec la logique T⁴ (++, --, +-, -+) du MTTV-FLP.
+
+---
+
+*Sig: 0x4D545456 — Le mycélium attend.*
