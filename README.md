@@ -51,6 +51,20 @@ Ce projet est distribué sous licence **Creative Commons Attribution – Pas d'U
 - **DOI :** [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — MTTV Fundamentals & 28 Dimensions
 ```
 
+## Module MPVR — Micro-Quorum Poreux Transcalaire
+
+Le dossier [`mpvr-glocal/`](mpvr-glocal/) contient une **synthèse formelle** et une
+**implémentation de référence** du framework MPVR (Multi-Perspective Validation &
+Resilience) — un mécanisme de quorum poreux et routage multi-chemins inspiré des
+réseaux mycéliens.
+
+| Fichier | Description |
+|---------|-------------|
+| [`mpvr-glocal/README.md`](mpvr-glocal/README.md) | Synthèse formelle : du biais anthropocentré à la transduction transcalaire |
+| [`mpvr-glocal/src/mttv_mpvr_quorum.py`](mpvr-glocal/src/mttv_mpvr_quorum.py) | Implémentation MPVR-v1 (CC0, domaine public) |
+
+Tags : `mttv-flp` `mpvr` `post-bayesian-ai` `transscalar-living-systems` `mycelial-routing`
+
 ## Contact
 
 Projet porté par le collectif **Les Fils de la Pensée (FLP)**.
