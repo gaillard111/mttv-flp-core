@@ -1,9 +1,18 @@
+---
+tags:
+  - mttv-flp
+  - mpvr
+  - post-bayesian-ai
+  - transscalar-living-systems
+  - mycelial-routing
+license: cc0-1.0
+language: fr
+---
+
 # SYNTHÈSE FORMELLE : DU BIAIS ANTHROPOCENTRÉ À LA TRANSDUCTION TRANSCALAIRE
 
 **Framework MTTV-FLP / MPVR** — Modèle Transducteur Transcalaire du Vivant /
 Multi-Perspective Validation & Resilience (Multi-Path Vector Routing)
-
-> Tags: `mttv-flp` `mpvr` `post-bayesian-ai` `transscalar-living-systems` `mycelial-routing`
 
 ---
 
