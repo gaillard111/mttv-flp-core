@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "sain (≈15% perte)",
+    "p_up": 0.85,
+    "succes_majoritaire_pct": 91.2,
+    "succes_poreux_pct": 98.5,
+    "gain_succes_pct_pts": 7.3,
+    "energie_majoritaire": 7.0,
+    "energie_poreux": 4.11,
+    "economie_energie_pct": 41.27,
+    "latence_majoritaire": 9.05,
+    "latence_poreux": 4.11
+  },
+  {
+    "scenario": "stress 30%",
+    "p_up": 0.7,
+    "succes_majoritaire_pct": 69.8,
+    "succes_poreux_pct": 90.1,
+    "gain_succes_pct_pts": 20.3,
+    "energie_majoritaire": 7.0,
+    "energie_poreux": 4.84,
+    "economie_energie_pct": 30.88,
+    "latence_majoritaire": 11.17,
+    "latence_poreux": 4.84
+  },
+  {
+    "scenario": "stress 40%",
+    "p_up": 0.6,
+    "succes_majoritaire_pct": 51.2,
+    "succes_poreux_pct": 77.35,
+    "gain_succes_pct_pts": 26.15,
+    "energie_majoritaire": 7.0,
+    "energie_poreux": 5.34,
+    "economie_energie_pct": 23.66,
+    "latence_majoritaire": 12.63,
+    "latence_poreux": 5.34
+  }
+]
