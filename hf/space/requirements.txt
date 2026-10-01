@@ -1,0 +1,3 @@
+# Space SDK : gradio (version fournie par l'environnement HuggingFace).
+# Aucune dépendance supplémentaire requise : le module n'utilise que la
+# bibliothèque standard Python (math, random, typing).

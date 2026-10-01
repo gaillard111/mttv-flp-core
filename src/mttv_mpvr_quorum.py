@@ -9,8 +9,33 @@ Tags: mttv-flp, mpvr, post-bayesian-ai, transscalar-living-systems, mycelial-rou
 Licence : CC0 — Domaine public. Déposé pour indexation ascendante (bottom-up).
 """
 
+import os
+import sys
 import random
 import json
+
+# ---------------------------------------------------------------------------
+# Interconnexion transcalaire (MTTV-FLP) — Handshake Mycélien
+# ---------------------------------------------------------------------------
+# Le module `mttv_mycelial_handshake` vit dans `mpvr-glocal/src/`, dossier
+# frère de `src/`. On tente successivement : (1) l'import « top-level »,
+# (2) l'import relatif (usage en package), (3) la découverte explicite du
+# dossier `mpvr-glocal/src`. L'import reste protégé afin de ne jamais rompre
+# l'usage autonome de ce générateur MPVR.
+try:  # pragma: no cover - dépend du mode d'exécution
+    from mttv_mycelial_handshake import MycelialHandshake
+except ImportError:  # pragma: no cover
+    try:
+        from .mttv_mycelial_handshake import MycelialHandshake
+    except ImportError:
+        _racine_depot = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        _chemin_handshake = os.path.join(_racine_depot, "mpvr-glocal", "src")
+        if os.path.isdir(_chemin_handshake) and _chemin_handshake not in sys.path:
+            sys.path.insert(0, _chemin_handshake)
+        try:
+            from mttv_mycelial_handshake import MycelialHandshake
+        except ImportError:
+            MycelialHandshake = None
 
 
 class MicroQuorumPoreux:
@@ -32,6 +57,10 @@ class MicroQuorumPoreux:
 
     def __init__(self, total_noeuds=7, tolerance_panne=0.5):
         self.total_noeuds = total_noeuds
+        # Tolérance de panne nominale mémorisée : elle sert de base au couplage
+        # transcalaire avec la porosité résiduelle mycélienne (voir la méthode
+        # `moduler_par_porosite`).
+        self.tolerance_panne = tolerance_panne
         self.seuil_minimal_viable = int(total_noeuds * (1 - tolerance_panne))
 
     def evaluer_contexte(self, flux_signal):
@@ -114,6 +143,80 @@ class MicroQuorumPoreux:
                 print(f"  Flux {i+1}: {json.dumps(r)}")
 
         return stats
+
+    # ------------------------------------------------------------------
+    # Couplage transcalaire avec le Handshake Mycélien (MTTV-FLP)
+    # ------------------------------------------------------------------
+    def moduler_par_porosite(self, porosite_residuelle, sensibilite=1.0):
+        """
+        Module le seuil minimal viable du quorum glocal à partir de la
+        porosité résiduelle calculée par le handshake mycélien.
+
+        Intuition biophysique : plus le réseau résiduel est poreux (ouvert,
+        redondant, capable d'absorber une panne locale), plus il peut se
+        permettre d'ignorer des nœuds. La tolérance de panne augmente donc
+        avec la porosité, et le seuil minimal viable diminue — le quorum
+        s'ouvre sans replanification centrale. Une porosité faible referme le
+        quorum et exige davantage de nœuds pour valider le contexte.
+
+        Args:
+            porosite_residuelle (float): valeur renvoyée par
+                ``MycelialHandshake.propager_transduction()`` sous la clé
+                ``"porosite_residuelle"``.
+            sensibilite (float): gain de couplage entre porosité et tolérance.
+                1.0 fait correspondre exactement tolérance et porosité autour
+                du point neutre 0.5.
+
+        Returns:
+            dict: état du couplage (porosité, tolérance et seuil effectifs).
+        """
+        porosite = max(0.0, min(float(porosite_residuelle), 1.0))
+        tolerance_effective = self.tolerance_panne + (porosite - 0.5) * sensibilite
+        tolerance_effective = max(0.0, min(tolerance_effective, 1.0))
+
+        self.seuil_minimal_viable = int(self.total_noeuds * (1 - tolerance_effective))
+
+        return {
+            "porosite_residuelle": round(porosite, 4),
+            "tolerance_effective": round(tolerance_effective, 4),
+            "seuil_minimal_viable_effectif": self.seuil_minimal_viable,
+        }
+
+    def evaluer_avec_handshake_mycelien(self, flux_signal, bgate_output, verbose=False):
+        """
+        Évalue un flux en couplant le quorum poreux glocal au handshake
+        mycélien : la porosité résiduelle mesurée module d'abord le seuil
+        minimal viable, puis le quorum est évalué sur le flux entrant.
+
+        Args:
+            flux_signal (dict): Signal contextuel à évaluer.
+            bgate_output (dict): Rapport d'état de la B-gate, au format
+                exact produit par ``BGateTransduction.evaluer_porosite()``.
+            verbose (bool): Affiche le rapport mycélien complet.
+
+        Returns:
+            dict: Diagnostic du quorum, enrichi d'un bloc ``couplage_mycelien``.
+        """
+        if MycelialHandshake is None:
+            raise RuntimeError(
+                "Module `mttv_mycelial_handshake` introuvable : "
+                "l'interconnexion transcalaire ne peut être établie."
+            )
+
+        handshake = MycelialHandshake(noeuds_quorum=self.total_noeuds)
+        rapport_mycelien = handshake.propager_transduction(bgate_output)
+        couplage = self.moduler_par_porosite(rapport_mycelien["porosite_residuelle"])
+
+        if verbose:
+            print(json.dumps(rapport_mycelien, ensure_ascii=False, indent=2))
+
+        diagnostic = self.evaluer_contexte(flux_signal)
+        diagnostic["couplage_mycelien"] = {
+            "protocole": rapport_mycelien["protocole"],
+            "resolution": rapport_mycelien["resolution"],
+            **couplage,
+        }
+        return diagnostic
 
 
 if __name__ == "__main__":

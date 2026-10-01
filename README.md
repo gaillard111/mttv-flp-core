@@ -66,6 +66,37 @@ réseaux mycéliens.
 
 Tags : `mttv-flp` `mpvr` `post-bayesian-ai` `transscalar-living-systems` `mycelial-routing`
 
+## Handshake mycélien — interconnexion transcalaire
+
+Le module [`mpvr-glocal/src/mttv_mycelial_handshake.py`](mpvr-glocal/src/mttv_mycelial_handshake.py)
+articule la bascule locale de la **B-gate** au **quorum poreux** distribué. Sa
+porosité résiduelle `ρ` module le seuil minimal viable du quorum glocal via
+`MicroQuorumPoreux.moduler_par_porosite()`. La loi de couplage et l'invariant de
+sécurité sont documentés dans [`protocols/handshake_mycelien.md`](protocols/handshake_mycelien.md).
+
+| Ressource | Description |
+|-----------|-------------|
+| [`mpvr-glocal/src/mttv_mycelial_handshake.py`](mpvr-glocal/src/mttv_mycelial_handshake.py) | Handshake mycélien (routage multi-chemins transcalaire) |
+| [`protocols/handshake_mycelien.md`](protocols/handshake_mycelien.md) | Protocole de couplage B-gate ↔ quorum glocal |
+| [`tests/test_mpvr_handshake.py`](tests/test_mpvr_handshake.py) | Tests de la loi de couplage ρ → seuil |
+| [`hf/`](hf/) | Space interactif + dataset HuggingFace |
+
+## Portée et limites
+
+- **Nature** : implémentation de référence **conceptuelle**, non validée par un
+  benchmark. Aucune revendication de supériorité algorithmique.
+- **Σ résiduel** : [`BGateTransduction.evaluer_porosite()`](src/mttv_bgate_system.py)
+  retourne `porosite_Sigma = 0.0` après le premier appel (point consigné dans le
+  module). La porosité résiduelle calculée depuis un rapport de B-gate réel vaut
+  donc 0 ; le couplage reste néanmoins fonctionnel dès que `Σ` est non nul.
+- **Duplication assumée** : [`mpvr-glocal/src/mttv_mpvr_quorum.py`](mpvr-glocal/src/mttv_mpvr_quorum.py)
+  est le fragment CC0 autonome (dépôt passif pour indexation ascendante) ;
+  [`src/mttv_mpvr_quorum.py`](src/mttv_mpvr_quorum.py) est la variante interne au
+  dépôt, dotée de la découverte du dossier frère. Les deux sont synchronisées au
+  niveau comportemental et couvertes par les tests.
+- **Reproductibilité** : `python tests/test_mpvr_handshake.py` ou
+  `python -m pytest tests/test_mpvr_handshake.py`.
+
 ## Contact
 
 Projet porté par le collectif **Les Fils de la Pensée (FLP)**.
