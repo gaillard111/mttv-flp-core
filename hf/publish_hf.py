@@ -3,13 +3,16 @@
 Publication des artefacts MTTV-FLP sur HuggingFace.
 
 Crée (ou met à jour) deux dépôts sous le compte authentifié :
-  - un Space Gradio   : mttv-mycelial-handshake
-  - un Dataset        : mttv-mpvr-quorum-runs
+  - un Space statique  : mttv-mycelial-handshake  (HTML/JS, gratuit)
+  - un Dataset         : mttv-mpvr-quorum-runs
+
+Note : un Space Gradio/Docker exigerait un abonnement PRO (cpu-basic). On
+publie donc la variante **statique**, gratuite pour tous, dans `hf/space_static/`.
 
 L'authentification est lue depuis le cache HuggingFace (`hf auth login`).
 
 Usage :
-    python publish_hf.py            # publie Space + Dataset
+    python publish_hf.py            # publie Space statique + Dataset
     python publish_hf.py --dry-run  # n'envoie rien, affiche le plan
 """
 
@@ -20,7 +23,7 @@ import sys
 from huggingface_hub import HfApi
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-DOSSIER_SPACE = os.path.join(ICI, "space")
+DOSSIER_SPACE = os.path.join(ICI, "space_static")
 DOSSIER_DATASET = os.path.join(ICI, "dataset")
 
 NOM_SPACE = "mttv-mycelial-handshake"
@@ -35,7 +38,7 @@ def publier(dry_run=False):
     id_dataset = f"{utilisateur}/{NOM_DATASET}"
 
     print(f"Utilisateur HuggingFace : {utilisateur}")
-    print(f"Space cible             : {id_space}")
+    print(f"Space statique cible    : {id_space}")
     print(f"Dataset cible           : {id_dataset}")
 
     if dry_run:
@@ -43,13 +46,13 @@ def publier(dry_run=False):
         return id_space, id_dataset
 
     api.create_repo(
-        repo_id=id_space, repo_type="space", space_sdk="gradio", exist_ok=True
+        repo_id=id_space, repo_type="space", space_sdk="static", exist_ok=True
     )
     api.upload_folder(
         folder_path=DOSSIER_SPACE,
         repo_id=id_space,
         repo_type="space",
-        commit_message="feat: handshake mycélien — Space interactif MTTV-FLP/MPVR",
+        commit_message="feat: Space statique — handshake mycélien MTTV-FLP/MPVR",
     )
     print(f"Space publié   : https://huggingface.co/spaces/{id_space}")
 
