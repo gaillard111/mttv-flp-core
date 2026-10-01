@@ -79,7 +79,20 @@ sécurité sont documentés dans [`protocols/handshake_mycelien.md`](protocols/h
 | [`mpvr-glocal/src/mttv_mycelial_handshake.py`](mpvr-glocal/src/mttv_mycelial_handshake.py) | Handshake mycélien (routage multi-chemins transcalaire) |
 | [`protocols/handshake_mycelien.md`](protocols/handshake_mycelien.md) | Protocole de couplage B-gate ↔ quorum glocal |
 | [`tests/test_mpvr_handshake.py`](tests/test_mpvr_handshake.py) | Tests de la loi de couplage ρ → seuil |
-| [`hf/`](hf/) | Space interactif + dataset HuggingFace |
+| [`hf/`](hf/) | Space interactif + dataset HuggingFace (voir ci-dessous) |
+
+> **Renvoi croisé — GitHub ↔ HuggingFace.** Le présent dépôt est hébergé sur
+> GitHub sous [`gaillard111/mttv-flp-core`](https://github.com/gaillard111/mttv-flp-core) ;
+> les artefacts publics sont publiés sur HuggingFace sous le compte
+> [`girard444`](https://huggingface.co/girard444). Ce sont **deux hébergements d'un
+> même projet** (Collectif Les Fils de la Pensée), et non deux projets distincts :
+>
+> | Artefact | Lien |
+> |----------|------|
+> | Démonstrateur (Space statique) | <https://huggingface.co/spaces/girard444/mttv-mycelial-handshake> |
+> | Application directe | <https://girard444-mttv-mycelial-handshake.static.hf.space/> |
+> | Dataset (runs du quorum) | <https://huggingface.co/datasets/girard444/mttv-mpvr-quorum-runs> |
+> | Code source (GitHub) | <https://github.com/gaillard111/mttv-flp-core> |
 
 ## Portée et limites
 

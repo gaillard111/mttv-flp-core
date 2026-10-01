@@ -48,5 +48,10 @@ seuil_minimal_viable = ⌊ nœuds · (1 − tolérance_effective) ⌋
 ## Liens
 
 - Code source : <https://github.com/gaillard111/mttv-flp-core>
+- Application directe : <https://girard444-mttv-mycelial-handshake.static.hf.space/>
 - Dataset associé : <https://huggingface.co/datasets/girard444/mttv-mpvr-quorum-runs>
 - Licence : CC-BY-NC-SA 4.0 — Collectif Les Fils de la Pensée.
+
+> **Renvoi croisé.** Le dépôt GitHub est sous le compte `gaillard111`, la
+> publication HuggingFace sous le compte `girard444` : ce sont **deux hébergements
+> d'un même projet** (MTTV-FLP / MPVR), et non deux projets distincts.

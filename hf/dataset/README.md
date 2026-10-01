@@ -33,6 +33,12 @@ Généré de façon déterministe (graine `20260101`) par
 
 Code source : <https://github.com/gaillard111/mttv-flp-core>
 
+> **Renvoi croisé.** Le dépôt GitHub est sous le compte `gaillard111`, la
+> publication HuggingFace sous le compte `girard444` : ce sont **deux hébergements
+> d'un même projet** (Collectif Les Fils de la Pensée). Démonstrateur associé :
+> [Space `mttv-mycelial-handshake`](https://huggingface.co/spaces/girard444/mttv-mycelial-handshake)
+> — application directe : <https://girard444-mttv-mycelial-handshake.static.hf.space/>.
+
 ## Schéma
 
 | Colonne | Type | Description |
