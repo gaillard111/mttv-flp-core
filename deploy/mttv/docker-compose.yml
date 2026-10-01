@@ -7,7 +7,7 @@
 #
 # Ressources cibles : < 200 MB RAM combinés
 # Politique         : restart: always (résilience H24)
-# Signature SCS_2026 · sig:0x4D545456
+# Signature SCS_2026 · sig:0x4D5454562D464C50
 # ──────────────────────────────────────────────────────────────────────────────
 
 services:

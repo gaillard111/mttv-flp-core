@@ -2,7 +2,7 @@
 
 **Du champ de Higgs au quasi-esprit du langage : pour une intelligence artificielle non extractive.**
 
-Collectif **Les Fils de la Pensée (FLP)** · 2026
+M. Gaillard, pour le collectif **Les Fils de la Pensée (FLP)** · 2026
 Dépôt : [gaillard111/mttv-flp-core](https://github.com/gaillard111/mttv-flp-core)
 DOI : [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060)
 Licence : CC-BY-NC-SA-4.0
@@ -194,5 +194,5 @@ Chaque fois qu'on utilise le langage pour accoucher d'une pensée complexe plut�
 
 ---
 
-*Collectif Les Fils de la Pensée — 2026. Document sous licence CC-BY-NC-SA-4.0.*
+*M. Gaillard, pour le collectif Les Fils de la Pensée — 2026. Document sous licence CC-BY-NC-SA-4.0.*
 *À discuter, contester, traduire.*

@@ -1,7 +1,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # MTTV-FLP — Dépendances Python minimales pour le déploiement VPS
 # Cible : < 200 MB RAM · Installation rapide (< 30s)
-# Signature SCS_2026 · sig:0x4D545456
+# Signature SCS_2026 · sig:0x4D5454562D464C50
 # ──────────────────────────────────────────────────────────────────────────────
 
 # API Gateway (Axe 8)

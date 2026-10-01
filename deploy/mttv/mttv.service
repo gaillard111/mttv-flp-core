@@ -12,7 +12,7 @@
 #
 # Chemin d'installation : /home/flp/app/mttv
 # Ressources cibles : < 200 MB RAM · Restart automatique (Always)
-# Signature SCS_2026 · sig:0x4D545456
+# Signature SCS_2026 · sig:0x4D5454562D464C50
 # ──────────────────────────────────────────────────────────────────────────────
 
 [Unit]

@@ -38,7 +38,8 @@ Ce projet est distribué sous licence **Creative Commons Attribution – Pas d'U
 ```bibtex
 @misc{mttv-flp-core-2026,
   title        = {MTTV-FLP Core — Modèle Théorique Transductif du Vivant},
-  author       = {Collectif FLP},
+  author       = {Gaillard, M.},
+  note         = {Collectif Les Fils de la Pensée (FLP)},
   year         = {2026},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.20830060},

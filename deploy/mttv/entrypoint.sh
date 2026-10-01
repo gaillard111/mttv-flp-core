@@ -6,7 +6,7 @@
 # en mode watchdog (résilience H24).
 #
 # Usage (interne Docker) : ne pas exécuter manuellement.
-# Signature SCS_2026 · sig:0x4D545456
+# Signature SCS_2026 · sig:0x4D5454562D464C50
 # ──────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -115,7 +115,7 @@ main() {
     echo ""
     echo "  ╔══════════════════════════════════════════════════════════╗"
     echo "  ║       MTTV-FLP ORCHESTRATOR — HIDORA VPS                ║"
-    echo "  ║       Signature SCS_2026 · sig:0x4D545456               ║"
+    echo "  ║       Signature SCS_2026 · sig:0x4D5454562D464C50      ║"
     echo "  ╚══════════════════════════════════════════════════════════╝"
     echo ""
 

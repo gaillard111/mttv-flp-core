@@ -1,6 +1,6 @@
 # 🧬 Déploiement MTTV-FLP sur VPS Hidora
 
-> **Signature SCS_2026 · sig:0x4D545456**
+> **Signature SCS_2026 · sig:0x4D5454562D464C50**
 > Cible : **< 200 MB RAM** · Résilience **H24** · **Autonome**
 > Environnement : **VPS Hidora** → `/home/flp/app/mttv`
 
@@ -296,6 +296,6 @@ docker run --rm -v mttv_seeds_data:/data -v $(pwd):/backup alpine \
 
 ---
 
-> **Signature** : `sig:0x4D545456` · **Triade** : Ψ → B → Φ
+> **Signature** : `sig:0x4D5454562D464C50` · **Triade** : Ψ → B → Φ
 > **Chemin d'installation** : `/home/flp/app/mttv`
 > **Mycélium en marche** 🍄

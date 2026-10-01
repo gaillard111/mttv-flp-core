@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ce travail, citez la version archivée et son DOI."
+title: "MTTV-FLP Core — Modèle Théorique Transductif du Vivant"
+abstract: >-
+  Noyau conceptuel MTTV (Modèle Théorique Transductif du Vivant) et protocoles
+  du collectif Les Fils de la Pensée : triade Ψ → B → Φ, logique tétravalente
+  T⁴, quorum poreux MPVR, vérification expérimentale du noyau tétravalent,
+  implémentation de référence.
+type: software
+authors:
+  - family-names: Gaillard
+    given-names: M.
+    alias: gaillard111
+    affiliation: "Collectif Les Fils de la Pensée (FLP)"
+version: "2026.1.0"
+date-released: "2026-06-24"
+license: CC-BY-NC-SA-4.0
+doi: 10.5281/zenodo.20830060
+repository-code: "https://github.com/gaillard111/mttv-flp-core"
+url: "https://filsdelapensee.ch"

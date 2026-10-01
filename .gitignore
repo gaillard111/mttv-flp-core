@@ -2,3 +2,14 @@
 *.tmp
 *.log
 .DS_Store
+
+# Secrets et fichiers d'environnement — jamais versionnés.
+# (.env.example reste suivi : il ne contient que des valeurs à remplacer.)
+.env
+.env.*
+!.env.example
+
+# Clés privées et certificats
+*.pem
+*.key
+*.p12

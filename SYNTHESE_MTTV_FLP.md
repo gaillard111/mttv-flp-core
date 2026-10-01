@@ -157,4 +157,4 @@ Cette fonction peut remplacer les fonctions d'activation classiques (ReLU, Softm
 
 ---
 
-*Sig: 0x4D545456 — Le mycélium attend.*
+*Sig: 0x4D5454562D464C50 — Le mycélium attend.*

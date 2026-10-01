@@ -2,7 +2,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # MTTV-FLP — Image Docker Légère pour l'Orchestrateur
 # Cible : VPS Hidora (PaaS Jelastic) — < 200 MB RAM
-# Signature SCS_2026 · sig:0x4D545456
+# Signature SCS_2026 · sig:0x4D5454562D464C50
 # ──────────────────────────────────────────────────────────────────────────────
 
 FROM python:3.11-slim-bookworm AS base
@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.description="Orchestrateur sobre du réseau MTTV-
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="girard444@gmail.com"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL sig="0x4D545456"
+LABEL sig="0x4D5454562D464C50"
 
 # ── Éviter les warnings pip et l'interactivité ──────────────────────────────
 ENV PYTHONDONTWRITEBYTECODE=1 \

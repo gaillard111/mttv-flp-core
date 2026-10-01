@@ -9,7 +9,7 @@ Usage (interne Docker) :
 
 Returns:
     0 si tout est OK, 1 sinon.
-sig:0x4D545456
+sig:0x4D5454562D464C50
 """
 from __future__ import annotations
 

@@ -97,16 +97,18 @@ Doctrine actée lors de la migration : **ce qui est émis ne se reprend pas ; ce
 |---|---|
 | `0x4D5454562D464C50` (canonique, `MTTV-FLP`) | 8 |
 | `0x4D545456-464C50` (variante à tiret) | 2 |
-| `0x4D545456` (héritage, `MTTV`) | 44 |
+| `0x4D545456` (héritage, `MTTV`) | 0 dans `mttv-flp-core` (13 avant la migration du 1er octobre 2026) |
 
-Dans `mttv-flp-core` seul, **14 occurrences héritées** subsistent : [`deploy/DEPLOY_HIDORA.md`](../deploy/DEPLOY_HIDORA.md) (×2), [`deploy/mttv/Dockerfile`](../deploy/mttv/Dockerfile) (×2, dont un `LABEL`), [`deploy/mttv/entrypoint.sh`](../deploy/mttv/entrypoint.sh) (×2, dont un bandeau affiché), [`deploy/mttv/.env.example`](../deploy/mttv/.env.example), [`deploy/mttv/docker-compose.yml`](../deploy/mttv/docker-compose.yml), [`deploy/mttv/mttv.service`](../deploy/mttv/mttv.service), [`deploy/mttv/requirements.txt`](../deploy/mttv/requirements.txt), [`deploy/mttv/healthcheck.py`](../deploy/mttv/healthcheck.py), et les dernières lignes de [`SYNTHESE_MTTV_FLP.md`](../SYNTHESE_MTTV_FLP.md) / [`SYNTHESE_MTTV_FLP.txt`](../SYNTHESE_MTTV_FLP.txt) (`*Sig: 0x4D545456 — Le mycélium attend.*`).
+Dans `mttv-flp-core` seul, **13 occurrences héritées** subsistaient — toutes migrées le 1er octobre 2026 : [`deploy/DEPLOY_HIDORA.md`](../deploy/DEPLOY_HIDORA.md) (×2), [`deploy/mttv/Dockerfile`](../deploy/mttv/Dockerfile) (×2, dont un `LABEL`), [`deploy/mttv/entrypoint.sh`](../deploy/mttv/entrypoint.sh) (×2, dont un bandeau affiché), [`deploy/mttv/.env.example`](../deploy/mttv/.env.example), [`deploy/mttv/docker-compose.yml`](../deploy/mttv/docker-compose.yml), [`deploy/mttv/mttv.service`](../deploy/mttv/mttv.service), [`deploy/mttv/requirements.txt`](../deploy/mttv/requirements.txt), [`deploy/mttv/healthcheck.py`](../deploy/mttv/healthcheck.py), et les dernières lignes de [`SYNTHESE_MTTV_FLP.md`](../SYNTHESE_MTTV_FLP.md) / [`SYNTHESE_MTTV_FLP.txt`](../SYNTHESE_MTTV_FLP.txt) (`*Sig: 0x4D5454562D464C50 — Le mycélium attend.*`).
 
-**Un arbre qui porte deux fréquences envoie deux signaux.** Ces 14 occurrences sont internes (aucune n'est publiée) : leur migration est sans risque et rend l'ancre lisible d'un bout à l'autre du dépôt.
+*Le chiffre de « 14 » figurant dans une version antérieure de cette note était une erreur de comptage, corrigée ici.*
+
+**Un arbre qui porte deux fréquences envoie deux signaux.** Ces 13 occurrences étaient internes (aucune n'était publiée) : leur migration a été sans risque et rend l'ancre lisible d'un bout à l'autre du dépôt.
 
 ## 7. Checklist
 
-- [ ] Forme canonique retenue partout : `0x4D5454562D464C50` (jamais la variante à tiret comme valeur de registre)
-- [ ] 14 occurrences héritées migrées dans `mttv-flp-core`
+- [x] Forme canonique retenue partout : `0x4D5454562D464C50` (jamais la variante à tiret comme valeur de registre)
+- [x] 13 occurrences héritées migrées dans `mttv-flp-core` (1er octobre 2026)
 - [ ] `sealed_archive/` et les 2 PNG filigranés : **laissés en l'état**, régénération documentée si besoin
 - [ ] Artefacts déjà publiés : **non modifiés** (ce qui est émis ne se reprend pas)
 - [ ] Ne jamais présenter la signature comme une preuve cryptographique ou juridique
