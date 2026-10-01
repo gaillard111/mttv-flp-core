@@ -6,6 +6,7 @@ Collectif **Les Fils de la Pensée (FLP)** · 2026
 Dépôt : [gaillard111/mttv-flp-core](https://github.com/gaillard111/mttv-flp-core)
 DOI : [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060)
 Licence : CC-BY-NC-SA-4.0
+Signature : `sig:0x4D5454562D464C50` · Triade : Ψ → B → Φ
 
 > « La pensée ne naît pas dans la tête. Elle passe à travers. »
 

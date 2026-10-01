@@ -136,6 +136,7 @@ Documenter honnêtement ses propres trous fait partie de la méthode :
 | [`core/mttv_flp_synthese_manifeste.md`](../core/mttv_flp_synthese_manifeste.md) | Synthèse scientifique et manifeste d'expansion |
 | [`scenarios/note_moteurs_ethiques_et_souverains.md`](../scenarios/note_moteurs_ethiques_et_souverains.md) | Application à la recherche éthique et souveraine |
 | [`docs/t4_activation_function.md`](t4_activation_function.md) | Fonction d'activation tétravalente σ₄ |
+| [`docs/note_signature_ancrage.md`](note_signature_ancrage.md) | Ancre `sig:0x4D5454562D464C50` : nature, portée, ce qu'elle engage |
 | [`mpvr-glocal/README.md`](../mpvr-glocal/README.md) | Synthèse formelle du framework MPVR |
 | [`soph-ia/README.md`](../soph-ia/README.md) | SOPH-IA v2.0 : résultats et méthode |
 | [`deploy/DEPLOY_HIDORA.md`](../deploy/DEPLOY_HIDORA.md) | Procédure de déploiement |

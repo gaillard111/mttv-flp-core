@@ -118,31 +118,30 @@ Les deux services utilisent `restart: always` avec healthcheck :
 MTTV_GITHUB_TOKEN=ghp_...   # Token GitHub avec droits repo
 ```
 
-### SMTP — Alertes Email (Gmail — pré-configuré)
+### SMTP — Alertes Email (Gmail)
 
-Le `.env.example` contient déjà les paramètres SMTP Gmail.
-**Aucune modification nécessaire** pour utiliser le compte `girard444@gmail.com`.
+Le `.env.example` contient les paramètres SMTP, **avec des valeurs à remplacer**.
 
 ```bash
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=girard444@gmail.com
-SMTP_PASS=csjx nyyu ezdl wueu
+SMTP_USER=votre.adresse@gmail.com
+SMTP_PASS=votre-mot-de-passe-application
 ```
 
-> ⚠️ **Sécurité** : Le mot de passe SMTP (`SMTP_PASS`) est un **mot de passe d'application** Gmail,
-> pas le mot de passe principal. Il est stocké dans `.env.example` par commodité,
-> mais vous pouvez le modifier si vous souhaitez utiliser un autre compte.
+> ⚠️ **Sécurité** : `SMTP_PASS` doit être un **mot de passe d'application** Gmail,
+> jamais le mot de passe principal. Et aucun identifiant réel ne doit figurer dans un fichier suivi
+> par git : les valeurs vivent uniquement dans `.env`, qui n'est pas versionné.
 
 ### Base de données MySQL (Hidora locale)
 
-Le VPS Hidora dispose d'une base MySQL locale. Les paramètres sont pré-remplis dans `.env.example` :
+Le VPS Hidora dispose d'une base MySQL locale. Les paramètres de connexion sont dans `.env.example` — **le mot de passe est à définir** :
 
 ```bash
 MYSQL_HOST=127.0.0.1
 MYSQL_PORT=3306
 MYSQL_USER=flp
-MYSQL_PASSWORD=NBui4!fnD32
+MYSQL_PASSWORD=changez-moi
 MYSQL_DATABASE=mttv_flp
 ```
 
