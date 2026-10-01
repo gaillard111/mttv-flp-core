@@ -13,3 +13,7 @@
 *.pem
 *.key
 *.p12
+
+# Artefacts Python (compilation, caches)
+__pycache__/
+*.py[cod]

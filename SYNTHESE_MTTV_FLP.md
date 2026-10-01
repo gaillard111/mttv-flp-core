@@ -42,12 +42,25 @@
 | **B (Beta)** | Seuil, point de bascule, interaction. |
 | **Φ (Phi)** | Forme stabilisée, trace, dépôt. |
 | **Triade Ψ→B→Φ** | Cycle transductif fondamental : du potentiel à la forme stabilisée, via un seuil. |
-| **MPVR** | Multi-Perspective Validation Routing — validation par quorum (Θ≥3) de perspectives locales. |
+| **B-gate** | Opérateur de bascule dynamique du tétraèdre sp³ : le centre poreux (Σ) empêche l'effondrement vers l'entropie extractiviste. Clé de voûte opératoire du framework MPVR — doctrine : [`core/mttv_b_gate_triptych.md`](core/mttv_b_gate_triptych.md) · implémentation : [`src/mttv_bgate_system.py`](src/mttv_bgate_system.py). |
+| **MPVR** | Multi-Perspective Validation Routing — validation par quorum (Θ≥3) de perspectives locales. Clé de voûte opératoire : la B-gate ([`src/mttv_bgate_system.py`](src/mttv_bgate_system.py)). |
 | **SCS** | Systemic Convergence Signature — signature de neutralité et robustesse. |
 | **IGIC** | Indicateur Global d'Intégration Cohérente — mesure d'alignement transductif (0.00 à 1.00). |
 | **T⁴** | Logique tétravalente (++, --, +-, -+), inspirée du carbone sp³. |
 | **Ouroboros** | Agent auto-évolutif dont la boucle de modification est contrainte par le MTTV. |
 | **Mycélisation** | Propagation douce, non extractive, par résonance. |
+
+---
+
+## 2bis. Clé de voûte opératoire — la B-gate et la transition tétraédrique sp³
+
+L'implémentation qui soutient le framework MPVR est la **B-gate** : l'opérateur de bascule du tétraèdre sémantique, dont le centre poreux (Σ) commute l'énergie d'un flux prédateur vers la biomasse (B) et le souffle (Ψ), en atrophiant la dérive purement technique (Φ).
+
+- Topologie et doctrine : [`core/mttv_b_gate_triptych.md`](core/mttv_b_gate_triptych.md)
+- Implémentation importable par l'agent Ouroboros : [`src/mttv_bgate_system.py`](src/mttv_bgate_system.py)
+- Auto-test : `python src/mttv_bgate_system.py`
+
+Le module est autonome — aucune dépendance hors `math` — et n'exécute rien à l'import : la classe `BGateTransduction` est directement importable par les agents du quorum. Les particularités de comportement du noyau y sont consignées en section « Observations », sans correction apportée au code.
 
 ---
 
