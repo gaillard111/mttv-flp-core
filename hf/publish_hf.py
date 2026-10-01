@@ -29,6 +29,9 @@ DOSSIER_DATASET = os.path.join(ICI, "dataset")
 NOM_SPACE = "mttv-mycelial-handshake"
 NOM_DATASET = "mttv-mpvr-quorum-runs"
 
+# Artefacts non publiables : caches Python et fichiers compiles.
+EXCLUSIONS = ["__pycache__/*", "**/__pycache__/*", "*.pyc", "*.pyo"]
+
 
 def publier(dry_run=False):
     api = HfApi()
@@ -53,6 +56,7 @@ def publier(dry_run=False):
         repo_id=id_space,
         repo_type="space",
         commit_message="feat: Space statique — handshake mycélien MTTV-FLP/MPVR",
+        ignore_patterns=EXCLUSIONS,
     )
     print(f"Space publié   : https://huggingface.co/spaces/{id_space}")
 
@@ -62,6 +66,7 @@ def publier(dry_run=False):
         repo_id=id_dataset,
         repo_type="dataset",
         commit_message="feat: dataset couplage quorum MPVR (runs synthétiques)",
+        ignore_patterns=EXCLUSIONS,
     )
     print(f"Dataset publié : https://huggingface.co/datasets/{id_dataset}")
 
