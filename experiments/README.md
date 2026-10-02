@@ -99,3 +99,43 @@ Trois faits consignés, parce qu'une erreur effacée vaut moins qu'une erreur do
 2. **Un faux positif a été produit, et corrigé.** La première version du contrôle de manipulation rendait son verdict en comparant les listes de jetons **sans vérifier que les appels avaient réussi**. Deux configurations en échec — dont une sans aucun jeton — ont donc été lues comme « les échantillons divergent », c'est-à-dire comme la preuve que la variable agit. Le banc **refuse désormais de conclure** dans ce cas (`--verifier` renvoie 3). Motif consigné au registre des refus : *un appel raté n'est pas une mesure.*
 
 3. **`seed` retiré.** La combinaison `seed` + `n > 1` n'a pas été testée et les fournisseurs ne garantissent pas l'effet du paramètre. Préférer une reproduction du **dispositif** à une illusion de reproduction des tirages. La dispersion entre sous-appels remplace l'information que le `seed` devait apporter.
+
+## 10. Premier contrôle de manipulation — chiffres et leçon (2 octobre 2026)
+
+Exécution : `--verifier`, **8 appels**, aucune erreur.
+
+| Configuration | Entropie | Jetons recueillis | Dispersion entre sous-appels |
+|---|---|---|---|
+| `N = 0` | **2,953 bits** | 16 | 0,479 |
+| `N = 16` | **2,656 bits** | 16 | 0,594 |
+
+**Règle appliquée** — celle fixée au feuillet, § « Procédure de seuil » : un écart ne compte que s'il dépasse **deux fois le bruit**.
+
+> écart mesuré = **0,297 bit** · bruit = **0,594 bit** → seuil = **1,188 bit** · **0,297 < 1,188**
+
+**Verdict : INDÉTERMINÉ.** Ni « `N` agit », ni « `N` est inerte » : l'écart observé est **inférieur au bruit de l'estimateur**. Le contrôle ne prouve rien, ni dans un sens ni dans l'autre.
+
+Le verdict imprimé par le programme (« les échantillons divergent → `N` agit ») est **tautologique et doit être ignoré** : comparer deux listes de tirages aléatoires les fait presque toujours différer, même à distribution identique. Correction à apporter au code (§11).
+
+### Pourquoi la manipulation était faible — mesuré, et c'est le point décisif
+
+Les blancs se regroupent en jetons. Comptage local (tokenizer SmolLM2, en cache) :
+
+| Blancs | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 |
+|---|---|---|---|---|---|---|---|---|
+| **Jetons** | 1 | 1 | 1 | 2 | **4** | 8 | 16 | 32 |
+
+`N = 16` ne produit donc que **quatre jetons de suspension** — perturbation dérisoire devant une question d'une quinzaine de jetons. **Le balayage prévu (`N` de 0 à 16) mesurait une variable presque inexistante**, alors même que sa plage annoncée paraissait large.
+
+**Conséquence : la plage doit être étendue avant toute mesure.** `N ∈ {0, 4, 16, 64, 256}` → 0, 1, 4, 16, 64 jetons de suspension. Le coût reste **identique** (mêmes sous-appels) : c'est la manipulation qui change, pas la dépense.
+
+### Leçon
+
+Le contrôle de manipulation a coûté **huit appels** et a évité une campagne complète mesurant du vide. Sans lui, dix-huit configurations auraient produit un tableau sans signification — assorti d'un verdict tautologique susceptible de passer pour un résultat.
+
+## 11. Corrections à apporter avant la prochaine exécution
+
+1. **Étendre la plage** : `N_VALEURS = (0, 4, 16, 64, 256)`.
+2. **Inscrire la conversion blancs → jetons** dans l'en-tête du journal (champ de calibrage), pour que la variable soit interprétable en jetons et non seulement en caractères.
+3. **Remplacer le verdict du contrôle** : appliquer la règle « écart > 2 × bruit » et **refuser de conclure** quand l'écart reste en deçà — au lieu de comparer des listes de tirages.
+4. **Journaliser aussi le contrôle de manipulation** : il ne produit aujourd'hui aucune trace, ce qui est une entorse au §7.
