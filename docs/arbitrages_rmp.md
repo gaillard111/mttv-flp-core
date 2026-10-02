@@ -95,10 +95,28 @@ Mention explicite, ou statut de source citée non contributrice, dans [`CITATION
 | **D3** | Le collectif **implique** un lecteur extérieur : pas de jugement sans au moins un **non-auteur** |
 | **Q6** | Les trois prompts sont **co-écrits** (collectif + IA), avec **variantes refusées consignées** et **ratification des trois finaux par le lecteur extérieur** avant la première exécution |
 
-### Reste ouvert
+### R3 — **DÉCIDÉ** : instrument unique, vérifié par essai
 
-- **R3 —** choix du modèle cible (proposition à examiner : trois candidats).
-- **R4 —** sort du palier 4 dans sa forme pleine.
+**Décision du 2 octobre 2026.** Instrument : **`meta-llama/Llama-3.1-8B-Instruct` par API**.
+
+| Constat de l'essai | Résultat |
+|---|---|
+| `Qwen2.5` 0,5 B / 1,5 B / 7 B par API | **refusés** — *« not supported by any provider you have enabled »* : aucun fournisseur activé ne les sert |
+| `meta-llama/Llama-3.1-8B-Instruct` | **fonctionne** (a répondu `Bonjour`) |
+| `logprobs` sur Llama | **reçus** : `logprob = −1,329` pour le jeton produit |
+| `top_logprobs` | **non fournis** (`None`) → la distribution complète reste inaccessible |
+
+**Conséquence sur la métrique.** L'entropie exacte n'est pas calculable par cette API ; elle est **estimée** par échantillonnage des premiers jetons — voir [`../experiments/README.md`](../experiments/README.md) §3.
+
+**Réserve consignée.** L'instrument est sous licence `llama3.1`, acceptée nominativement : **un tiers peut rejouer l'expérience, mais doit accepter la même licence**. Les candidats `apache-2.0` (famille Qwen) ne sont pas joignables par cette voie.
+
+### R4 — **DÉCIDÉ : reporté, non annulé**
+
+**Décision du 2 octobre 2026.** Cinq personnes ne sont **pas réunissables pour le moment** ; le palier 4 en forme pleine (12 à 18 personnes) reste hors d'atteinte.
+
+Le protocole [`protocole_derive_texte.md`](protocole_derive_texte.md) est **écrit, complet et prêt** : il attend un jour plus favorable, il n'est pas retiré. Le pilote réduit reste possible dès que 4 à 6 personnes dont un non-auteur se trouvent réunies — sans aucun coût.
+
+**Conséquence sur l'ordre de marche :** la phase 1 commence par le **banc machine**, seule étape falsifiable immédiatement accessible.
 
 ### Règle de facturation — à ne pas confondre
 
@@ -155,9 +173,9 @@ La question « qu'est-ce qui compte comme effet ? » ne se tranche pas dans la p
 
 ## Ordre de traitement
 
-1. **R3** — choix du modèle *(ouvert)*
-2. **R4** — forme du palier 4 *(ouvert)*
-3. **C** — lexique, dont la fixation du nom `Δκ` *(ouvert)*
-4. **D** puis **E** — droits et attribution *(ouverts)*
-5. **Phase 1** — banc descriptif, API au jeton, plafond 10 USD
+1. ~~**R3**~~ — **décidé** : instrument `meta-llama/Llama-3.1-8B-Instruct` par API *(§G)*
+2. ~~**R4**~~ — **décidé, reporté** : palier 4 en attente de personnes *(§G)*
+3. **Phase 1 — en cours** : banc machine descriptif, [`../experiments/banc_suspension.py`](../experiments/banc_suspension.py), API au jeton, plafond 10 USD
+4. **C** — lexique, dont la fixation du nom `Δκ` *(ouvert)*
+5. **D** puis **E** — droits et attribution *(ouverts)*
 6. **Phase 2** — `κ_min`/`κ_max` dans la loi, seuil fixé, palier 4 en forme pleine
