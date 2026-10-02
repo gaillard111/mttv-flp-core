@@ -113,6 +113,8 @@ L'opérateur `Σ`, évoqué ici comme seuil de lecture non mécanisable, fait l'
 | `κ` | Zone de résonance — intervalle du rapport `π/η` où la transduction devient possible |
 | `Σ` | Opérateur de lecture du seuil de bascule (voir annexe 3.2) |
 | `V_dyn` | Polyèdre de Voronoi dynamique — partition reconfigurable selon `(π, η)` |
+| `Δκ` | **Proposition — à valider par le collectif.** Marge de retour : `κ_max − κ_min`, largeur d'hystérésis. Indicateur direct de **réversibilité** ; le cas `Δκ = 0` désigne une **fermeture irréversible**. Voir [`../docs/arbitrages_rmp.md`](../docs/arbitrages_rmp.md) §C |
+| `M_n` | **Proposition — à valider par le collectif.** Mémoire diachronique (inscrite / fluente / transmutée). **Discriminateur de viabilité** : à porosité égale, c'est `M_n` intacte qui distingue la dormance de la mort. Voir [`../docs/note_juge_et_viabilite.md`](../docs/note_juge_et_viabilite.md) §4 |
 
 ---
 
@@ -146,3 +148,7 @@ Observation de l'écart entre la présente annexe et l'implémentation courante 
 3. **La viscosité `η` n'est pas nommée.** Elle existe, mais sous forme de constante littérale (`0.95`) dans [`propager_transduction()`](../mpvr-glocal/src/mttv_mycelial_handshake.py:50) : elle ne peut ni varier par nœud, ni être mesurée, ni entrer dans un rapport `π/η`.
 
 **Correspondance de vocabulaire à trancher avant toute intégration :** le noyau emploie déjà `Σ` pour la porosité de la B-gate (`porosite_Sigma`) et `ρ` pour la porosité résiduelle mycélienne. L'arrivée de `π` (porosité RMP) et de `Σ₁` / `Σ₂` (opérateurs de lecture) introduirait **trois à quatre symboles pour deux notions**. Le lexique du §7 doit être mis en regard de celui de [`handshake_mycelien.md`](handshake_mycelien.md:69) avant d'être figé.
+
+**Constat complémentaire.** Le corpus interrogeable nomme la porosité sous trois symboles et ne nomme **nulle part la réversibilité** — pas plus qu'il ne nomme `spore`, `dormance`, `Peirce` ou `habitude`. La grandeur manquante n'est donc pas un synonyme de porosité : c'est la **marge de retour**, proposée au §7 sous le nom `Δκ`.
+
+**Arbitrages en cours :** les décisions d'intégration (statut de `κ`, de `Σ₂`, convention de lexique, statut de la version augmentée) sont consignées **ouvertes** dans [`../docs/arbitrages_rmp.md`](../docs/arbitrages_rmp.md), avec leurs options écartées et leurs motifs.

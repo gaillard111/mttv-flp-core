@@ -12,13 +12,25 @@ import random
 from typing import Dict, List, Any
 
 class MycelialHandshake:
-    def __init__(self, noeuds_quorum: int = 5, porosite_initiale: float = 0.42):
+    def __init__(
+        self,
+        noeuds_quorum: int = 5,
+        porosite_initiale: float = 0.42,
+        eta_retenue: float = 0.95,
+    ):
         """
         Initialise le réseau mycélien local (Micro-Quorum Poreux).
         Chaque nœud représente une perspective transcalaire du vivant.
+
+        `eta_retenue` **nomme la viscosité du réseau** (η) : la part de potentiel
+        conservée d'un cycle au suivant — ce par quoi un retour reste possible.
+        Sa valeur par défaut (0.95) reproduit exactement le comportement
+        historique, où ce coefficient était une constante littérale non nommée.
+        Voir le terme `η` du lexique de `protocols/rmp_mecanisme_pre_transducteur.md`.
         """
         self.nombre_noeuds = noeuds_quorum
         self.porosite_reseau = porosite_initiale
+        self.eta_retenue = eta_retenue
         # Initialisation des potentiels de membrane des hyphes (noeuds)
         self.noeuds = {f"hyphe_{i}": random.uniform(0.6, 0.9) for i in range(noeuds_quorum)}
 
@@ -46,8 +58,14 @@ class MycelialHandshake:
                 # Résonance avec le pôle Bios
                 nouveau_potentiel += (1.0 - nouveau_potentiel) * valeur_bios
             else:
-                # Flux stable : homéostasie mycélienne standard
-                nouveau_potentiel = potentiel * 0.95 + (porosite_sigma * 0.05)
+                # Flux stable : homéostasie mycélienne standard.
+                # η = rétention ; la part complémentaire est la fuite vers le pôle Σ.
+                # Défaut 0.95 : comportement historique inchangé (l'ancienne écriture
+                # littérale `* 0.95 + sigma * 0.05` n'est plus qu'un cas particulier).
+                nouveau_potentiel = (
+                    potentiel * self.eta_retenue
+                    + porosite_sigma * (1.0 - self.eta_retenue)
+                )
             
             self.noeuds[nom_hyphe] = round(nouveau_potentiel, 4)
             chemins_traverses.append(nom_hyphe)

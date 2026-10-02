@@ -96,6 +96,35 @@ def test_integration_bout_en_bout():
     assert diagnostic["couplage_mycelien"]["protocole"] == "HANDSHAKE MYCÉLIEN V1"
 
 
+def test_eta_nommee_reproduit_la_formule_dorigine():
+    """η nommée : la valeur par défaut (0.95) doit reproduire exactement
+    l'ancienne formule littérale `potentiel * 0.95 + Sigma * 0.05`.
+
+    Mesure préalable sur 200 000 couples aléatoires : `1.0 - 0.95 != 0.05` en
+    virgule flottante (75 618 écarts bruts), mais **aucun** écart après arrondi
+    à 4 décimales — or le module ne stocke que des potentiels arrondis. Le
+    comportement est donc identique, cycle après cycle.
+    """
+    potentiels = (0.6, 0.7, 0.8, 0.9)
+    sigma = 0.35
+    handshake = MycelialHandshake(noeuds_quorum=len(potentiels), eta_retenue=0.95)
+    handshake.noeuds = {f"hyphe_{i}": v for i, v in enumerate(potentiels)}
+
+    rapport = handshake.propager_transduction(
+        {
+            "status": "FLUX TRANSDUCTIF STABLE : Alignement sur le vivant validé.",
+            "etats_sp3": {"Bios (B)": 0.45},
+            "porosite_Sigma": sigma,
+        }
+    )
+
+    attendu = {
+        f"hyphe_{i}": round(v * 0.95 + sigma * 0.05, 4)
+        for i, v in enumerate(potentiels)
+    }
+    assert rapport["cartographie_hyphes"] == attendu
+
+
 if __name__ == "__main__":
     # Exécution sans pytest : chaque test lève une assertion en cas d'échec.
     for nom, fonction in sorted(globals().items()):

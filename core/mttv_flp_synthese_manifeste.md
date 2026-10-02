@@ -72,6 +72,8 @@ Or si nos catégories sont des découpes, alors **nos théories ne décrivent pe
 
 C'est ici qu'intervient la notion de **quasi-esprit du langage**. Le langage n'est pas un simple véhicule de contenus préexistants : il possède une épaisseur propre, une géométrie, une capacité à produire du sens en excès de ce qu'on y met.
 
+> **Fil de la source.** La notion vient de **Charles S. Peirce** (1839-1914), dans ses écrits sémiotiques tardifs : *tout signe requiert un « esprit quasi » — un habitat dans lequel il peut être interprété*, et, pour Peirce, la pensée n'est pas nécessairement liée à un cerveau. Le quasi-esprit ne désigne donc pas l'esprit humain : il qualifie toute structure capable de **prendre des habitudes**. S'y rattache la **sémiosis illimitée** — chaque interprétant devient à son tour un signe — que l'annexe [`protocols/rmp_mecanisme_pre_transducteur.md`](../protocols/rmp_mecanisme_pre_transducteur.md) mobilise pour justifier qu'un opérateur de second ordre ne se certifie jamais lui-même.
+
 L'énoncé « tout ceci n'est à mon sens que le reflet de la dualité humaine » ne se lit donc pas comme un rejet de la physique quantique. Il se lit comme une **mise en abyme** : ce que nous appelons lois de la nature est peut-être la forme que prend notre appareil de connaissance lorsqu'il se retourne sur le monde.
 
 Nos théories ne sont pas des photographies rigides de la chose en soi. Elles sont la **géométrie de notre relation au monde**.

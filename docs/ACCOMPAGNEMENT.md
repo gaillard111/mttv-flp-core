@@ -26,7 +26,7 @@
 | `mpvr-glocal/` | Framework MPVR : synthèse formelle + implémentation | 1 README + `src/` |
 | `soph-ia/` | SOPH-IA v2.0 : teaser, benchmark, métadonnées Zenodo | 7 fichiers |
 | `deploy/` | Instructions de déploiement | 1 Markdown + `mttv/` |
-| `docs/` | Documentation d'accompagnement et notes techniques | Markdown |
+| `docs/` | Documentation d'accompagnement, notes techniques — dont la note [`note_juge_et_viabilite.md`](note_juge_et_viabilite.md) (« qui juge ») et le feuillet ouvert [`arbitrages_rmp.md`](arbitrages_rmp.md) | Markdown |
 
 ## 3. Le modèle en une page
 
@@ -67,7 +67,7 @@ La triade transductive : **Ψ → B → Φ**
 | **Singularité Σ** | Apport ponctuel, asymétrique et non périodique — voir `protocols/3.1` à `3.4` |
 | **MPVR** | *Multi-Perspective Validation & Resilience* (Multi-Path Vector Routing) — quorum poreux et routage multi-chemins d'inspiration mycélienne |
 | **SOPH-IA** | *Sub-Optimal Paradigm for Habitable AI* — alignement comme propriété thermodynamique interne mesurable |
-| **Quasi-esprit du langage** | Hypothèse selon laquelle le langage possède une épaisseur et une géométrie propres, produisant du sens en excès de ce qu'on y dépose |
+| **Quasi-esprit du langage** | Hypothèse selon laquelle le langage possède une épaisseur et une géométrie propres, produisant du sens en excès de ce qu'on y dépose. *Fil de la source* : le **quasi-esprit** de C. S. Peirce (habitat interprétant de tout signe ; l'habitude comme essence de l'esprit) et la **sémiosis illimitée** (tout interprétant devient un signe) — voir [`core/mttv_flp_synthese_manifeste.md`](../core/mttv_flp_synthese_manifeste.md) §3.2 |
 | **IGIC** | Mentionné dans le README comme indice associé au noyau — *document source à préciser* |
 
 ## 5. Conventions du dépôt
