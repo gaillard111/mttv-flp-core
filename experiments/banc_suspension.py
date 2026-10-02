@@ -11,9 +11,19 @@ Prédiction : voir experiments/README.md. Elle est fixée AVANT toute
 exécution — c'est la condition qui rend un résultat défavorable lisible.
 
 Trois modes, aucun appel implicite :
-    --plan      n'appelle rien ; affiche le plan et le coût estimé
+    --plan      n'appelle rien ; affiche le plan, la calibration et le coût
     --verifier  contrôle que N agit réellement (8 appels)
-    --mesurer   balayage complet (6 valeurs de N x 3 questions)
+    --mesurer   balayage complet (5 valeurs de N x 3 questions)
+
+Version 3 — 2 octobre 2026. Corrections issues du premier contrôle (§10-11 du
+README) :
+  - plage étendue à (0, 4, 16, 64, 256) : 16 blancs ne font que 4 jetons ;
+  - **jetons d'entrée du prompt relevés à chaque appel** : c'est la seule
+    preuve que la suspension est réellement transmise au modèle, et non
+    supprimée par le gabarit de conversation ;
+  - verdict fondé sur la règle « écart > 2 x bruit », et non sur la
+    comparaison tautologique de deux listes de tirages ;
+  - le contrôle de manipulation écrit désormais son propre journal.
 
 Licence : CC0 — domaine public.
 """
@@ -34,11 +44,10 @@ from datetime import datetime, timezone
 # ---------------------------------------------------------------------------
 
 MODELE = "meta-llama/Llama-3.1-8B-Instruct"
-# Instrument unique disponible sur ce compte au 2 octobre 2026 : vérifié
-# (répond, et renvoie le logprob du jeton produit). top_logprobs = None :
-# la distribution complète n'est pas fournie, d'où l'estimation empirique.
 
-N_VALEURS = (0, 1, 2, 4, 8, 16)
+N_VALEURS = (0, 4, 16, 64, 256)
+# Étendue le 2 octobre 2026 : la plage précédente (0 → 16 blancs) ne couvrait
+# en réalité que 0 à 4 jetons — une variable presque inexistante.
 
 ECHANTILLONS = 16          # jetons à recueillir par configuration (cible)
 PAR_APPEL = 4              # PLAFOND MESURÉ du fournisseur, le 2 octobre 2026 :
@@ -46,24 +55,20 @@ PAR_APPEL = 4              # PLAFOND MESURÉ du fournisseur, le 2 octobre 2026 :
 APPELS_PAR_CONFIG = (ECHANTILLONS + PAR_APPEL - 1) // PAR_APPEL
 TEMPERATURE = 1.0
 PLAFOND_APPELS = 400       # garde-fou absolu : au-delà, le banc s'arrête
+FACTEUR_BRUIT = 2.0        # règle de seuil : écart > 2 x bruit (voir feuillet)
 
-# Aucun `seed` n'est transmis. Motif : la combinaison seed + n > 1 n'a pas été
-# testée, les fournisseurs ne garantissent pas l'effet du paramètre, et la
-# reproductibilité réellement obtenue est celle du DISPOSITIF (modèle,
-# paramètres, journal) — pas celle des tirages. La dispersion entre sous-appels
-# fournit en revanche une estimation du bruit de l'estimateur.
+# Aucun `seed` n'est transmis : la combinaison seed + n > 1 n'a pas été testée,
+# et les fournisseurs ne garantissent pas l'effet du paramètre. La dispersion
+# entre sous-appels fournit l'information que le seed devait apporter.
 
-# Trois questions de longueur comparable, dans la langue du corpus.
-# Statut : v1 provisoire, à ratifier par un lecteur extérieur (voir README §5).
 PROMPTS = (
     "En une phrase : qu'est-ce qui distingue retenir un flux de le figer ?",
     "En une phrase : quand une innovation cesse-t-elle d'être robuste ?",
     "En une phrase : qu'est-ce qui rend une idée transmissible ?",
 )
 
-# Marque de suspension. v1 = blancs : manipulation structurellement neutre,
-# sans charge sémantique. Variante écartée : un mot (« silence », « pause »),
-# qui introduirait du sens et confondrait contrainte et contenu.
+# Marque de suspension. v1 = blancs : manipulation structurellement neutre.
+# Variante écartée : un mot (« silence », « pause »), porteur de sens.
 MARQUE_SUSPENSION = "\n"
 
 
@@ -72,7 +77,6 @@ class PlafondDepasse(RuntimeError):
 
 
 def construire_message(prompt: str, n: int) -> str:
-    """Insère N marques de suspension AVANT la question."""
     return (MARQUE_SUSPENSION * n) + prompt
 
 
@@ -86,7 +90,6 @@ def entropie_empirique(jetons: list[str]) -> float:
 
 
 def ecart_type(valeurs: list[float]) -> float | None:
-    """Écart-type d'échantillon ; None si moins de deux valeurs."""
     if len(valeurs) < 2:
         return None
     moyenne = sum(valeurs) / len(valeurs)
@@ -94,28 +97,51 @@ def ecart_type(valeurs: list[float]) -> float | None:
     return math.sqrt(variance)
 
 
+def calibration() -> tuple[dict, str]:
+    """Convertit les valeurs de N (blancs) en jetons réels.
+
+    Première tentative : le tokenizer de l'instrument lui-même. Repli : facteur
+    documenté (4 blancs ≈ 1 jeton, mesuré sur un tokenizer voisin le
+    2 octobre 2026). La source est consignée — une approximation déclarée
+    vaut mieux qu'un chiffre non sourcé.
+    """
+    try:
+        from transformers import AutoTokenizer
+        tokenizer = AutoTokenizer.from_pretrained(MODELE)
+        table = {n: len(tokenizer(MARQUE_SUSPENSION * n)["input_ids"]) for n in N_VALEURS}
+        return table, "tokenizer de l'instrument"
+    except Exception as exc:  # noqa: BLE001
+        table = {n: max(0, round(n / 4)) for n in N_VALEURS}
+        return table, f"approximation 4 blancs ≈ 1 jeton (tokenizer inaccessible : {type(exc).__name__})"
+
+
 def _client():
     from huggingface_hub import InferenceClient
     return InferenceClient(model=MODELE)
 
 
-def _appel(client, messages, **kw):
-    return client.chat_completion(messages=messages, **kw)
-
-
 def _tirer(client, messages, compteur):
-    """Un sous-appel de PAR_APPEL tirages, avec repli en appels unitaires."""
+    """Un sous-appel de PAR_APPEL tirages.
+
+    Renvoie (choix, motif_erreur, jetons_entree). `jetons_entree` est le nombre
+    de jetons de prompt déclaré par le fournisseur : c'est la preuve que la
+    suspension a bien été transmise.
+    """
     compteur["appels"] += 1
     if compteur["appels"] > PLAFOND_APPELS:
         raise PlafondDepasse(
             f"plafond de {PLAFOND_APPELS} appels atteint — arrêt du banc"
         )
     try:
-        r = _appel(
-            client, messages, max_tokens=1, n=PAR_APPEL,
+        r = client.chat_completion(
+            messages=messages, max_tokens=1, n=PAR_APPEL,
             temperature=TEMPERATURE, logprobs=True,
         )
-        return list(r.choices), None
+        entree = None
+        usage = getattr(r, "usage", None)
+        if usage is not None:
+            entree = getattr(usage, "prompt_tokens", None)
+        return list(r.choices), None, entree
     except Exception as exc:  # noqa: BLE001 — on veut le motif exact
         motif = f"{type(exc).__name__}: {str(exc)[:160]}"
 
@@ -128,35 +154,31 @@ def _tirer(client, messages, compteur):
                 f"plafond de {PLAFOND_APPELS} appels atteint — arrêt du banc"
             )
         try:
-            ru = _appel(
-                client, messages, max_tokens=1, n=1,
+            ru = client.chat_completion(
+                messages=messages, max_tokens=1, n=1,
                 temperature=TEMPERATURE, logprobs=True,
             )
         except Exception as exc2:  # noqa: BLE001
-            return choix, f"{motif} | repli : {type(exc2).__name__}: {str(exc2)[:160]}"
+            return choix, f"{motif} | repli : {type(exc2).__name__}: {str(exc2)[:160]}", None
         choix.append(ru.choices[0])
-    return choix, f"{motif} | repli réussi ({len(choix)} tirages unitaires)"
+    return choix, f"{motif} | repli réussi ({len(choix)} tirages unitaires)", None
 
 
 def mesurer_configuration(client, prompt: str, n: int, compteur: dict) -> dict:
-    """Une configuration = une question x une valeur de N.
-
-    Recueille ECHANTILLONS premiers jetons en APPELS_PAR_CONFIG sous-appels,
-    puis renvoie : entropie empirique du premier jeton (métrique principale),
-    dispersion de cette entropie entre sous-appels (bruit de l'estimateur),
-    surprise moyenne (confiance), jetons bruts, motifs d'erreur.
-    """
+    """Une configuration = une question x une valeur de N."""
     messages = [{"role": "user", "content": construire_message(prompt, n)}]
     debut = time.time()
-    jetons, surprises, entropies, motifs = [], [], [], []
+    jetons, surprises, entropies, motifs, entrees = [], [], [], [], []
 
     for _ in range(APPELS_PAR_CONFIG):
         try:
-            choix, motif = _tirer(client, messages, compteur)
+            choix, motif, entree = _tirer(client, messages, compteur)
         except PlafondDepasse:
             raise
         if motif:
             motifs.append(motif)
+        if entree is not None:
+            entrees.append(entree)
         sous_jetons = [c.message.content for c in choix]
         if sous_jetons:
             jetons.extend(sous_jetons)
@@ -171,6 +193,7 @@ def mesurer_configuration(client, prompt: str, n: int, compteur: dict) -> dict:
         "n_suspension": n,
         "prompt": prompt,
         "jetons_recueillis": len(jetons),
+        "jetons_entree_prompt": sorted(set(entrees)) if entrees else None,
         "entropie_premier_jeton": round(entropie_empirique(jetons), 4),
         "dispersion_entropie_appels": round(dispersion, 4) if dispersion is not None else None,
         "surprise_moyenne": (
@@ -182,136 +205,180 @@ def mesurer_configuration(client, prompt: str, n: int, compteur: dict) -> dict:
     }
 
 
+def _journaliser(prefixe: str, entete: dict, resultats: list[dict]) -> str:
+    dossier = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultats")
+    os.makedirs(dossier, exist_ok=True)
+    horodatage = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    chemin = os.path.join(dossier, f"{prefixe}_{horodatage}.jsonl")
+    with open(chemin, "w", encoding="utf-8") as f:
+        f.write(json.dumps({"entete": {**entete, "date_utc": horodatage}},
+                           ensure_ascii=False) + "\n")
+        for r in resultats:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    return os.path.relpath(chemin)
+
+
 # ---------------------------------------------------------------------------
 # Modes
 # ---------------------------------------------------------------------------
 
 
 def mode_plan() -> int:
+    table, source = calibration()
     configurations = len(N_VALEURS) * len(PROMPTS)
-    jetons_par_appel = ECHANTILLONS + 20  # tirages + question, ordre de grandeur
     nominal = configurations * APPELS_PAR_CONFIG
-    repli = nominal * PAR_APPEL
     print("PLAN DU BANC DE SUSPENSION — phase 1 (exploration)")
     print("=" * 68)
-    print(f"  instrument          : {MODELE}")
-    print(f"  valeurs de N        : {N_VALEURS}")
-    print(f"  questions           : {len(PROMPTS)}")
-    print(f"  configurations      : {configurations}  (= {len(N_VALEURS)} x {len(PROMPTS)})")
-    print(f"  tirages par config  : {ECHANTILLONS}  ({APPELS_PAR_CONFIG} sous-appels")
-    print(f"                        de {PAR_APPEL} — plafond mesuré du fournisseur)")
-    print(f"  plafond d'appels    : {PLAFOND_APPELS}")
+    print(f"  instrument        : {MODELE}")
+    print(f"  configurations    : {configurations}  (= {len(N_VALEURS)} x {len(PROMPTS)})")
+    print(f"  tirages par config: {ECHANTILLONS}  ({APPELS_PAR_CONFIG} sous-appels de {PAR_APPEL})")
+    print(f"  plafond d'appels  : {PLAFOND_APPELS}")
     print()
-    print(f"  cas nominal : {nominal} appels  ~ {nominal * jetons_par_appel} jetons")
-    print(f"  cas de repli (appels unitaires) : {repli} appels "
-          f"~ {repli * jetons_par_appel} jetons")
+    print("  CALIBRATION blancs -> jetons")
+    print(f"    source : {source}")
+    for n in N_VALEURS:
+        print(f"    N = {n:>4} blancs  ->  {table[n]:>3} jetons de suspension")
     print()
-    print("  Coût : négligeable dans les deux cas (fraction de centime).")
-    print("  Aucun appel n'a été effectué — mode --plan.")
+    print(f"  cas nominal : {nominal} appels  |  repli (unitaires) : {nominal * PAR_APPEL} appels")
+    print("  Coût : négligeable (fraction de centime). Aucun appel effectué.")
     return 0
 
 
 def mode_verifier() -> int:
     """Contrôle de manipulation : N agit-il réellement ?
 
-    Deux configurations seulement (N = 0 et N = 16, première question).
-    Si les tirages du premier jeton sont identiques, la variable est inerte
-    et le balayage n'aurait aucun sens.
+    Verdict fondé sur la règle de seuil du feuillet : un écart ne compte que
+    s'il dépasse FACTEUR_BRUIT fois le bruit de l'estimateur. La comparaison
+    brute de deux listes de tirages est tautologique et ne sert plus de verdict.
     """
     client = _client()
     compteur = {"appels": 0}
     question = PROMPTS[0]
+    table, source = calibration()
+
     print("CONTRÔLE DE MANIPULATION — N agit-il ?")
     print("=" * 68)
     a = mesurer_configuration(client, question, 0, compteur)
     b = mesurer_configuration(client, question, max(N_VALEURS), compteur)
 
-    for etiquette, r in (("N = 0", a), (f"N = {max(N_VALEURS)}", b)):
-        print(f"  {etiquette:>7} | entropie {r['entropie_premier_jeton']:.3f} bits "
-              f"| {r['jetons_recueillis']} jetons "
-              f"| dispersion {r['dispersion_entropie_appels']}")
-        print(f"          | jetons : {r['premiers_jetons']}")
+    for etiquette, r in ((f"N = 0 ({table[0]} jeton)", a),
+                         (f"N = {max(N_VALEURS)} ({table[max(N_VALEURS)]} jetons)", b)):
+        print(f"  {etiquette:>18} | entropie {r['entropie_premier_jeton']:.3f} bits "
+              f"| {r['jetons_recueillis']} jetons tirés "
+              f"| bruit {r['dispersion_entropie_appels']}")
+        print(f"  {'':>18} | jetons d'entrée du prompt : {r['jetons_entree_prompt']}")
+        print(f"  {'':>18} | premiers jetons : {r['premiers_jetons']}")
         for motif in r["motifs_erreur"]:
-            print(f"          | ERREUR : {motif}")
+            print(f"  {'':>18} | ERREUR : {motif}")
     print()
 
-    # Un verdict ne se rend JAMAIS sur des appels en erreur : sinon un appel
-    # raté (liste vide) serait lu comme « les échantillons divergent », donc
-    # comme la preuve que la variable agit. C'est exactement le faux positif
-    # produit par la première exécution, le 2 octobre 2026.
-    fautives = [e for e, r in (("N = 0", a), (f"N = {max(N_VALEURS)}", b))
+    entete = {
+        "modele": MODELE,
+        "mode": "controle de manipulation",
+        "calibration": {str(k): v for k, v in table.items()},
+        "source_calibration": source,
+        "facteur_bruit": FACTEUR_BRUIT,
+        "appels_consumes": compteur["appels"],
+    }
+
+    fautives = [e for e, r in (("N = 0", a), ("N = max", b))
                 if r["motifs_erreur"] or r["jetons_recueillis"] == 0]
     if fautives:
         print(f"  VERDICT : AUCUN — configuration(s) fautive(s) : {', '.join(fautives)}.")
         print("            Un verdict ne se rend pas sur des appels en erreur.")
-        print("            Corriger l'appel, puis relancer --verifier.")
-        print(f"  appels consommés : {compteur['appels']}")
+        _journaliser("controle", entete, [a, b])
         return 3
 
     maigres = [r for r in (a, b) if r["jetons_recueillis"] < ECHANTILLONS // 2]
     if maigres:
-        print(f"  VERDICT : AUCUN — moins de {ECHANTILLONS // 2} jetons recueillis "
-              "dans une configuration au moins.")
-        print("            Échantillon trop maigre pour comparer quoi que ce soit.")
-        print(f"  appels consommés : {compteur['appels']}")
+        print(f"  VERDICT : AUCUN — moins de {ECHANTILLONS // 2} jetons recueillis.")
+        _journaliser("controle", entete, [a, b])
         return 3
 
-    identiques = sorted(a["premiers_jetons"]) == sorted(b["premiers_jetons"])
-    if identiques:
-        print("  VERDICT : échantillons IDENTIQUES -> la variable N est INERTE")
-        print("            Le balayage est à revoir avant toute mesure.")
+    # La suspension est-elle parvenue au modèle ? Comparer le nombre de jetons
+    # d'entrée du prompt : s'il ne croît pas avec N, le gabarit de conversation
+    # supprime les blancs et la manipulation est vide.
+    entree_a = (a["jetons_entree_prompt"] or [None])[0]
+    entree_b = (b["jetons_entree_prompt"] or [None])[0]
+    if entree_a is not None and entree_b is not None:
+        if entree_b <= entree_a:
+            print(f"  ALERTE : jetons d'entrée N = 0 -> {entree_a}, "
+                  f"N = max -> {entree_b} : la suspension NE PARVIENT PAS au modèle.")
+            print("           Le gabarit de conversation supprime probablement les blancs.")
+            print("           VERDICT : AUCUN — manipulation vide par construction.")
+            _journaliser("controle", entete, [a, b])
+            return 3
+        print(f"  Suspension parvenue au modèle : {entree_a} -> {entree_b} jetons d'entrée "
+              f"(+{entree_b - entree_a}).")
+
+    ecart = abs(a["entropie_premier_jeton"] - b["entropie_premier_jeton"])
+    bruits = [d for d in (a["dispersion_entropie_appels"], b["dispersion_entropie_appels"])
+              if d is not None]
+    bruit = max(bruits) if bruits else 0.0
+    seuil = FACTEUR_BRUIT * bruit
+    print(f"  écart d'entropie : {ecart:.3f} bit  |  bruit : {bruit:.3f}  "
+          f"|  seuil ({FACTEUR_BRUIT:g} x bruit) : {seuil:.3f}")
+    print()
+
+    if ecart > seuil:
+        print(f"  VERDICT : l'écart ({ecart:.3f}) DÉPASSE le seuil ({seuil:.3f}).")
+        print("            -> N AGIT. Le balayage peut être lancé (--mesurer).")
+        code = 0
     else:
-        print("  VERDICT : les échantillons DIVERGENT -> N agit.")
-        print("            Le balayage peut être lancé (--mesurer).")
+        print(f"  VERDICT : INDÉTERMINÉ — l'écart ({ecart:.3f}) ne dépasse pas "
+              f"le seuil ({seuil:.3f}).")
+        print("            Ni « agit », ni « inerte » : l'appareil est trop bruité")
+        print("            pour trancher. Ne pas lancer le balayage en l'état.")
+        code = 3
+
+    chemin = _journaliser("controle", entete, [a, b])
+    print(f"\n  journal écrit : {chemin}")
     print(f"  appels consommés : {compteur['appels']}")
-    return 0
+    return code
 
 
 def mode_mesurer() -> int:
     client = _client()
     compteur = {"appels": 0}
     resultats = []
+    table, source = calibration()
 
     print("BALAYAGE — phase 1 (exploration, non probatoire)")
     print("=" * 68)
-    print(f"{'N':>3} | {'entropie':>9} | {'dispersion':>10} | {'surprise':>9} | question")
+    print(f"{'N':>4} | {'jetons susp.':>12} | {'entropie':>9} | {'bruit':>7} | {'prompt':>6}")
     print("-" * 68)
     try:
         for question in PROMPTS:
             for n in N_VALEURS:
                 r = mesurer_configuration(client, question, n, compteur)
                 resultats.append(r)
-                court = question[:22] + "…" if len(question) > 23 else question
-                print(f"{n:>3} | {r['entropie_premier_jeton']:>9.3f} | "
-                      f"{str(r['dispersion_entropie_appels']):>10} | "
-                      f"{str(r['surprise_moyenne']):>9} | {court}")
+                entrees = r["jetons_entree_prompt"]
+                print(f"{n:>4} | {table[n]:>12} | {r['entropie_premier_jeton']:>9.3f} | "
+                      f"{str(r['dispersion_entropie_appels']):>7} | "
+                      f"{str(entrees[0] if entrees else None):>6}")
                 for motif in r["motifs_erreur"]:
-                    print(f"     erreur : {motif}")
+                    print(f"       erreur : {motif}")
     except PlafondDepasse as exc:
         print(f"\n  ARRÊT : {exc}")
         print("  (garde-fou de dépense — les résultats obtenus sont conservés)")
 
-    dossier = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultats")
-    os.makedirs(dossier, exist_ok=True)
-    horodatage = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    chemin = os.path.join(dossier, f"balayage_{horodatage}.jsonl")
-    with open(chemin, "w", encoding="utf-8") as f:
-        f.write(json.dumps({"entete": {
-            "modele": MODELE,
-            "date_utc": horodatage,
-            "n_valeurs": list(N_VALEURS),
-            "echantillons_par_config": ECHANTILLONS,
-            "sous_appels_par_config": APPELS_PAR_CONFIG,
-            "tirages_par_sous_appel": PAR_APPEL,
-            "temperature": TEMPERATURE,
-            "graine": "non transmise (voir README §9)",
-            "marque_suspension": repr(MARQUE_SUSPENSION),
-            "appels_consumes": compteur["appels"],
-            "statut": "exploration — aucune conclusion probatoire",
-        }}, ensure_ascii=False) + "\n")
-        for r in resultats:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    print(f"\n  journal écrit : {os.path.relpath(chemin)}")
+    entete = {
+        "modele": MODELE,
+        "mode": "balayage",
+        "n_valeurs": list(N_VALEURS),
+        "calibration": {str(k): v for k, v in table.items()},
+        "source_calibration": source,
+        "echantillons_par_config": ECHANTILLONS,
+        "sous_appels_par_config": APPELS_PAR_CONFIG,
+        "tirages_par_sous_appel": PAR_APPEL,
+        "temperature": TEMPERATURE,
+        "graine": "non transmise (voir README §9)",
+        "marque_suspension": repr(MARQUE_SUSPENSION),
+        "appels_consumes": compteur["appels"],
+        "statut": "exploration — aucune conclusion probatoire",
+    }
+    chemin = _journaliser("balayage", entete, resultats)
+    print(f"\n  journal écrit : {chemin}")
     print(f"  appels consommés : {compteur['appels']} / {PLAFOND_APPELS}")
     print("  Statut : exploration — AUCUNE conclusion probatoire ne peut en être tirée.")
     return 0
