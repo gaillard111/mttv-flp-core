@@ -170,6 +170,9 @@ La question « qu'est-ce qui compte comme effet ? » ne se tranche pas dans la p
 | **Prompts écrits par le seul auteur** | Biais nommable d'avance ; déplacé, il est traçable, tu, il ne l'est pas |
 | **« Clôture = ρ → 0 = mort »** *(formulation de l'assistant, retirée)* | Trop grossier : une spore est fermée et viable. Le discriminant est la **réversibilité** |
 | **Trancher A sans A2 documenté** | Renverser un invariant en effaçant sa trace ferme une porte de sortie |
+| **Verdict rendu sur des appels en erreur** | Faux positif du 2 octobre 2026 : deux configurations en échec, dont une sans aucun jeton, et la comparaison a conclu « les échantillons divergent » — soit « la variable agit ». **Un appel raté n'est pas une mesure.** Le banc refuse désormais de conclure (`--verifier` renvoie 3) |
+| **`n = 16` en un seul appel** | Refusé par le fournisseur (*HTTP 422*) ; le plafond mesuré est `n = 4`. Remplacé par 4 sous-appels de 4 tirages, qui produisent en prime la dispersion de l'estimateur |
+| **`seed` pour reproduire les tirages** | Retiré : combinaison non testée avec `n > 1`, et effet non garanti par le fournisseur. La reproductibilité conservée est celle du **dispositif**, non celle des tirages |
 
 ## Ordre de traitement
 
