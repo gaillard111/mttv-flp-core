@@ -18,7 +18,7 @@
 | Dossier | Contenu | Nature |
 |---|---|---|
 | `core/` | Noyau théorique : modèle, positionnement, métaphysique, manifeste | 14 PDF + 1 Markdown |
-| `protocols/` | Protocoles opératoires : RMP, Singularité Σ, graines de mycélisation | 6 PDF |
+| `protocols/` | Protocoles opératoires : RMP, Singularité Σ, graines de mycélisation | 6 PDF + 1 Markdown |
 | `benchmark/` | Benchmark ultime, prompts d'étiquetage 28 dimensions | 2 PDF |
 | `scenarios/` | Applications : noosphère, moteurs de recherche, agriculture, urbanisme | PDF + Markdown |
 | `src/` | Implémentation de référence du Micro-Quorum Poreux Transcalaire | 1 script Python |
@@ -63,7 +63,7 @@ La triade transductive : **Ψ → B → Φ**
 | **Sous-optimalité** | Principe de robustesse : accepter des approximations et des pannes locales pour garantir la résilience globale |
 | **Quorum poreux** | Mécanisme de décision local où le seuil n'est pas un nombre mais une dérivée, et où la porosité (non-étanchéité des sous-ensembles) évite le verrouillage centralisé |
 | **Basse continue** | Rôle assigné à l'IA : ne pas ordonner mais réguler passivement les flux, amortir entre les échelles |
-| **RMP** | Mécanisme Pré-Transducteur — voir `protocols/3 MTTV-flp Mécanisme PréTransducteur RMP.pdf` |
+| **RMP** | Régularité Métabolique Prégalvanique — mécanisme pré-transducteur : [`../protocols/rmp_mecanisme_pre_transducteur.md`](../protocols/rmp_mecanisme_pre_transducteur.md) (texte, indexable) · `protocols/3  MTTV-flp Mécanisme Pré-Transducteur RMP.pdf` (source) |
 | **Singularité Σ** | Apport ponctuel, asymétrique et non périodique — voir `protocols/3.1` à `3.4` |
 | **MPVR** | *Multi-Perspective Validation & Resilience* (Multi-Path Vector Routing) — quorum poreux et routage multi-chemins d'inspiration mycélienne |
 | **SOPH-IA** | *Sub-Optimal Paradigm for Habitable AI* — alignement comme propriété thermodynamique interne mesurable |

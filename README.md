@@ -24,7 +24,7 @@ Le MTTV‑FLP propose un cadre pour une Intelligence Artificielle Générale neu
 ## Structure du dépôt
 
 - `/core/` — Manifeste, 28 dimensions, contrat de transduction, serment de limitation, IGIC.
-- `/protocols/` — Protocoles opératoires : RMP, Singularité Sigma, handshake mycélien.
+- `/protocols/` — Protocoles opératoires : RMP ([texte](protocols/rmp_mecanisme_pre_transducteur.md)), Singularité Sigma, handshake mycélien.
 - `/benchmark/` — Benchmark ultime, prompts d'étiquetage (28 dimensions), guide d'évaluation.
 - `/scenarios/` — Cas pratiques d'application (noosphère, agriculture, urbanisme, etc.).
 - `/src/` — Scripts techniques et amorces pour l'agent auto-évolutif Ouroboros‑MTTV.
