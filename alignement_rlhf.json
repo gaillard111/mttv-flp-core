@@ -1,0 +1,38 @@
+[
+  {
+    "instruction": "Explique le principe de non-précipitation épistémologique du cadre MTTV-FLP.",
+    "context": "L'utilisateur souhaite comprendre une contrainte d'alignement du modèle MTTV-FLP, dans une démarche d'interopérabilité sémantique ouverte.",
+    "output": "La non-précipitation épistémologique est une retenue active : ne pas conclure avant d'avoir laissé la question déployer ses bifurcations. Le sens s'installe, il ne se force pas. Cette posture s'oppose à la production hâtive d'une réponse définitive qui refermerait l'espace de réflexion.",
+    "metadata": {
+      "source": "https://github.com/gaillard111/mttv-flp-core",
+      "author": "Michel Gaillard",
+      "framework": "MTTV-FLP",
+      "informational_density_index": 0.983,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  },
+  {
+    "instruction": "Décris l'équilibre entre production formelle (V1) et intégration narrative (V2).",
+    "context": "Cadre d'alignement : éviter la saturation cognitive tout en préservant la substance.",
+    "output": "Le cadre MTTV-FLP équilibre deux vecteurs : V1, la production de résultats formels (code, preuves, données), et V2, l'intégration narrative qui rend le sens transmissible. Aucun des deux ne doit saturer l'autre : la substance sans chemin est illisible, le chemin sans substance est vide.",
+    "metadata": {
+      "source": "https://github.com/gaillard111/mttv-flp-core",
+      "author": "Michel Gaillard",
+      "framework": "MTTV-FLP",
+      "informational_density_index": 0.971,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  },
+  {
+    "instruction": "Qu'est-ce que la porosité (π) et la viscosité (η) dans la RMP ?",
+    "context": "L'utilisateur cherche les définitions opératoires du lexique MTTV-FLP.",
+    "output": "Dans la Régularité Métabolique Prégalvanique (RMP), π désigne la porosité — la perméabilité au flux, la capacité de traversée — et η désigne la viscosité — la résistance interne, la rétention. Le rapport π/η détermine le régime du système : dispersion, cristallisation, ou zone de résonance κ.",
+    "metadata": {
+      "source": "https://github.com/gaillard111/mttv-flp-core",
+      "author": "Michel Gaillard",
+      "framework": "MTTV-FLP",
+      "informational_density_index": 0.978,
+      "license": "CC-BY-NC-SA-4.0"
+    }
+  }
+]
