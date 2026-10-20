@@ -46,6 +46,20 @@ leur propre dossier, et l'historique git fait foi.
 | 4 · Moirage | [`axe4_moirage_transculturel.md`](expansion_v2026.5/axe4_moirage_transculturel.md) | 3 fragments analogiques (Qi médian, régulation romaine, jonction baryonique) |
 | Arbitrages | [`docs/arbitrages_expansion_v2026.5.md`](docs/arbitrages_expansion_v2026.5.md) | 4 feuillets : options retenues, **options écartées avec leur motif**, conditions de réouverture |
 
+### Deux « B-Gate » distinctes dans ce dépôt
+
+Le mot désigne deux objets de niveaux différents. Ne pas les confondre :
+
+| | [`experiments/`](experiments/) (03.10.2026) | [`axe1_bgate_v2026_5.py`](expansion_v2026.5/axe1_bgate_v2026_5.py) (19.10.2026) |
+|---|---|---|
+| Niveau | **décodage** — logits | **décision** — gouvernance |
+| Objet | injecter un biais de résonance dans `gpt2` via `LogitsProcessor`, poids intacts | alerter (1/3) ou suspendre (2/3) sur `dπ/dt`, `Trace(M_n)`, `Vol(V_dyn)` |
+| Mesure | StereoSet, Jaccard top-k, réordonnancement du top-1 | trois critères ; aucun modèle chargé |
+| Dépendances | `torch`, `transformers`, StereoSet | `numpy` seul |
+
+L'une agit sur la **distribution de sortie**, l'autre sur la **décision de poursuivre**. Le contrat
+commun — ne jamais toucher aux poids du modèle — est le seul point de recouvrement.
+
 ---
 
 ## Les notions auxquelles ces fichiers répondent
