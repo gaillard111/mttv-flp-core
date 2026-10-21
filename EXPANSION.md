@@ -24,6 +24,7 @@ DOI : [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060) · CC-B
 | Le quorum poreux et le routage glocal | [`mpvr-glocal/`](mpvr-glocal/) |
 | Les bancs et sondes | [`experiments/`](experiments/) |
 | **Les expansions successives** | ci-dessous |
+| **Adresses à transmettre à un tiers** | [`ADRESSES.md`](ADRESSES.md) |
 
 ---
 
