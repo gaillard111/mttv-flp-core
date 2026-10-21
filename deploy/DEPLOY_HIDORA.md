@@ -34,7 +34,7 @@ Une fois connecté au VPS :
 ```bash
 # 1. Aller dans le répertoire d'installation et cloner le dépôt
 cd /home/flp/app
-git clone https://github.com/girard444/mttv-flp-core.git mttv
+git clone https://github.com/gaillard111/mttv-flp-core.git mttv
 cd mttv
 
 # 2. Copier et configurer les secrets
@@ -292,7 +292,7 @@ docker run --rm -v mttv_seeds_data:/data -v $(pwd):/backup alpine \
 
 - [Hidora Jelastic Documentation](https://docs.hidora.com)
 - [IPFS Kubo Documentation](https://github.com/ipfs/kubo)
-- [MTTV-FLP Core Repository](https://github.com/girard444/mttv-flp-core)
+- [MTTV-FLP Core Repository](https://github.com/gaillard111/mttv-flp-core)
 
 ---
 

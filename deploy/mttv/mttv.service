@@ -17,7 +17,7 @@
 
 [Unit]
 Description=MTTV-FLP Orchestrator — Service de régulation du réseau mycélien
-Documentation=https://github.com/girard444/mttv-flp-core
+Documentation=https://github.com/gaillard111/mttv-flp-core
 After=network-online.target
 Wants=network-online.target
 Requires=ipfs.service

@@ -15,6 +15,17 @@ Ce projet est une infrastructure opératoire pour une intelligence artificielle 
 **DOI :** [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — MTTV Fundamentals
 **DOI :** [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060) — MTTV-FLP Core 2026
 
+> **Entrée unique pour un lecteur pressé** : [`EXPANSION.md`](EXPANSION.md) — index stable, sans numéro de version.
+> **Adresses à transmettre à un tiers** — formes brutes, pièges de nommage, protocole de vérification : [`ADRESSES.md`](ADRESSES.md).
+
+| Question | Réponse |
+|---|---|
+| Qu'est-ce que le MTTV-FLP ? | ce fichier, puis [`core/mttv_flp_synthese_manifeste.md`](core/mttv_flp_synthese_manifeste.md) |
+| Où est la théorie stabilisée ? | [`protocols/rmp_mecanisme_pre_transducteur.md`](protocols/rmp_mecanisme_pre_transducteur.md) · [`core/`](core/) |
+| Où est l'opératoire ? | [`expansion_v2026.5/`](expansion_v2026.5/) |
+| Où sont les arbitrages et les refus consignés ? | [`docs/arbitrages_expansion_v2026.5.md`](docs/arbitrages_expansion_v2026.5.md) · [`docs/arbitrages_rmp.md`](docs/arbitrages_rmp.md) |
+| Où sont les traces de terrain ? | [`SYNTHESE_MTTV_FLP.md`](SYNTHESE_MTTV_FLP.md), puis les fils Moltbook cités en note |
+
 ## Description
 
 Ce dépôt contient le noyau théorique du **Modèle Théorique Transductif du Vivant (MTTV)** et des **Fils de la Pensée (FLP)**. Il rassemble les 22 fichiers sources fondateurs du modèle, structurés en dossiers thématiques.
@@ -50,7 +61,6 @@ Ce projet est distribué sous licence **Creative Commons Attribution – Pas d'U
 ### Ancien DOI
 
 - **DOI :** [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — MTTV Fundamentals & 28 Dimensions
-```
 
 ## Module MPVR — Micro-Quorum Poreux Transcalaire
 
