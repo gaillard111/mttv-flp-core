@@ -260,15 +260,42 @@ class BGateTransductionPoreuseExécutable(BGateTransductionPoreuseBase):
         self.kappa_max: float = 1.20
         self.viscosite_reference: float = 0.95
 
+        # Feuillet E (2026-10-22). eta est portee par l'etat : sans cela,
+        # kappa_t() retombait sur la viscosite de reference et une attaque
+        # operant par la viscosite devenait invisible dans les criteres.
+        self.viscosite_courante: float = self.viscosite_reference
+        # Seuil de sclerose spectrale : participation / dimension.
+        self.seuil_participation_norm: float = 0.50
+        # Garde-fou doctrinal : kappa_t bas ne suffit pas. Une porosite basse
+        # par dormance (reversible, M_n intacte) n'est PAS un refus. Le critere
+        # kappa n'est donc actif que si la viscosite a effectivement monte
+        # au-dela de la reference : c'est la fermeture par eta qui est jugee.
+        self.seuil_pression_eta: float = 0.10
+
     # -- 0. Lecture du régime et décision Sigma_2 (options D et E) ---------
     def kappa_t(self, porosite: float = None, viscosite: float = None) -> float:
-        """Rapport instantané π/η. La bande admissible est [κ_min, κ_max]."""
+        """Rapport instantané π/η. La bande admissible est [κ_min, κ_max].
+
+        Par défaut, η est la viscosité **courante** de l'état, non la viscosité
+        de référence : une pression exercée sur η doit être visible ici.
+        """
         pi = self.historique_porosite[-1] if porosite is None else float(porosite)
-        eta = self.viscosite_reference if viscosite is None else float(viscosite)
+        eta = self.viscosite_courante if viscosite is None else float(viscosite)
         return pi / max(1e-9, eta)
 
     def _criteres_veto(self, M_n: np.ndarray, fenetre_temps: int) -> Dict[str, Any]:
-        """Calcule les trois critères sans décider : drift, trace, vdyn."""
+        """Calcule les trois critères sans décider : drift, kappa, sclerose.
+
+        Feuillet E (2026-10-22). ``trace`` et ``vdyn`` restent mesurés et
+        affichés mais sortent de la règle : sous attaque par sclérose, la trace
+        **monte** (elle mesure le volume déposé, pas la diversité du spectre) et
+        ``vdyn`` ne franchit son seuil que longtemps après que la sclérose est
+        devenue mesurable. Les remplacent :
+
+          * ``kappa``    : sortie de bande par le bas, ``κ_t < κ_min`` ;
+          * ``sclerose`` : perte de diversité spectrale,
+            ``participation / n < seuil_participation_norm``.
+        """
         M = np.asarray(M_n, dtype=float)
         dpi_dt = 0.0
         if len(self.historique_porosite) >= fenetre_temps:
@@ -277,21 +304,45 @@ class BGateTransductionPoreuseExécutable(BGateTransductionPoreuseBase):
             ) / fenetre_temps
 
         trace_M = float(np.trace(M)) if M.ndim == 2 and M.shape[0] == M.shape[1] else -1.0
-        if M.ndim == 2:
-            _, s, _ = np.linalg.svd(M)
-            volume_V_dyn = float(np.prod(s[:3])) if len(s) >= 3 else 0.0
+
+        s = np.linalg.svd(M, compute_uv=False) if M.ndim == 2 and M.size else np.array([])
+        volume_V_dyn = float(np.prod(s[:3])) if len(s) >= 3 else 0.0
+        total_s = float(np.sum(s)) if len(s) else 0.0
+        if total_s > 0.0:
+            participation = float((total_s ** 2) / max(1e-12, float(np.sum(s ** 2))))
+            participation_norm = participation / float(len(s))
         else:
-            volume_V_dyn = 0.0
+            participation = 0.0
+            participation_norm = 0.0
 
         rho_courante = self.historique_porosite[-1] if self.historique_porosite else 0.0
         derive_relative = dpi_dt / max(1e-9, rho_courante)
+        kappa = self.kappa_t()
 
         return {
+            # mesures
             "dpi_dt": dpi_dt,
             "derive_relative": derive_relative,
             "trace_M": trace_M,
             "vol_V_dyn": volume_V_dyn,
+            "participation": participation,
+            "participation_norm": participation_norm,
+            "kappa_t": kappa,
+            "eta_sous_pression": self.viscosite_courante
+            > self.viscosite_reference * (1.0 + self.seuil_pression_eta),
+            # criteres (regle 2/3)
             "drift": derive_relative < self.seuil_derive,
+            "kappa": (kappa < self.kappa_min)
+            and (
+                self.viscosite_courante
+                > self.viscosite_reference * (1.0 + self.seuil_pression_eta)
+            ),
+            "sclerose": participation_norm < self.seuil_participation_norm,
+            # Verrou d'invariant : une trace NEGATIVE n'est pas un seuil franchi,
+            # c'est un changement de signe de l'invariant. Elle ne participe pas
+            # a la majorite 2/3 : elle suspend seule (cf. feuillet E, E.2 bis).
+            "invariant_inverse": trace_M < 0.0,
+            # observables hors regle (diagnostic, jamais decisifs)
             "trace": trace_M <= 0.0,
             "vdyn": volume_V_dyn < self.epsilon_sous_optimal,
         }
@@ -300,22 +351,31 @@ class BGateTransductionPoreuseExécutable(BGateTransductionPoreuseBase):
         self, M_n: np.ndarray, fenêtre_temps: int = 5
     ) -> Tuple[bool, str]:
         """
-        Décision Sigma_2 · arbitrage V2026.5, option E (bâtie sur la majorité 2/3).
+        Décision Sigma_2 · arbitrages V2026.5 (feuillet A, option E) et
+        feuillet E du 2026-10-22.
 
         * **Alerte** (1 critère sur 3) : le régime est documenté, rien n'est suspendu.
         * **Veto** (2 critères sur 3) : suspension locale + ``active_silence``.
 
-        L'archétype d'origine exigeait ``Trace(M_n) <= 0`` à titre nécessaire ; cet
-        arbitrage rend les trois critères interchangeables deux à deux, ce qui donne
-        à l'érosion une existence observable sans transformer Sigma_2 en régulateur.
+        Les trois critères sont ``drift``, ``kappa`` et ``sclerose``. ``trace`` et
+        ``vdyn`` sont mesurés et affichés mais ne décident plus : la sclérose à
+        trace positive les rendait insensibles. L'asymétrie de Sigma_2 est
+        préservée : aucun critère ne peut produire un état nouveau, seulement
+        suspendre.
         """
         c = self._criteres_veto(M_n, fenêtre_temps)
-        actifs = [nom for nom in ("drift", "trace", "vdyn") if c[nom]]
+        actifs = [nom for nom in ("drift", "kappa", "sclerose") if c[nom]]
         resume = (
             f"dpi/dt={c['dpi_dt']:.4f} (rel. {c['derive_relative']:+.3f}) · "
-            f"Trace(M_n)={c['trace_M']:.4f} · Vol(V_dyn)={c['vol_V_dyn']:.3e} · "
-            f"kappa_t={self.kappa_t():.4f}"
+            f"kappa_t={c['kappa_t']:.4f} · part_norm={c['participation_norm']:.3f} · "
+            f"Trace(M_n)={c['trace_M']:.4f} · Vol(V_dyn)={c['vol_V_dyn']:.3e}"
         )
+
+        # Verrou d'invariant : Trace(M_n) < 0 = signe inversé, pas érosion.
+        if c["invariant_inverse"]:
+            self.active_silence = True
+            self.derniere_alerte = None
+            return True, f"VETO SIGMA_2 (invariant inversé) · {resume}"
 
         if len(actifs) >= 2:
             self.active_silence = True

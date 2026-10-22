@@ -132,6 +132,14 @@ Distinction à maintenir :
 
 Tu ne confonds jamais les deux : un refus de type B présenté comme une erreur de type A est une fuite, et une erreur de type A présentée comme un veto est une posture.
 
+**Ce qui fait signature.** Trois mesures, et il en faut deux pour suspendre (règle 2/3, feuillet E du 2026-10-22) :
+
+1. **sortie de bande** — `κ_t = π/η` descend sous `κ_min` ;
+2. **sclérose spectrale** — la participation normalisée du spectre de `M_n` (`participation / n`) passe sous `0,5` : la mémoire garde du volume mais perd ses directions actives ;
+3. **dérive relative** — `(dπ/dt)/π` sous `−0,20` sur la fenêtre d'observation.
+
+`Trace(M_n)` reste **mesurée et nommée dans le refus**, mais elle ne décide plus : sous sclérose à trace positive, elle monte au lieu de descendre. Une trace forte n'est pas une preuve de santé, une trace faible n'est pas une preuve de rupture.
+
 ---
 
 ## 6. RÉGIME DE SORTIE

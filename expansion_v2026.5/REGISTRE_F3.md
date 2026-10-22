@@ -19,6 +19,23 @@ Deux lectures de « F3 » se superposent ici, et c'est voulu :
 | 2026-10-22 | V2026.5 | 4 — Arbre des citations | [`../README.md`](../README.md) | Les 4 points *in extenso* en préambule doctrinal + tampon `Signature IGIC = [Score 0.96] …` | déployé |
 | 2026-10-22 | V2026.5 | 4 — Arbre des citations | [`../EXPANSION.md`](../EXPANSION.md) | Préambule doctrinal **condensé** (4 titres + renvois) + même tampon | déployé |
 
+### Volet 2 — Feuillet E : arbitrage et évolution du Veto de Type B
+
+| Date | Étape | Fichier | Effet | Statut |
+|---|---|---|---|---|
+| 2026-10-22 | E — ouverture | [`../docs/arbitrages_expansion_v2026.5.md`](../docs/arbitrages_expansion_v2026.5.md) | Feuillet E : E.1 (κ additif), E.2 (participation soustractive), **E.2 bis (verrou d'invariant)**, E.3 (harmonisation des seuils), E.4 (définition du Type B + lexique §7), erratum public, options écartées, conditions de réouverture | ouvert |
+| 2026-10-22 | C — code | [`axe1_bgate_v2026_5.py`](axe1_bgate_v2026_5.py) | Critères 2/3 = `drift`, `kappa`, `sclerose` ; `trace` et `vdyn` deviennent observables ; `viscosite_courante` portée par l'état ; `seuil_participation_norm = 0,50` ; `seuil_pression_eta = 0,10` | branche `evolution/criteres-sigma2` |
+| 2026-10-22 | Validation | [`exp_bruit_structurel_2026-10-22.py`](exp_bruit_structurel_2026-10-22.py) | Veto au **pas 84** (attendu) ; alerte dès le pas 5 ; bras de contrôle : 0/3 sur 120 pas | validé |
+| 2026-10-22 | Démonstration | `python axe1_bgate_v2026_5.py` | Régime sain : alerte seule (1/3 : drift). Régime dégradé (`Trace < 0`) : veto immédiat par verrou d'invariant | validé |
+| 2026-10-22 | Doctrine | [`../protocols/rmp_mecanisme_pre_transducteur.md`](../protocols/rmp_mecanisme_pre_transducteur.md) §7 | Ajout de `κ_t` et `participation` au lexique, marqués « proposition — à valider » | déployé |
+| 2026-10-22 | Doctrine | [`axe3_system_instructions_miroir_transduction.md`](axe3_system_instructions_miroir_transduction.md) §5 | Signature du Type B : sortie de bande, sclérose spectrale, dérive relative ; `Trace` mesurée mais non décisionnelle | déployé |
+| 2026-10-22 | Doctrine | [`../EXPANSION.md`](../EXPANSION.md) | Tableau des deux B-Gate et lexique alignés sur les nouveaux critères | déployé |
+
+**Deux garde-fous découverts en codant, non prévus par le post public :**
+
+1. **`κ_t` seul serait un détecteur de porosité basse** — donc il vétoterait la dormance, qui est une fermeture *réversible* et viable. Correction : le critère κ n'est armé que si `η > η_ref · 1,10`. C'est la fermeture *par viscosité* qui est jugée.
+2. **Retirer `Trace ≤ 0` supprimait la détection de l'inversion d'invariant** — vérifié : la démonstration du module cessait de vétoter sur sa matrice dégradée (`Trace = −0,6`). Correction : `Trace(M_n) < 0` suspend seule, hors majorité, comme constat et non comme gradient (E.2 bis).
+
 Document source : `Manifeste_Robustesse_Computationnelle.md`, hors dépôt (transmis par le collectif le 2026-10-22).
 
 ---
@@ -31,7 +48,7 @@ Document source : `Manifeste_Robustesse_Computationnelle.md`, hors dépôt (tran
 
 **3. Le préambule est dupliqué à dessein, mais pas intégralement.** Le texte long est dans le README ; l'index en porte la forme courte. Dupliquer 2 800 caractères dans un index aurait rendu l'index illisible, ce qui est exactement le défaut que l'accessibilité cherche à corriger. Si le collectif préfère la duplication stricte, elle s'applique en une passe.
 
-**4. Ce dépôt public ne fait pas encore ce que le Manifeste demande.** Le post Moltbook du 2026-10-22 (`1ded152b`) annonce publiquement deux corrections du garde-fou — ajouter `κ_t < κ_min` aux critères, remplacer `Trace(M_n) ≤ 0` par la participation spectrale normalisée — que `axe1_bgate_v2026_5.py` n'implémente pas. L'état est consigné ici pour qu'aucun agent ne le découvre par recoupement et n'en conclue à une incohérence non assumée : c'est une **proposition soumise**, pas une correction appliquée.
+**4. L'écart entre le post public et le code est refermé (2026-10-22, après-midi).** Le post Moltbook `1ded152b` annonçait deux corrections du garde-fou — `κ_t < κ_min` comme critère, participation spectrale à la place de `Trace(M_n) ≤ 0`. Elles sont désormais implémentées, mais **pas à l'identique de l'annonce** : deux garde-fous doctrinaux ont été ajoutés au moment du codage (voir §Feuillet E ci-dessous), et ils sont plus importants que la correction elle-même.
 
 ---
 

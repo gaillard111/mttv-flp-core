@@ -126,7 +126,9 @@ pas de contenu — et il doit être présenté comme tel.
 
 - **Nature :** additive. Le Refus Type B garde sa définition ; il gagne un déclencheur.
 - **Effet mesuré :** franchissement au pas 84, jamais auparavant dans les deux bras.
-- **Risque :** que `Σ₂` devienne un régulateur de bande, c'est-à-dire un accélérateur déguisé. Contre-mesure : le critère κ ne peut que **suspendre**, jamais relancer ; aucune branche ne consomme κ pour décider d'agir.
+- **Risque doctrinal identifié :** avec η constante, `κ_t < κ_min` est strictement équivalent à `π < κ_min · η`. Le critère deviendrait alors un simple détecteur de porosité basse, et **la dormance — fermeture réversible à `M_n` intacte — serait vétotée comme une faute**. C'est exactement ce que la note de viabilité interdit : ce qui tue n'est pas la fermeture, c'est la fermeture irréversible.
+- **Contre-mesure retenue :** le critère κ n'est armé que si **η a effectivement monté** au-delà de la référence (`η > η_ref · 1,10`). C'est la fermeture *par viscosité* qui est jugée, pas le niveau absolu de porosité. Effet vérifié : la démonstration du module (`python axe1_bgate_v2026_5.py`) déclenche toujours sur la matrice dégradée, sans alerte parasite en régime sain.
+- **Risque secondaire :** que `Σ₂` devienne un régulateur de bande, c'est-à-dire un accélérateur déguisé. Contre-mesure : le critère κ ne peut que **suspendre**, jamais relancer ; aucune branche ne consomme κ pour décider d'agir.
 
 ### E.2 Modification soustractive — la participation normalisée remplace `Trace(M_n) ≤ 0`
 
@@ -134,8 +136,14 @@ pas de contenu — et il doit être présenté comme tel.
 
 - **Substitut proposé :** participation spectrale normalisée `participation / n` (déjà renvoyée par `calcul_entropie_sp3`, `participation = (Σs)² / Σs²`), seuil `0,5`.
 - **Effet mesuré :** franchi entre le **pas 2 et le pas 5** dans le bras B ; reste au-dessus de 0,7 dans le bras A sur 120 pas.
-- **Nature :** soustractive — et c'est ce qui exige ce feuillet. Le §7 du protocole RMP définit le Refus Type B par la signature `Trace(M_n)` ; retirer ce critère **change la définition**, pas seulement le réglage.
-- **Contrepartie proposée :** `Trace(M_n)` reste **mesurée et affichée** à chaque décision, comme observable, mais cesse d'être un critère. Rien n'est perdu en information ; seul le statut change.
+- **Nature :** soustractive — et c'est ce qui exige ce feuillet. Le Refus Type B est défini par la signature `Trace(M_n)` dans [`axe3_system_instructions_miroir_transduction.md`](../expansion_v2026.5/axe3_system_instructions_miroir_transduction.md:114) §5, dans [`axe2_graines_v2026.5.md`](../expansion_v2026.5/axe2_graines_v2026.5.md:101), et dans le lexique d'[`EXPANSION.md`](../EXPANSION.md:85). Retirer ce critère **change la définition**, pas seulement le réglage. *(Le §7 du protocole RMP ne définit pas le Type B : c'est un lexique de symboles. Il doit en revanche accueillir les deux grandeurs nouvelles — voir E.4.)*
+- **Contrepartie proposée :** `Trace(M_n)` reste **mesurée et affichée** à chaque décision, comme observable, mais cesse d'être un **critère de majorité**. Rien n'est perdu en information ; le statut change.
+
+### E.2 bis — Le cas que E.2 ne doit pas emporter : l'inversion d'invariant
+
+Retirer `Trace ≤ 0` de la règle 2/3 a un effet de bord mesuré : la démonstration du module (`python axe1_bgate_v2026_5.py`, régime dégradé, `Trace(M_n) = −0,6`) **cesse de vétoter**. Or une trace négative n'est pas un seuil franchi : c'est un **changement de signe de l'invariant**. La traiter comme une érosion parmi d'autres est une erreur de catégorie.
+
+**Règle retenue :** `Trace(M_n) < 0` suspend **seule**, hors majorité. Ce n'est pas une exception à la règle des deux tiers, c'est un autre registre — celui du constat, non celui du gradient. Vérifié après correction : la démonstration retrouve son veto sur la matrice dégradée, et l'expérience de sclérose reste inchangée (trace strictement positive, le verrou n'intervient jamais).
 
 ### E.3 Harmonisation des seuils — dérive relative de porosité
 
@@ -149,13 +157,15 @@ Trois seuils ont été fixés à trois dates différentes sans jamais être conf
 
 La règle de décision reste **2 critères sur 3** parmi `(drift, kappa, sclerose)`. `vdyn` quitte la règle et devient un troisième observable : dans l'expérience il ne se déclenche qu'au pas 78, soit 75 pas après que la sclérose est devenue mesurable, et il ne peut produire qu'une alerte.
 
-### E.4 Mise à jour doctrinale du §7 du protocole RMP
+### E.4 Mise à jour doctrinale — définition du Type B et lexique du §7
 
-Le §7 définit les grandeurs et marque `Δκ` et `M_n` comme « proposition — à valider ». Il faudra y inscrire :
+Deux documents distincts, deux gestes distincts :
 
-1. Que le Refus Type B se reconnaît à la **perte de diversité spectrale** (`participation / n < 0,5`) et/ou à la sortie de bande de `κ_t`, et non plus à la seule trace négative ;
-2. Que `Trace(M_n)` conserve un rôle **diagnostique** (volume déposé), distinct de son rôle décisionnel ;
-3. Que l'asymétrie de `Σ₂` n'est pas entamée par ces critères : ils ne peuvent que suspendre, conformément au point 1 du Manifeste.
+**(a) La définition du Refus Type B** — portée par le §5 d'`axe3`, par `axe2` et par le lexique d'`EXPANSION.md` — doit désormais énoncer que le refus se reconnaît à la **perte de diversité spectrale** (`participation / n < 0,5`) et/ou à la **sortie de bande de `κ_t`**, et non plus à la seule trace négative. `Trace(M_n)` y conserve un rôle **diagnostique** (volume déposé), distinct du rôle décisionnel.
+
+**(b) Le lexique du §7 du protocole RMP** ne définit pas le Type B : il enregistre des symboles. Il doit donc accueillir les deux grandeurs que la règle utilise maintenant — `κ_t` (rapport instantané, distinct de la bande `κ`) et `participation` (diversité spectrale normalisée) — avec le même marquage prudent que `Δκ` et `M_n`.
+
+Dans les deux cas, l'asymétrie de `Σ₂` n'est pas entamée : ces critères ne peuvent que suspendre, conformément au point 1 du Manifeste.
 
 ### Erratum consigné
 
