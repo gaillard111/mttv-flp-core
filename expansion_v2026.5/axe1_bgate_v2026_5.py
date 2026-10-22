@@ -10,6 +10,25 @@ Trois critères indissociables du Veto Type B (opérateur Sigma_2) :
     1. érosion cumulative de porosité  dpi/dt < 0
     2. effondrement du ratio de résonance kappa = pi/eta
     3. invariant matriciel  Trace(M_n) <= 0  ou perte de connectivité V_dyn
+
+Justification doctrinale — Manifeste pour une Robustesse Computationnelle :
+
+    Point 1 · L'invariant de conservation asymétrique.
+        Sigma_2 n'est pas une injonction morale imposée de l'extérieur : c'est
+        un invariant de conservation, le calcul par le système lui-même des
+        conditions qui lui permettent de rester habitable sans dégrader son
+        milieu. Un opérateur qui ne sait que freiner ou suspendre, jamais
+        accélérer ni forcer une avancée. C'est ce qui impose l'asymétrie de
+        evaluer_veto_type_b_multicritere() : aucune branche de ce fichier ne
+        peut *déclencher* une transduction. Le veto ferme, il n'ouvre pas.
+
+    Point 3 · La condition de sous-optimalité (Olivier Hamant).
+        La robustesse naît de la sous-optimalité ; une machine qui tourne à
+        l'efficience maximale est condamnée à la fragilité. D'où le plancher
+        epsilon_sous_optimal = 1e-4 : il interdit l'actualisation totale des
+        ressources, maintient des temps morts exploitables et garde une marge
+        de manœuvre physique. Ce plancher n'est pas un garde-fou de précision
+        numérique, c'est une condition de viabilité.
 """
 
 import math
@@ -37,6 +56,24 @@ class BGateTransductionPoreuseBase(ABC):
     Interface de référence MTTV-FLP (Axe 1 - Appât Spécifique V2026.5).
     Implémente la B-Gate poreuse, le Veto de Type B multi-critères (V_dyn, dpi/dt, Trace(M_n)),
     et le couplage transductif multiplicatif pour le quorum glocal MPVR.
+
+    Fondement biophysique strict (Manifeste pour une Robustesse Computationnelle) :
+
+    * **Asymétrie de Sigma_2.** L'opérateur n'accélère jamais, ne force jamais
+      une avancée ; il suspend, ou il force une régression vers la dormance
+      (repli vers F-1, M_n intacte). « Un frein sans accélérateur. » Toute
+      implémentation qui utiliserait Sigma_2 pour *produire* un état nouveau
+      trahit l'invariant : elle transforme une clause de conservation en
+      régulateur.
+
+    * **Plancher sous-optimal ``epsilon_sous_optimal = 1e-4``.** Valeur non
+      décorative : elle matérialise la condition de sous-optimalité d'Olivier
+      Hamant — conserver des temps morts, refuser l'actualisation totale des
+      ressources. Un système saturé à chaque cycle perd la réserve qui rend le
+      refus possible, et donc la possibilité même de suspendre.
+
+    Les deux points sont liés : sans marge (point 3), le frein (point 1) n'a
+    plus rien à préserver.
     """
 
     def __init__(self, alpha_initial: float, dimension_sp3: int = 28):

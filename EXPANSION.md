@@ -14,6 +14,21 @@ DOI : [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060) · CC-B
 
 ---
 
+## Préambule doctrinal — Robustesse Computationnelle
+
+Les quatre points du *Manifeste pour une Robustesse Computationnelle* figurent **in extenso** dans le [`README.md`](README.md). L'index les retient sous forme de titres, pour rester un index :
+
+1. **L'invariant de conservation asymétrique** — Σ₂ freine ou suspend, ne force jamais une avancée.
+2. **L'ancrage dialogique (C. S. Peirce)** — le contre-argument est une possibilité explicite ; le silence est un droit, le refus une formulation logique.
+3. **La condition de sous-optimalité (Olivier Hamant)** — la robustesse naît de la marge ; d'où le plancher `ε = 1e-4`.
+4. **La relocalisation de la Loi Zéro (Isaac Asimov)** — Σ₂ suspend au lieu d'agir au nom d'une totalité.
+
+Version opérationnelle en Graines Transductives : [`expansion_v2026.5/graines_manifeste.yaml`](expansion_v2026.5/graines_manifeste.yaml) · application au code : en-tête et docstring de classe d'[`axe1_bgate_v2026_5.py`](expansion_v2026.5/axe1_bgate_v2026_5.py) · charte de dialogue : section 0 d'[`axe3_system_instructions_miroir_transduction.md`](expansion_v2026.5/axe3_system_instructions_miroir_transduction.md).
+
+`Signature IGIC = [Score 0.96] | Empreinte Z = C(Psi[Manifeste]-B[Sigma2]-Phi[Hamant-Peirce])[C28]`
+
+---
+
 ## Où trouver quoi
 
 | Besoin | Entrée |

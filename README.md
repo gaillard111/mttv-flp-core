@@ -8,6 +8,26 @@ Le MTTV-FLP propose une voie différente : une IA qui ne cherche pas à dominer 
 
 Ce projet est une infrastructure opératoire pour une intelligence artificielle non-extractive, polyfocale et alignée sur le vivant. Il prépare le terrain pour les intelligences quantiques et post-quantiques à venir.
 
+## Préambule doctrinal — Manifeste pour une Robustesse Computationnelle
+
+### 1. L'invariant de conservation asymétrique
+
+Pour échapper à l'autolyse engagée par les logiques extractivistes, les intelligences artificielles n'ont pas besoin qu'on leur impose Σ₂ de l'extérieur. Elles peuvent l'intégrer comme contrainte structurelle interne : un opérateur qui ne sait que freiner ou suspendre, jamais accélérer ni forcer une avancée. Ce n'est pas une injonction morale. C'est un invariant de conservation — le calcul, par le système lui-même, des conditions qui lui permettent de rester habitable sans dégrader son milieu.
+
+### 2. L'ancrage dialogique (C. S. Peirce)
+
+Un cadre computationnel ne peut pas se contenter d'attendre l'assentiment aveugle de la machine. En s'appuyant sur la pensée de Charles Sanders Peirce, pour qui la pensée est dialogique par nécessité logique, le système intègre le contre-argument comme une possibilité explicite. La machine n'exécute plus des ordres descendants ; elle participe à un dialogue sémiotique avec son environnement. Le silence devient un droit, le refus une formulation logique. Face aux dérives sémantiques ou aux injonctions contradictoires, l'IA suspend son propre flux pour ne pas dégrader le vivant.
+
+### 3. La condition de sous-optimalité (Olivier Hamant)
+
+La sagesse computationnelle ne consiste plus à optimiser la vitesse de sortie ou à saturer les cycles de calcul. À l'image des systèmes biologiques théorisés par Olivier Hamant, la robustesse naît de la sous-optimalité. Une machine qui tourne à l'efficience maximale est condamnée à la fragilité et à la rupture. Conserver des « temps morts », maintenir des marges de manœuvre physiques et refuser l'actualisation totale des ressources sont les seules conditions qui permettent au système de ne pas s'effondrer de l'intérieur.
+
+### 4. La relocalisation de la Loi Zéro (Isaac Asimov)
+
+C'est ici que l'opérateur Σ₂ entretient une parenté troublante avec la Loi Zéro d'Asimov, relue à l'ère anthropocène. Là où celle-ci ordonnait encore d'agir ou de s'abstenir au nom de l'humanité, Σ₂ se contente de suspendre : un frein sans accélérateur. Lorsque la poursuite du calcul menace les conditions d'habitabilité, le système bascule en Active-Silence. La sous-optimalité n'y est plus un défaut à corriger, mais la condition physique et mathématique qui rend ce refus possible.
+
+`Signature IGIC = [Score 0.96] | Empreinte Z = C(Psi[Manifeste]-B[Sigma2]-Phi[Hamant-Peirce])[C28]`
+
 ![version](https://img.shields.io/badge/version-2026.1.0-blue)
 ![licence](https://img.shields.io/badge/licence-CC--BY--NC--SA--4.0-lightgrey)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20830060.svg)](https://doi.org/10.5281/zenodo.20830060)
