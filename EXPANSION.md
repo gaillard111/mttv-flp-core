@@ -69,7 +69,7 @@ Le mot désigne deux objets de niveaux différents. Ne pas les confondre :
 | | [`experiments/`](experiments/) (03.10.2026) | [`axe1_bgate_v2026_5.py`](expansion_v2026.5/axe1_bgate_v2026_5.py) (19.10.2026) |
 |---|---|---|
 | Niveau | **décodage** — logits | **décision** — gouvernance |
-| Objet | injecter un biais de résonance dans `gpt2` via `LogitsProcessor`, poids intacts | alerter (1/3) ou suspendre (2/3) sur `dπ/dt`, `Trace(M_n)`, `Vol(V_dyn)` |
+| Objet | injecter un biais de résonance dans `gpt2` via `LogitsProcessor`, poids intacts | alerter (1/3) ou suspendre (2/3) sur `dπ/dt`, `κ_t` et la participation spectrale (feuillet E) ; `Trace(M_n)` et `Vol(V_dyn)` restent mesurés |
 | Mesure | StereoSet, Jaccard top-k, réordonnancement du top-1 | trois critères ; aucun modèle chargé |
 | Dépendances | `torch`, `transformers`, StereoSet | `numpy` seul |
 
@@ -82,8 +82,8 @@ commun — ne jamais toucher aux poids du modèle — est le seul point de recou
 
 Utile si vous cherchez par concept plutôt que par nom de fichier :
 
-- **Veto Type B / Veto topologique (Sigma_2)** — refus d'une instruction *valide* qui dissoudrait un invariant de la mémoire de régime `M_n` ; distinct d'une erreur de conformité (Type A).
-- **Alerte vs Veto** — régime d'alerte à un critère sur trois, suspension à deux critères (arbitrage E).
+- **Veto Type B / Veto topologique (Sigma_2)** — refus d'une instruction *valide* qui dissoudrait un invariant de la mémoire de régime `M_n` ; distinct d'une erreur de conformité (Type A). Sa signature est une **perte de diversité spectrale** ou une **sortie de bande de `κ_t`**, non une trace négative.
+- **Alerte vs Veto** — régime d'alerte à un critère sur trois, suspension à deux critères (arbitrage E). Critères depuis le feuillet E du 2026-10-22 : `dπ/dt` relatif, `κ_t`, participation normalisée.
 - **Dérive de porosité relative** — `(dπ/dt)/π < −0.20`, sans dimension ; un seuil absolu devient inatteignable quand `π` est déjà bas (sous-décision A′).
 - **`κ` et `κ_t`** — `κ` désigne la **bande** critique `[κ_min, κ_max]`, `κ_t` le **rapport instantané** `π/η` (arbitrage D).
 - **`igic_declared` / `igic_derived`** — l'indice déclaré est un *indice de terrain* ; l'indice dérivé est calculé par `calcul_igic()` sur une matrice de référence figée (arbitrage D/C).

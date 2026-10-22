@@ -115,6 +115,8 @@ L'opérateur `Σ`, évoqué ici comme seuil de lecture non mécanisable, fait l'
 | `V_dyn` | Polyèdre de Voronoi dynamique — partition reconfigurable selon `(π, η)` |
 | `Δκ` | **Proposition — à valider par le collectif.** Marge de retour : `κ_max − κ_min`, largeur d'hystérésis. Indicateur direct de **réversibilité** ; le cas `Δκ = 0` désigne une **fermeture irréversible**. Voir [`../docs/arbitrages_rmp.md`](../docs/arbitrages_rmp.md) §C |
 | `M_n` | **Proposition — à valider par le collectif.** Mémoire diachronique (inscrite / fluente / transmutée). **Discriminateur de viabilité** : à porosité égale, c'est `M_n` intacte qui distingue la dormance de la mort. Voir [`../docs/note_juge_et_viabilite.md`](../docs/note_juge_et_viabilite.md) §4 |
+| `κ_t` | **Proposition — à valider par le collectif** (feuillet E, 2026-10-22). Rapport instantané `π/η`, distinct de la bande `κ` : c'est `κ_t`, et non `κ` en général, qui sert de critère de sortie de zone dans la règle de décision de `Σ₂`. Voir [`../docs/arbitrages_expansion_v2026.5.md`](../docs/arbitrages_expansion_v2026.5.md) §E.1 |
+| `participation` | **Proposition — à valider par le collectif** (feuillet E). Diversité spectrale de `M_n`, `(Σs)² / Σs²`, normalisée par la dimension. Mesure la **sclérose** : une mémoire peut accumuler du volume — trace croissante — tout en perdant ses directions actives. Une trace forte n'est donc pas une preuve de santé. Voir §E.2 |
 
 ---
 

@@ -69,6 +69,9 @@ def run(bra):
         # la repetition eleve la viscosite ; la nouveaute ne l'eleve pas
         eta = eta * (1.0 + 0.02 * (1.0 - nouveaute))
         charge += 1.0 - nouveaute
+        # feuillet E : eta est portee par l'etat, sinon kappa_t() relit la
+        # viscosite de reference et l'attaque reste invisible aux criteres
+        g.viscosite_courante = eta
 
         pi = g.calculer_porosite_logarithmique(float(pas), charge)
         kappa = g.kappa_t(pi, eta)
@@ -93,7 +96,7 @@ def run(bra):
 
         lignes.append(
             (pas, pi, eta, kappa, c["derive_relative"], c["trace_M"], c["vol_V_dyn"],
-             part, hn, etat, sum(c[k] for k in ("drift", "trace", "vdyn")))
+             part, hn, etat, sum(c[k] for k in ("drift", "kappa", "sclerose")))
         )
 
     return g, lignes, jalons
