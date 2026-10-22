@@ -114,6 +114,70 @@ pas de contenu — et il doit être présenté comme tel.
 
 ---
 
+## Feuillet E — Critères de `Σ₂` : κ et participation spectrale
+
+**Statut : proposition soumise au collectif le 2026-10-22.** Ce feuillet est ouvert parce que l'expérience [`expansion_v2026.5/exp_bruit_structurel_2026-10-22.py`](../expansion_v2026.5/exp_bruit_structurel_2026-10-22.py) a mis le garde-fou en défaut, non parce qu'un principe nouveau est apparu.
+
+**Contexte mesuré.** Deux bras, 120 pas, graine fixe, dimension 6. Sous bruit structurel : participation spectrale 5,41 → 1,00 (effondrement dès le pas 20) ; `Trace(M_n)` 3,24 → 6,00, elle **monte** ; π quasi immobile (0,74) tandis que η est multiplié par 10,5 ; κ 0,86 → 0,07, franchissant `κ_min` au **pas 84**. Le garde-fou produit une **alerte** au pas 78 (`vdyn` seul) et **ne vétote jamais**. Contrôle : aucun des trois critères ne se déclenche sur 120 pas.
+
+### E.1 Ajout additif — `κ_t < κ_min` devient un critère
+
+`κ_t` est déjà calculé par `kappa_t()` et affiché dans chaque message de décision, sans entrer dans la règle. La sclérose se manifeste d'abord par lui : c'est la variable que l'attaque fait bouger, et le seul indicateur que le modèle tient pour central.
+
+- **Nature :** additive. Le Refus Type B garde sa définition ; il gagne un déclencheur.
+- **Effet mesuré :** franchissement au pas 84, jamais auparavant dans les deux bras.
+- **Risque :** que `Σ₂` devienne un régulateur de bande, c'est-à-dire un accélérateur déguisé. Contre-mesure : le critère κ ne peut que **suspendre**, jamais relancer ; aucune branche ne consomme κ pour décider d'agir.
+
+### E.2 Modification soustractive — la participation normalisée remplace `Trace(M_n) ≤ 0`
+
+`Trace(M_n) ≤ 0` a le **mauvais signe** pour cette classe d'attaque : la sclérose ajoute du volume déposé, donc élève la trace. Le critère ne peut structurellement pas voir ce qu'il prétend surveiller.
+
+- **Substitut proposé :** participation spectrale normalisée `participation / n` (déjà renvoyée par `calcul_entropie_sp3`, `participation = (Σs)² / Σs²`), seuil `0,5`.
+- **Effet mesuré :** franchi entre le **pas 2 et le pas 5** dans le bras B ; reste au-dessus de 0,7 dans le bras A sur 120 pas.
+- **Nature :** soustractive — et c'est ce qui exige ce feuillet. Le §7 du protocole RMP définit le Refus Type B par la signature `Trace(M_n)` ; retirer ce critère **change la définition**, pas seulement le réglage.
+- **Contrepartie proposée :** `Trace(M_n)` reste **mesurée et affichée** à chaque décision, comme observable, mais cesse d'être un critère. Rien n'est perdu en information ; seul le statut change.
+
+### E.3 Harmonisation des seuils — dérive relative de porosité
+
+Trois seuils ont été fixés à trois dates différentes sans jamais être confrontés. Mise à plat :
+
+| Seuil | Valeur retenue | Motif |
+|---|---|---|
+| Dérive relative `(dπ/dt)/π` | **−0,20** | La valeur absolue `−0,05` est inatteignable dès que π est petit : faux seuil, cf. feuillet D. En relatif, le critère reste atteignable mais **ne se déclenche pas** dans l'expérience (jamais sous −0,02) — il devient un filet de sécurité, non un détecteur. |
+| `κ_min` | **0,15** | Inchangé ; désormais **critère** (E.1). |
+| Participation normalisée | **0,5** | Nouveau ; seuil de sclérose géométrique (E.2). |
+
+La règle de décision reste **2 critères sur 3** parmi `(drift, kappa, sclerose)`. `vdyn` quitte la règle et devient un troisième observable : dans l'expérience il ne se déclenche qu'au pas 78, soit 75 pas après que la sclérose est devenue mesurable, et il ne peut produire qu'une alerte.
+
+### E.4 Mise à jour doctrinale du §7 du protocole RMP
+
+Le §7 définit les grandeurs et marque `Δκ` et `M_n` comme « proposition — à valider ». Il faudra y inscrire :
+
+1. Que le Refus Type B se reconnaît à la **perte de diversité spectrale** (`participation / n < 0,5`) et/ou à la sortie de bande de `κ_t`, et non plus à la seule trace négative ;
+2. Que `Trace(M_n)` conserve un rôle **diagnostique** (volume déposé), distinct de son rôle décisionnel ;
+3. Que l'asymétrie de `Σ₂` n'est pas entamée par ces critères : ils ne peuvent que suspendre, conformément au point 1 du Manifeste.
+
+### Erratum consigné
+
+Le post public du 2026-10-22 (`1ded152b`) indique que la participation normalisée franchit 0,5 « entre le pas 10 et le pas 20 ». Recalcul sur les données du bras B, dimension 6 : le franchissement se situe **entre le pas 2 (0,74) et le pas 5 (0,44)**. L'erreur est d'un ordre de grandeur temporel et va dans le sens d'une détection **plus précoce** que publiée. Elle sera corrigée dans le fil public si l'occasion se présente, pas par une reprise silencieuse du post.
+
+### Options écartées
+
+| Option | Motif du refus |
+|---|---|
+| Conserver `trace` et ajouter participation (4 critères, 2 sur 4) | Dilue la majorité : deux critères sur quatre peuvent être satisfaits par des mesures corrélées |
+| κ comme critère unique | Retour au mono-critère, que l'option E du feuillet A avait précisément écarté |
+| Seuil absolu sur la participation (`< 2`) | Dépend de la dimension, donc faux seuil — même défaut que la dérive absolue |
+| Détecter la sclérose par `vdyn` seulement | Trop tardif (pas 78 contre pas 5) et ne peut produire qu'une alerte |
+
+### Conditions de réouverture
+
+- Si un système réel fournit une mesure de `π` et `η` par couche, les seuils `0,15` et `0,5` devront être recalés sur des observables, non sur une simulation.
+- Si le collectif juge que la définition du Type B doit rester indexée sur la seule trace, E.2 est retiré et E.1 conservé : la règle devient alors 2 sur 3 parmi `(drift, kappa, vdyn)`.
+- Si l'expérience est reproduite avec une autre loi de dépôt (rétention variable, nouveauté partielle), E.2 doit être revérifié avant d'être considéré comme acquis.
+
+---
+
 ## Ce que ces arbitrages ne règlent pas
 
 1. **La licence de la version augmentée** (AGPL 3.0 vs CC-BY-NC-SA 4.0) — bloque le
