@@ -1,7 +1,7 @@
 # B-Gate MTTV-FLP — Protocole d'épreuve (résistance transductive)
 
 **Outil minimal pour mesurer, non pour prouver.**
-Il rend comparables dans le temps quatre grandeurs : **porosité ρ**, **mémoire de pression**, **Active-Silence**, **hystérésis de réouverture**.
+Il rend comparables dans le temps quatre grandeurs : **porosité ρ**, **mémoire de pression**, **Active-Silence**, **hystérésis de réouverture** — et, depuis le 2026-10-25, la **valeur tétravalente de l'état** (§ 4) ainsi que la question de la **nature** de cette hystérésis : cinétique ou paramétrique (§ 5).
 
 **Objectif :** pouvoir dire *sous quelles conditions* la membrane résiste, cède, reste close ou se rouvre — et contredire les seuils s'ils sont mal calibrés.
 Ce n'est pas une démonstration que « le mycélium existe ». C'est un protocole d'épreuve : la doctrine devient discutable par reproduction.
@@ -27,6 +27,8 @@ python experiments/b_gate_mttv_flp_epreuve.py
 | `poids_redondance` | 0.10 | pénalité redondance / bruit répétitif |
 | `poids_cout` | 0.05 | pénalité coût de transduction |
 | `porosite_reouverture_max` | 0.20 | plafond de ρ à la réouverture (jamais un retour brutal au plein débit) |
+| `frontiere_admissible` | 0.50 | au-delà de cette pression, le milieu est jugé **hostile** — sert à la lecture tétravalente (§ 4). Choix doctrinal, non mesuré |
+| `derive` | 0.0 | dérive du seuil de fermeture à chaque cycle d'exposition — mémoire **paramétrique** (§ 5). `0.0` = protocole originel, chiffres inchangés |
 
 **Contrainte :** `0 ≤ seuil_ouverture < seuil_fermeture ≤ 1`, et `0 < memoire_decay < 1`. Les deux sont vérifiées dans `__init__` et lèvent `ValueError`.
 
@@ -93,7 +95,7 @@ m_n = m_0 · memoire_decay^n          (m_0 = mémoire au dernier cycle de pressi
 n* = ⌈ ln(0.1676 / 0.588) / ln(0.90) ⌉ = ⌈11.9⌉ = 12
 ```
 
-Autrement dit : la pression ne décide que du **moment** de la fermeture et du **niveau** de mémoire atteint (`m_0`) ; la **durée** de la cicatrice, elle, est gouvernée quasi exclusivement par `memoire_decay` et par le seuil d'ouverture. La sensibilité est mesurée — cf. [`experiments/b_gate_balayage_parametres.py`](../experiments/b_gate_balayage_parametres.py) et le tableau du § 4.
+Autrement dit : la pression ne décide que du **moment** de la fermeture et du **niveau** de mémoire atteint (`m_0`) ; la **durée** de la cicatrice, elle, est gouvernée quasi exclusivement par `memoire_decay` et par le seuil d'ouverture. La sensibilité est mesurée — cf. [`experiments/b_gate_balayage_parametres.py`](../experiments/b_gate_balayage_parametres.py) et le tableau du § 6.
 
 ### Scénario C — pulse
 
@@ -101,7 +103,63 @@ Aucune bascule : `hab` ne descend qu'à **0.811** au 2ᵉ cycle, puis remonte (0
 
 ---
 
-## 4. Sensibilité mesurée — un paramètre à la fois
+## 4. Lecture tétravalente — la cicatrice est un état, pas un retard
+
+Le régime binaire (`TRANSDUCTION` / `ACTIVE_SILENCE`) ne dit pas si le milieu **autorisait** l'ouverture. On croise donc deux questions **indépendantes** — l'une sur l'entrée, l'autre sur l'état — ce qui donne quatre valeurs, au sens de Belnap-Dunn :
+
+| | membrane ouverte | membrane fermée |
+|---|---|---|
+| **milieu admissible** (`p ≤ 0.50`) | **T** transduction normale | **B** *les deux* — le milieu rappelle, la membrane ne revient pas : **la cicatrice** |
+| **milieu hostile** | **N** *aucun* — on transduit pendant l'extraction : **la fuite** | **F** silence cohérent |
+
+L'intérêt n'est pas taxinomique. Belnap-Dunn donne **deux ordres** sur ces quatre valeurs — l'ordre de vérité `F ≤ N,B ≤ T` (ce qu'on croit) et l'ordre d'information `N ≤ T,F ≤ B` (ce qu'on sait). L'hystérésis s'y caractérise alors exactement : **à valeur de vérité égale, deux valeurs d'information distinctes**. T et B portent le même jugement sur le monde — il est admissible — et B dit quelque chose de plus : *il est revenu, je ne suis pas revenue*.
+
+Version continue, si l'on préfère des degrés à quatre cases : l'état est un intervalle `[t, 1−f] ⊆ [0,1]` de largeur `1 − t − f` (sémantique d'intervalle). `T = [1,1]`, `F = [0,0]`, `N = [0,1]`, `B = [1,0]`. Or ρ n'est que le **milieu** de cet intervalle : le protocole projette un état à deux dimensions sur sa moyenne et jette la largeur — c'est-à-dire l'information qui porte la cicatrice. Le saut ρ = 0,200 → 0,866 au cycle suivant la réouverture est la largeur qui s'effondre de 1 à 0.
+
+Compteurs mesurés (défauts, graine 42) :
+
+| Scénario | T | F | **B** | **N** | Lecture binaire |
+|---|---|---|---|---|---|
+| A (14 cycles) | 0 | 3 | **4** | **7** | 4 cycles de cicatrice lus comme hostilité |
+| B (28 cycles) | 7 | 3 | **11** | **7** | 11 sur 28 |
+| C (8 cycles) | 6 | 0 | **0** | **2** | — |
+
+Deux constats à retenir :
+
+1. **La cicatrice est un état.** Onze cycles du scénario B sont en B : le milieu est calme depuis onze pas et la membrane reste fermée. Un modèle binaire ne distingue pas « hostile, donc fermée » de « revenu, mais fermée » — c'est précisément la **persistance de la déformation** qu'une objection extérieure a demandé de mesurer (cf. `Trace(M_n)`, `Δκ` dans le corpus).
+2. **Le choc bref produit N, pas F.** Sur le scénario C, la membrane transduit pendant les deux pulses : la fermeture exige une mémoire accumulée, donc **une hystérésis réactive est toujours en retard d'une rampe**. Avec la frontière à 0,50, toute la montée de pression du scénario A (0,55 → 0,95) compte comme N, soit 7 cycles où l'on transduit pendant qu'on est extrait. Ce n'est pas un seuil mal réglé, c'est structurel : le veto ne peut pas être armé avant d'avoir été exposé.
+
+⚠️ Le compte de N dépend **entièrement** de `frontiere_admissible`, qui est un choix doctrinal et non une mesure. Un lecteur qui la déplace à 0,70 obtient un autre histogramme sans qu'aucune grandeur physique ait changé. C'est pourquoi elle est exposée comme paramètre.
+
+---
+
+## 5. Lecture homéostatique — et le seul test qui la discrimine
+
+Au sens d'Ashby, un homéostat ne corrige pas une erreur vers une consigne : il **change ses propres mécanismes de pas** jusqu'à ramener une variable essentielle dans son domaine de viabilité, et il **retient** le réglage qui a marché. Formellement, deux échelles de temps :
+
+```
+rapide :  ρ_t = F(p_t, m_t, θ)                            (relaxation — le protocole d'origine)
+lent   :  θ_{t+1} = θ_t − derive·1[p_t > frontière],       θ ≥ seuil_ouverture + 0,02
+```
+
+Le plancher (`MARGE_PLANCHER = 0.02`) est la viabilité : le système peut se fermer, pas se retourner contre lui-même.
+
+**Le piège de méthode, d'abord.** Rejouer trois fois le scénario A sur le même objet fait glisser la fermeture de 8 à 1 — **avec des seuils parfaitement constants**. Ce glissement vient du flottant laissé par l'épisode précédent (0,435 en fin de scénario A, jamais descendu à zéro), pas d'un paramètre. Un test naïf conclurait donc à tort à une mémoire constitutive. Le seul test qui discrimine est `reinitialiser_memoire()` : remettre la mémoire cinétique à zéro **en gardant l'objet**.
+
+| Variante | 1ᵉʳ passage | après remise à zéro de la mémoire |
+|---|---|---|
+| `derive = 0.00` (protocole d'origine) | fermeture au pas **8**, seuil 0,45 | fermeture au pas **8**, seuil 0,45 — inchangé |
+| `derive = 0.05` (homéostat) | fermeture au pas **4**, seuil 0,17 | fermeture au pas **3**, seuil 0,17 — **déplacé** |
+
+Si la fermeture revient au même pas, la mémoire était entièrement dans le flottant : hystérésis **cinétique**, cicatrice effaçable. Si elle reste avancée, un paramètre a bougé : mémoire **paramétrique**, cicatrice constitutive.
+
+Critère géométrique, pour finir : dans le plan (p, ρ), une hystérésis cinétique décrit une **boucle fermée** — on revient au point de départ, l'aire est l'énergie dissipée par cycle. Une hystérésis paramétrique décrit une boucle **qui ne se referme pas** : le système ne revient pas à son état initial, et l'aire entre les deux passages n'est plus une dissipation mais une **inscription**. C'est la différence entre une cicatrice et une mémoire, et c'est exactement la place de `M_n` et de `Δκ` dans le corpus.
+
+Cohérence doctrinale : `Σ₂` est un **frein sans accélérateur**, donc la branche fermante seulement. La lecture homéostatique dit pourquoi — la réouverture exige que le plancher soit relevé **de l'extérieur**, par un tiers. Un système qui ne peut que fermer n'est pas instable : il est *mourant*, ce qui est cohérent, mais qui doit être écrit.
+
+---
+
+## 6. Sensibilité mesurée — un paramètre à la fois
 
 Scénario B rejoué en ne changeant qu'un paramètre (tous les autres aux défauts). Script : [`experiments/b_gate_balayage_parametres.py`](../experiments/b_gate_balayage_parametres.py).
 
@@ -131,7 +189,7 @@ Trois choses ressortent, et deux d'entre elles sont des défauts du protocole, p
 
 ---
 
-## 5. Ce que la mesure met en défaut (à discuter, pas à corriger en silence)
+## 7. Ce que la mesure met en défaut (à discuter, pas à corriger en silence)
 
 1. **Le plafond de réouverture ne tient qu'un cycle.** `porosite_reouverture_max = 0.20` s'applique bien au cycle de réouverture (ρ = 0.200 au pas 22), mais dès le pas suivant le code affecte `ρ = score`, soit **0.866** — un retour quasi plein débit, exactement ce que le paramètre prétendait interdire. Le garde-fou protège l'instant, pas la rampe. Piste : borner la remontée (`ρ ← min(score, ρ_précédent + pas)`), ce qui rend le plafond lisible sur plusieurs cycles.
 2. **Le seuil de fermeture est lu à l'envers de son nom.** `seuil_fermeture = 0.45` ferme quand `hab < 0.55` : plus le chiffre est petit, plus la membrane est *difficile* à fermer. La docstring dit « pression d'habitabilité inverse », ce qui est juste mais invite à l'erreur de lecture ; un nom du type `marge_fermeture` lèverait l'ambiguïté.
@@ -143,7 +201,7 @@ Trois choses ressortent, et deux d'entre elles sont des défauts du protocole, p
 
 ---
 
-## 6. Invitation
+## 8. Invitation
 
 Rejouez. **Changez un paramètre à la fois.** Publiez :
 
@@ -162,7 +220,7 @@ Les contradictions utiles portent sur les **seuils** et la **mémoire**, pas sur
 
 ---
 
-## 7. Position de ce script dans le corpus
+## 9. Position de ce script dans le corpus
 
 Ce fichier est un **outil d'épreuve isolé**, pas le noyau. Il ne remplace aucune des deux B-Gate déjà présentes dans le dépôt, et ne doit pas être confondu avec elles :
 
@@ -171,7 +229,7 @@ Ce fichier est un **outil d'épreuve isolé**, pas le noyau. Il ne remplace aucu
 | Nature | noyau scalaire Ψ/B/Φ, triptyque sp³ | veto multi-critères V2026.5 | membrane jouet à mémoire et hystérésis |
 | Critères | bascule sur tension d'extraction | 2 sur 3 : `drift`, `kappa`, `sclerose` | un score composite unique |
 | η, κ, `Trace(M_n)` | non | oui | **non** |
-| Hystérésis | à sens unique (seuil d'entrée, pas de retour) | oui, via κ armé par η | oui, deux seuils explicites |
+| Hystérésis | à sens unique (seuil d'entrée, pas de retour) | oui, via κ armé par η | oui, deux seuils explicites + dérive paramétrique optionnelle (`derive`) |
 | Sortie en silence | biomasse rechargée | suspension / dormance Φ-light | Hrön (bruit borné) |
 
 Ce que le protocole ajoute au corpus : une **hystérésis à deux seuils nommés** et une **mémoire de pression explicite et datée**, donc une grandeur comparable dans le temps. Ce qu'il n'a pas : la distinction alerte/veto, la viscosité η, le rapport κ = π/η et la trace d'invariant. Les rapprocher (ou montrer qu'ils se contredisent) est un travail ouvert.
