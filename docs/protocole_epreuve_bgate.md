@@ -103,7 +103,7 @@ Aucune bascule : `hab` ne descend qu'à **0.811** au 2ᵉ cycle, puis remonte (0
 
 ---
 
-## 4. Lecture tétravalente — la cicatrice est un état, pas un retard
+## 4. Lecture tétravalente — rendre la cicatrice représentable
 
 Le régime binaire (`TRANSDUCTION` / `ACTIVE_SILENCE`) ne dit pas si le milieu **autorisait** l'ouverture. On croise donc deux questions **indépendantes** — l'une sur l'entrée, l'autre sur l'état — ce qui donne quatre valeurs, au sens de Belnap-Dunn :
 
@@ -112,9 +112,20 @@ Le régime binaire (`TRANSDUCTION` / `ACTIVE_SILENCE`) ne dit pas si le milieu *
 | **milieu admissible** (`p ≤ 0.50`) | **T** transduction normale | **B** *les deux* — le milieu rappelle, la membrane ne revient pas : **la cicatrice** |
 | **milieu hostile** | **N** *aucun* — on transduit pendant l'extraction : **la fuite** | **F** silence cohérent |
 
-L'intérêt n'est pas taxinomique. Belnap-Dunn donne **deux ordres** sur ces quatre valeurs — l'ordre de vérité `F ≤ N,B ≤ T` (ce qu'on croit) et l'ordre d'information `N ≤ T,F ≤ B` (ce qu'on sait). L'hystérésis s'y caractérise alors exactement : **à valeur de vérité égale, deux valeurs d'information distinctes**. T et B portent le même jugement sur le monde — il est admissible — et B dit quelque chose de plus : *il est revenu, je ne suis pas revenue*.
+L'intérêt n'est pas taxinomique. Belnap-Dunn donne **deux ordres** sur ces quatre valeurs — l'ordre de vérité `F ≤ N,B ≤ T` (ce qu'on croit) et l'ordre d'information `N ≤ T,F ≤ B` (ce qu'on sait). Ce que cela apporte est exactement ceci : **à valeur de vérité égale, deux valeurs d'information distinctes**. T et B portent le même jugement sur le monde — il est admissible — et B affirme une chose de plus : *la membrane est close*. Une logique à une dimension ne peut pas écrire cette différence ; elle range B avec F.
+
+⚠️ **Précision ajoutée le 2026-10-25, et correction d'une formulation antérieure.** L'ordre d'information est **atemporel** : il dit *combien* de choses sont affirmées au même instant, pas *depuis combien de temps*. Ce que la tétravalence fournit est donc la **représentabilité** de la cicatrice, non sa **durée**. Qu'un état B existe *parce que* le passé a laissé une trace est une affirmation causale, que le bilattice est incapable de formuler : c'est l'affaire du § 5. Les deux sont nécessaires, et aucune ne remplace l'autre.
 
 Version continue, si l'on préfère des degrés à quatre cases : l'état est un intervalle `[t, 1−f] ⊆ [0,1]` de largeur `1 − t − f` (sémantique d'intervalle). `T = [1,1]`, `F = [0,0]`, `N = [0,1]`, `B = [1,0]`. Or ρ n'est que le **milieu** de cet intervalle : le protocole projette un état à deux dimensions sur sa moyenne et jette la largeur — c'est-à-dire l'information qui porte la cicatrice. Le saut ρ = 0,200 → 0,866 au cycle suivant la réouverture est la largeur qui s'effondre de 1 à 0.
+
+Ce que chaque lecture donne, et ce qu'elle ne donne pas sans l'autre :
+
+| | sans rétention (§ 5 absent) | avec rétention (§ 5) |
+|---|---|---|
+| **sans représentation** (§ 4 absent) | un choc, rien de plus | **une cicatrice innommable** — notre cas d'origine : douze cycles de cicatrice que le régime binaire étiquetait « hostile » |
+| **avec représentation** (§ 4) | un état nommé qui s'efface en un cycle | une cicatrice représentable et durable |
+
+L'hystérésis n'est donc ni l'une ni l'autre de ces deux lectures : c'est leur conjonction. Et le tableau vaut avertissement — la case en bas à gauche est celle où le protocole se trouvait avant aujourd'hui, et c'est la plus dangereuse, parce qu'elle produit toutes les apparences de la mémoire sans en fournir aucune des preuves.
 
 Compteurs mesurés (défauts, graine 42) :
 
@@ -134,6 +145,8 @@ Deux constats à retenir :
 ---
 
 ## 5. Lecture homéostatique — et le seul test qui la discrimine
+
+La tétravalence rend la cicatrice **représentable** ; elle ne la rend pas **durable**. Un état nommé qui s'efface au cycle suivant n'est qu'un nom. C'est ici qu'intervient la seconde lecture, et elle est plus sévère.
 
 Au sens d'Ashby, un homéostat ne corrige pas une erreur vers une consigne : il **change ses propres mécanismes de pas** jusqu'à ramener une variable essentielle dans son domaine de viabilité, et il **retient** le réglage qui a marché. Formellement, deux échelles de temps :
 
