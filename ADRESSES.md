@@ -73,6 +73,19 @@ Version figée (dossier) :
 
 ---
 
+## 2 bis. Protocole d'épreuve de la B-Gate
+
+Outil isolé, distinct des deux B-Gate du corpus (voir § 7 de la page).
+
+| Forme | URL |
+|---|---|
+| protocole (lisible) | `https://github.com/gaillard111/mttv-flp-core/blob/main/docs/protocole_epreuve_bgate.md` |
+| protocole (brut) | `https://raw.githubusercontent.com/gaillard111/mttv-flp-core/main/docs/protocole_epreuve_bgate.md` |
+| script (brut — celui à donner à une IA) | `https://raw.githubusercontent.com/gaillard111/mttv-flp-core/main/experiments/b_gate_mttv_flp_epreuve.py` |
+| balayage (brut) | `https://raw.githubusercontent.com/gaillard111/mttv-flp-core/main/experiments/b_gate_balayage_parametres.py` |
+
+---
+
 ## 3. Point d'entrée unique
 
 ```
