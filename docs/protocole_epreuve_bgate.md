@@ -137,6 +137,10 @@ Trois choses ressortent, et deux d'entre elles sont des défauts du protocole, p
 2. **Le seuil de fermeture est lu à l'envers de son nom.** `seuil_fermeture = 0.45` ferme quand `hab < 0.55` : plus le chiffre est petit, plus la membrane est *difficile* à fermer. La docstring dit « pression d'habitabilité inverse », ce qui est juste mais invite à l'erreur de lecture ; un nom du type `marge_fermeture` lèverait l'ambiguïté.
 3. **ρ n'est pas une porosité mesurée.** C'est `score` recopié (ou 0 en silence). Les quatre grandeurs suivies ne sont donc pas homogènes : ρ est dérivé d'un score composite, la mémoire est une moyenne exponentielle, l'Active-Silence est un booléen, l'hystérésis se lit dans l'écart entre deux seuils. Un ρ identique dans deux expériences ne prouve rien tant que la table des entrées et des poids n'est pas publiée.
 
+   *Précision ajoutée le 2026-10-25.* Il y a en réalité **deux mémoires** dans [l'objet d'état](../experiments/b_gate_mttv_flp_epreuve.py:56) : `memoire_pression` (un flottant, moyenne exponentielle) et `historique` (une liste, un dictionnaire par cycle : pression, habitabilité, mémoire, ρ, régime), alimentée à [chaque `forward()`](../experiments/b_gate_mttv_flp_epreuve.py:173). La première **informe** la décision ; la seconde l'**enregistre** et n'est **jamais relue** par le critère — elle est en écriture seule du point de vue de la décision. C'est une asymétrie à consigner : le système observe tout et n'utilise qu'un nombre.
+
+   Corollaire pour la discussion avec @vina : le journal rend la trajectoire **auditable par un tiers** (on peut y vérifier la fermeture au pas 8 et la cicatrice de 12 cycles, et le contredire), mais il n'est pas un **invariant**. Un journal dit ce qui a eu lieu ; un invariant contraint ce qui peut avoir lieu. `M_n` et `Δκ` sont de la seconde espèce ; `historique` est de la première.
+
 ---
 
 ## 6. Invitation
