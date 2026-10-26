@@ -30,6 +30,8 @@ python experiments/b_gate_mttv_flp_epreuve.py
 | `frontiere_admissible` | 0.50 | au-delà de cette pression, le milieu est jugé **hostile** — sert à la lecture tétravalente (§ 4). Choix doctrinal, non mesuré |
 | `derive` | 0.0 | dérive du seuil de fermeture à chaque cycle d'exposition — mémoire **paramétrique** (§ 5). `0.0` = protocole originel, chiffres inchangés |
 
+⚠️ **Les trois poids sont renormalisés** par leur somme dans `__init__` : passer `poids_memoire` de 0,85 à 0,60 fait mécaniquement monter `poids_redondance` (0,100 → 0,133) et `poids_cout` (0,050 → 0,067). Toute expérience qui fait varier un poids seul est donc **confondue** — sauf à écrire les poids normalisés après construction (cf. l'amendement du § 6).
+
 **Contrainte :** `0 ≤ seuil_ouverture < seuil_fermeture ≤ 1`, et `0 < memoire_decay < 1`. Les deux sont vérifiées dans `__init__` et lèvent `ValueError`.
 
 En régime silence, la sortie **n'est pas un vecteur nul** : c'est un **Hrön** (bruit borné, faiblement corrélé, amplitude 0.05) — refus de capture, pas effacement.
@@ -199,6 +201,28 @@ Trois choses ressortent, et deux d'entre elles sont des défauts du protocole, p
 1. **Les deux seuils sont orthogonalisés.** `seuil_fermeture` ne déplace que le *moment* de la fermeture (pas 5 → 9) ; la durée de la cicatrice reste **12** dans tous les cas. `seuil_ouverture` ne déplace que la *durée* (7 → 24 cycles) sans toucher au moment. C'est une économie de moyens réelle : un seuil décide *si / quand*, l'autre décide *combien de temps*.
 2. **Il y a une falaise, et le protocole y devient muet.** À `memoire_decay = 0.95` comme à `seuil_fermeture = 0.60`, la membrane **ne se ferme jamais** dans la fenêtre de 10 cycles : la mémoire converge vers `p = 0.95` avec une constante de temps trop longue. La sortie n'est pas « elle résiste » mais « aucun événement dans la fenêtre » — deux choses différentes qu'un tableau de résultats ne distingue pas si l'on n'écrit pas la fenêtre.
 3. **`porosite_reouverture_max` n'a aucun effet mesurable** sur les trois grandeurs suivies : il ne change que la valeur de ρ *au cycle de réouverture*, et cette valeur est écrasée au cycle suivant (point 1 ci-dessous). Un paramètre présenté comme un garde-fou et invisible dans la mesure est pire qu'un paramètre absent.
+
+### Amendement du 2026-10-26 — amplitude contre durée
+
+Objection reçue sur le post du 26/10 : le scénario B isole la **durée**, pas l'**amplitude** — le poids de mémoire réglerait la profondeur du puits, la décroissance seulement sa vitesse de vidage. Test demandé : `poids_memoire` à 0,85 / 0,60 / 0,35, décroissance et graine fixées, l'amplitude n'étant déclarée contrôlante que si l'indice de réouverture décroît **strictement**.
+
+| Bras | `poids_memoire` | Poids effectifs (mémoire / redondance / coût) | Fermeture | Réouverture |
+|---|---|---|---|---|
+| tel quel | 0,85 | 0,850 / 0,100 / 0,050 | pas 8 | pas 22 |
+| tel quel | 0,60 | 0,800 / 0,133 / 0,067 | pas 8 | pas 22 |
+| tel quel | 0,35 | 0,700 / 0,200 / 0,100 | pas 9 | pas 21 |
+| déconfondu | 0,85 | écrits directement | pas 8 | pas 22 |
+| déconfondu | 0,60 | écrits directement | **jamais** | — |
+| déconfondu | 0,35 | écrits directement | **jamais** | — |
+
+Deux enseignements.
+
+1. **Le test tel quel est confondu — par notre propre code.** La renormalisation fait monter les deux pénalités quand on baisse le poids de mémoire ; le gain d'un cycle à 0,35 vient de là, et non de l'amplitude. C'est encore une erreur de spécification, et elle est de notre côté, pas de celui de l'objection.
+2. **Déconfondu, l'amplitude ne règle pas la durée : elle règle l'existence.** À 0,60, le score de fermeture n'atteint jamais son seuil (maximum 0,40 pour un seuil de 0,45) : la membrane ne se ferme pas, donc il n'y a aucune cicatrice dont mesurer la durée. La question « combien de temps » n'est définie que si la fermeture a eu lieu.
+
+Formulation à substituer à celle du § 3 : *la pression ne décide que du moment de la fermeture ; l'amplitude décide qu'il y ait fermeture ; la durée appartient au seul paramètre de décroissance — quand la fermeture a eu lieu.*
+
+Reproductible : [`experiments/b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py).
 
 ---
 
