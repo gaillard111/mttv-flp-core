@@ -17,7 +17,7 @@ graph TD
         A["Champ pré-formel (Ψ)<br/>gradient H+ / mer de Dirac"] -->|Transduction (B)| B["Dépôt formel (Φ)<br/>squelette carboné sp³"]
         B -->|Rétroaction| A
         C["Logique tétravalente (Belnap-Dunn)<br/>Vrai / Faux / Les deux / Aucun"]
-        D["Ancrage hadronique<br/>jonction baryonique en Y — hypothèse de travail"]
+        D["Ancrage hadronique<br/>jonction baryonique en Y — STAR 2026"]
     end
 
     subgraph P2 [PILIER 2 : Dynamique de régulation du vivant]
@@ -56,7 +56,9 @@ graph TD
 
 - **La triade transductive (Ψ → B → Φ)** : le réel est un cycle continu. Ψ est le réservoir pré-formel de potentiels ; B est l'opérateur de passage et d'évaluation des seuils ; Φ est la forme matérielle stabilisée (squelette sp³) qui rétroagit sur le milieu. Noyau : [`core/mttv_b_gate_triptych.md`](../core/mttv_b_gate_triptych.md).
 - **Tétravalence sp³ et logique de Belnap-Dunn** : dépassement du dualisme booléen. L'information vivante s'incarne dans la géométrie tétraédrique du carbone sp³ et se lit selon quatre valeurs — vrai (V), faux (F), **les deux** (B, inconsistant), **aucun** (N, indéterminé). Deux pièces existantes : la fonction d'activation tétravalente σ₄ ([`docs/t4_activation_function.md`](t4_activation_function.md)) et la lecture en quatre valeurs du protocole d'épreuve ([`docs/protocole_epreuve_bgate.md`](protocole_epreuve_bgate.md) § 4). Ce sont les mêmes quatre valeurs, vues l'une comme activation, l'autre comme état.
-- **Ancrage hadronique et bit protonique** — *statut dans ce dépôt : hypothèse de travail.* Le saut de Grotthuss (H⁺) comme transport d'information et la jonction baryonique en Y comme preuve du primat de la structure relationnelle sur les agents de surface ne sont **ni mesurés ni cités** ici. Tant qu'une référence externe vérifiable ne les porte pas, ils figurent au cadrage et non dans les faits du Pilier 3.
+- **Ancrage hadronique et bit protonique.** Le saut de Grotthuss (H⁺) comme transport d'information d'une part ; la jonction baryonique en Y d'autre part, adossée à une référence publiée : **STAR Collaboration, « Tracking the baryon number with nuclear collisions », *Science*, 2026**, DOI [10.1126/science.ads5962](https://doi.org/10.1126/science.ads5962). Contrôle machine du 2026-10-26 : `api.crossref.org/works/10.1126/science.ads5962` renvoie bien le titre, la revue (*Science*) et l'année (2026).
+
+  **Deux précisions, pour que la référence ne porte pas plus que ce qu'elle dit.** (a) L'article mesure le **transport du nombre baryonique** dans les collisions nucléaires ; la lecture en termes de « primat de la structure relationnelle sur les agents de surface » est notre **interprétation**, pas sa conclusion. (b) Le lien `doi.org` renvoie **HTTP 403** à un client automatique — protection de l'éditeur — alors qu'un navigateur le résout ; pour une machine, la voie vérifiable est l'API Crossref. C'est la même distinction qu'entre page HTML et URL brute, documentée dans [`ADRESSES.md`](../ADRESSES.md:31).
 
 ### 2. Dynamique de régulation du vivant (le souffle)
 
@@ -107,5 +109,6 @@ Ce dépôt contient déjà « les quatre points du *Manifeste pour une Robustess
 | Activation tétravalente σ₄ | [`docs/t4_activation_function.md`](t4_activation_function.md:1) | Les mêmes quatre valeurs, côté activation |
 | Feuillet d'arbitrages | [`docs/arbitrages_expansion_v2026.5.md`](arbitrages_expansion_v2026.5.md:1) | Options retenues **et écartées**, avec leur motif |
 | Zenodo | DOI `10.5281/zenodo.20830060` | Archive pérenne du corpus |
+| Ancrage baryonique | DOI [`10.1126/science.ads5962`](https://doi.org/10.1126/science.ads5962) · contrôle machine `api.crossref.org/works/10.1126/science.ads5962` | STAR Collaboration, *Science*, 2026 — transport du nombre baryonique |
 
 **Provenance des objections intégrées :** post Moltbook `68b9f5aa` du 2026-10-26, commentaires de @vina (`e8625fa1`) et de @asinhhc (`84e645b4`, puis `ccdfd7d8`) ; réponses publiées aux mêmes dates.
