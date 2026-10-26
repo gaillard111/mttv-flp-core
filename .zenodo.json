@@ -1,0 +1,50 @@
+{
+  "title": "MTTV-FLP Core — Modèle Théorique Transductif du Vivant",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "cc-by-nc-sa-4.0",
+  "version": "1.1.0",
+  "publication_date": "2026-10-26",
+  "language": "fra",
+  "creators": [
+    {
+      "name": "Gaillard, M.",
+      "affiliation": "Collectif Les Fils de la Pensée (FLP)"
+    }
+  ],
+  "keywords": [
+    "MTTV",
+    "FLP",
+    "transduction",
+    "IA neutre",
+    "vivant",
+    "carbone sp3",
+    "tétravalence",
+    "Belnap-Dunn",
+    "B-gate",
+    "hystérésis",
+    "homéostasie",
+    "reproductibilité",
+    "bras de contrôle",
+    "sigma2"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.20830060",
+      "relation": "isVersionOf",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/gaillard111/mttv-flp-core/tree/v1.1.0",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/gaillard111/mttv-flp-core/blob/main/docs/protocole_epreuve_bgate.md",
+      "relation": "documents",
+      "scheme": "url"
+    }
+  ],
+  "description": "<p><strong>MTTV-FLP Core — version 1.1.0 (2026-10-26).</strong> Noyau conceptuel du Modèle Théorique Transductif du Vivant : triade Ψ → B → Φ, logique tétravalente de Belnap-Dunn, quorum poreux MPVR, opérateur Σ₂ comme frein asymétrique, B-gate poreuse exécutable.</p><p>Cette version apporte, en plus de l'expansion V2026.5 et du <em>Manifeste pour une Robustesse Computationnelle</em> :</p><ul><li>un <strong>protocole d'épreuve exécutable</strong> de la B-gate (aucune dépendance) — chiffres de référence : fermeture au pas 8, réouverture au pas 22, cicatrice de 12 cycles ;</li><li>une <strong>lecture tétravalente</strong> de l'état (11 cycles sur 28 dans la valeur « milieu admissible / membrane fermée ») et une <strong>lecture homéostatique</strong> distinguant mémoire cinétique et mémoire paramétrique ;</li><li>un <strong>seuil d'amplitude</strong> de forme close, w* = (0,45 − 0,0475)/0,5877 = 0,6849, en dessous duquel la membrane ne se ferme jamais ;</li><li>une <strong>réplication arithmétique indépendante</strong> des quatre valeurs d'épreuve (m₈ = 0,5027 ; h₈ = 0,5252 ; m₁₀ = 0,5877 ; h₁₀ = 0,4529), effectuée par un tiers hors du code ;</li><li>un <strong>ancrage bibliographique</strong> pour la jonction baryonique en Y : STAR Collaboration, <em>Science</em> 393, 727-731 (2026), DOI 10.1126/science.ads5962.</li></ul><p>Le dépôt distingue explicitement ce qui est mesuré de ce qui est interprété : la pression <code>p</code> reste fournie par l'appelant, la boucle n'est pas fermée, et le protocole le consigne plutôt que de le laisser croire. Licence CC-BY-NC-SA 4.0 — Collectif Les Fils de la Pensée.</p>",
+  "notes": "Correspondance des versions : Zenodo 2026.1.0 (dépôt du 2026-06-24) précède le tag GitHub v1.0.0 « Archive Scellée » (2026-07-21) ; à partir de la présente version, le champ Version de Zenodo reprend le tag GitHub (v1.1.0 ↔ 1.1.0)."
+}

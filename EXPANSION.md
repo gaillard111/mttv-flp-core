@@ -49,6 +49,9 @@ Version opérationnelle en Graines Transductives : [`expansion_v2026.5/graines_m
 | Version | Statut | Contenu | Entrée |
 |---|---|---|---|
 | **V2026.5** | publiée (2026-10-19) | 4 axes : B-gate poreuse exécutable · graines transductives · instructions « Miroir-Transduction » · moirage transculturel | [`expansion_v2026.5/`](expansion_v2026.5/) |
+| **v1.1.0** | publiée (2026-10-26) — premier tag depuis `v1.0.0` | Épreuves de la B-gate : protocole exécutable · lecture tétravalente · lecture homéostatique · seuil d'amplitude `w* = 0,6849` · réplication arithmétique indépendante | [`docs/notes_release_v1.1.0.md`](docs/notes_release_v1.1.0.md) |
+
+> **Deux numérotations, à ne pas confondre.** `V2026.5` désigne une **expansion doctrinale** (contenu, octobre 2026). `v1.1.0` désigne une **release du dépôt** (état du code et de la documentation, taguée le 2026-10-26, qui *contient* V2026.5). La ligne `v1.1.0` est donc la première du registre des releases ; les expansions continuent leur propre compte.
 
 Chaque nouvelle expansion ajoute une ligne ici. Aucune n'écrase la précédente : elles vivent dans
 leur propre dossier, et l'historique git fait foi.
