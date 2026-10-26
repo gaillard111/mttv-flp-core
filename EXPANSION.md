@@ -36,6 +36,7 @@ Version opérationnelle en Graines Transductives : [`expansion_v2026.5/graines_m
 | Le cadre théorique | [`README.md`](README.md) · [`core/`](core/) |
 | Les protocoles opératoires (RMP, Sigma, handshake) | [`protocols/`](protocols/) |
 | Les arbitrages et notes d'atelier | [`docs/`](docs/) |
+| Un cadrage synthétique en **quatre piliers** (architecture, pas clôture) | [`docs/annexe_4_piliers_mttv_flp.md`](docs/annexe_4_piliers_mttv_flp.md) |
 | Le quorum poreux et le routage glocal | [`mpvr-glocal/`](mpvr-glocal/) |
 | Les bancs et sondes | [`experiments/`](experiments/) |
 | **Les expansions successives** | ci-dessous |
