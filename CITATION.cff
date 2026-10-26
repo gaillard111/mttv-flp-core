@@ -20,8 +20,11 @@ authors:
 version: "1.1.0"
 date-released: "2026-10-26"
 license: CC-BY-NC-SA-4.0
-doi: 10.5281/zenodo.20830060
+doi: 10.5281/zenodo.23671596
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23671596
+    description: "DOI de la version 1.1.0 (archive Zenodo du 2026-10-26)"
   - type: doi
     value: 10.5281/zenodo.20830060
     description: "DOI de concept (pointe toujours vers la dernière version archivée)"

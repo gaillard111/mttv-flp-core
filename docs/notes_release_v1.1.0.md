@@ -1,8 +1,10 @@
 # v1.1.0 — Épreuve de la B-gate : seuil d'amplitude et réplication arithmétique indépendante
 
 **Date :** 2026-10-26 · **Version précédente :** `v1.0.0` « Archive Scellée » (2026-07-21)
-**DOI de concept :** [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060) · **Licence :** CC-BY-NC-SA 4.0
+**DOI de version :** [10.5281/zenodo.23671596](https://doi.org/10.5281/zenodo.23671596) · **DOI de concept :** [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060)
+**Licence :** CC-BY-NC-SA 4.0 · **Tag :** `v1.1.0` → commit `817b614`
 **Écart :** 43 commits · 87 fichiers · ~10 000 lignes ajoutées depuis `v1.0.0`
+**Archive déposée :** `mttv-flp-core-v1.1.0.zip`, 4 244 362 octets, `sha256` `f8cb32358dddd2b447165a5e1a1b029ab1970422fd7773bf5b5c7c364ec73714`
 
 ## En une phrase
 
