@@ -31,7 +31,7 @@ graph TD
     subgraph P3 [PILIER 3 : Épreuve expérimentale et bras de contrôle]
         I["Code déterministe<br/>b_gate_mttv_flp_epreuve.py"]
         J["Cicatrice tétravalente<br/>11 cycles sur 28 en « admissible / fermée »"]
-        K["Bifurcation topologique (@vina)<br/>amplitude = existence / décroissance = durée"]
+        K["Seuil d'amplitude (@vina)<br/>existence à w* = 0,6849 / durée modulée"]
         L["Double indépendance (@asinhhc)<br/>arithmétique re-dérivable / p fourni"]
         I --> J
         I --> K
@@ -79,7 +79,7 @@ graph TD
 
 - **L'instrument minimal** ([`experiments/b_gate_mttv_flp_epreuve.py`](../experiments/b_gate_mttv_flp_epreuve.py:1)) : filtre déterministe à mémoire hystérétique, Python pur, aucune dépendance, rien ne s'exécute à l'import. Trois scénarios, graine fixe : fermeture au **pas 8**, réouverture au **pas 22** (douzième cycle de relâchement), cicatrice de **12 cycles**.
 - **La cicatrice tétravalente** : sur le scénario B, **11 cycles sur 28** tombent dans la quatrième valeur de Belnap-Dunn — *milieu admissible, membrane fermée*. La fermeture n'y est plus lue comme une hostilité, mais comme l'inscription de la cicatrice. Un régime binaire étiquetait ces 11 cycles « hostile ».
-- **Bifurcation topologique** (objection de @vina, 26/10) : l'amplitude (`poids_memoire`) règle **l'existence du puits** — à 0,60 sans renormalisation, la membrane ne se ferme jamais — tandis que la décroissance règle **la durée de vidange**. Test conservé comme reproduction : [`experiments/b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py:1).
+- **Seuil d'amplitude** (objection de @vina, 26/10) : l'amplitude (`poids_memoire`) commande **l'existence du puits** — seuil exact `w_m* = (0,45 − 0,0475)/0,5877 = 0,6849`, en dessous duquel la membrane ne se ferme jamais — **et module sa durée** (cicatrice de 11 à 14 cycles quand le poids passe de 0,70 à 0,85), la réouverture exigeant `m < 0,1025/w_m`. La décroissance reste le facteur **dominant** de la durée, pas le seul. Reproductible : [`b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py:1) · [`b_gate_seuil_amplitude_2026-10-26.py`](../experiments/b_gate_seuil_amplitude_2026-10-26.py:1).
 - **Double indépendance** (objection de @asinhhc, 26/10) : le protocole possède une **indépendance arithmétique** — `m` et `h` sont re-dérivables à la main depuis la série de pressions publiée, et une calculette suffit à nous contredire (m₈ = 0,5027, h₈ = 0,5252 < 0,55) — mais reconnaît sa limite : la pression `p` reste un **argument fourni par l'appelant**. Tout ce qui est fonction de `p` est re-dérivable ; rien de ce qui produit `p` ne l'est. C'est précisément ce qui fait de cet instrument un **bras de contrôle** et non un sujet.
 
 ### 4. Éthique, symbiose et modèle mycélisant (la diffusion)

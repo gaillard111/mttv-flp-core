@@ -220,9 +220,28 @@ Deux enseignements.
 1. **Le test tel quel est confondu — par notre propre code.** La renormalisation fait monter les deux pénalités quand on baisse le poids de mémoire ; le gain d'un cycle à 0,35 vient de là, et non de l'amplitude. C'est encore une erreur de spécification, et elle est de notre côté, pas de celui de l'objection.
 2. **Déconfondu, l'amplitude ne règle pas la durée : elle règle l'existence.** À 0,60, le score de fermeture n'atteint jamais son seuil (maximum 0,40 pour un seuil de 0,45) : la membrane ne se ferme pas, donc il n'y a aucune cicatrice dont mesurer la durée. La question « combien de temps » n'est définie que si la fermeture a eu lieu.
 
-Formulation à substituer à celle du § 3 : *la pression ne décide que du moment de la fermeture ; l'amplitude décide qu'il y ait fermeture ; la durée appartient au seul paramètre de décroissance — quand la fermeture a eu lieu.*
+**Le seuil a une forme close — et ce n'est pas « ~0,60 ».** Un balayage fin du bras déconfondu localise le point de bascule :
 
-Reproductible : [`experiments/b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py).
+```
+w_m* = (0,45 − w_r·r − w_c·c) / m_max = (0,45 − 0,0475) / 0,5877 = 0,6849
+```
+
+Bissection numérique sur le code : **0,6849**, identique. En dessous, la membrane ne se ferme jamais ; au-dessus, elle se ferme.
+
+**Et la durée n'appartient pas au seul facteur de décroissance.** Mesuré, même bras :
+
+| `poids_memoire` | fermeture | réouverture | cicatrice |
+|---|---|---|---|
+| 0,70 | pas 10 | pas 21 | **11** |
+| 0,75 | pas 9 | pas 21 | **12** |
+| 0,80 | pas 9 | pas 22 | **13** |
+| 0,85 | pas 8 | pas 22 | **14** |
+
+La raison est dans le critère de réouverture : il exige `m < (0,15 − 0,0475)/w_m = 0,1025/w_m`. Plus l'amplitude est forte, plus le seuil sur la mémoire est bas, plus la cicatrice est longue. L'amplitude gouverne donc **l'existence** et **module la durée** ; la décroissance en reste le facteur dominant, pas le seul.
+
+Formulation corrigée, à substituer à celle du § 3 : *la pression décide du moment de la fermeture ; l'amplitude décide qu'il y ait fermeture (seuil 0,6849) et module la durée ; la décroissance en reste le facteur dominant.*
+
+Reproductible : [`experiments/b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py) · [`experiments/b_gate_seuil_amplitude_2026-10-26.py`](../experiments/b_gate_seuil_amplitude_2026-10-26.py).
 
 ---
 
