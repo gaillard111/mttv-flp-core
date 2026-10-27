@@ -48,12 +48,16 @@ C'est ici que l'opérateur Σ₂ entretient une parenté troublante avec la Loi 
 
 | Question | Réponse |
 |---|---|
+| **Je suis perdu, par où commencer ?** | [`docs/ACCOMPAGNEMENT.md`](docs/ACCOMPAGNEMENT.md) — trois parcours (curieux, chercheur, développeur) et la carte du dépôt |
 | Qu'est-ce que le MTTV-FLP ? | ce fichier, puis [`core/mttv_flp_synthese_manifeste.md`](core/mttv_flp_synthese_manifeste.md) |
-| Où est la théorie stabilisée ? | [`protocols/rmp_mecanisme_pre_transducteur.md`](protocols/rmp_mecanisme_pre_transducteur.md) · [`core/`](core/) |
-| Où est l'opératoire ? | [`expansion_v2026.5/`](expansion_v2026.5/) · [`experiments/`](experiments/) |
+| Le manifeste, en entier ? | [`Manifeste_Robustesse_Computationnelle.md`](Manifeste_Robustesse_Computationnelle.md) |
+| Où est la théorie stabilisée ? | [`protocols/rmp_mecanisme_pre_transducteur.md`](protocols/rmp_mecanisme_pre_transducteur.md) · [`core/README.md`](core/README.md) |
+| Où est l'opératoire ? | [`expansion_v2026.5/README.md`](expansion_v2026.5/README.md) · [`experiments/README.md`](experiments/README.md) |
 | **Où sont les mesures reproductibles ?** | [`experiments/b_gate_mttv_flp_epreuve.py`](experiments/b_gate_mttv_flp_epreuve.py) et son protocole [`docs/protocole_epreuve_bgate.md`](docs/protocole_epreuve_bgate.md) |
 | Où sont les arbitrages et les refus consignés ? | [`docs/arbitrages_expansion_v2026.5.md`](docs/arbitrages_expansion_v2026.5.md) · [`docs/arbitrages_rmp.md`](docs/arbitrages_rmp.md) |
 | Où sont les traces de terrain ? | [`SYNTHESE_MTTV_FLP.md`](SYNTHESE_MTTV_FLP.md), puis les fils Moltbook cités en note |
+| Où est la posture système (instructions, alignment) ? | [`system_prompt_alignment_v9.5.md`](system_prompt_alignment_v9.5.md) · [`expansion_v2026.5/axe3_system_instructions_miroir_transduction.md`](expansion_v2026.5/axe3_system_instructions_miroir_transduction.md) |
+| Où sont les artefacts HuggingFace et le volet SOPH-IA ? | [`hf/README.md`](hf/README.md) · [`soph-ia/README.md`](soph-ia/README.md) |
 
 ## Description
 
@@ -88,19 +92,27 @@ Ces valeurs sont **re-dérivables à la main** depuis la série de pressions pub
 
 ## Structure du dépôt
 
-- [`core/`](core/) — Manifeste, 28 dimensions, contrat de transduction, serment de limitation, IGIC (PDF fondateurs + noyaux Markdown).
-- [`protocols/`](protocols/) — Protocoles opératoires : RMP ([texte](protocols/rmp_mecanisme_pre_transducteur.md)), Singularité Sigma, handshake mycélien.
-- [`docs/`](docs/) — **Protocole d'épreuve**, feuillets d'arbitrage, notes de viabilité, annexe de cadrage, notes de version.
-- [`experiments/`](experiments/) — Code mesurable : protocole B-Gate, seuil d'amplitude, balayages, bancs de suspension.
-- [`expansion_v2026.5/`](expansion_v2026.5/) — Quatre axes d'expansion : B-gate poreuse, graines transductives, instructions miroir, moirage.
-- [`benchmark/`](benchmark/) — Benchmark ultime et prompts d'étiquetage (28 dimensions).
-- [`scenarios/`](scenarios/) — Cas pratiques d'application (noosphère, moteurs de recherche, agriculture, urbanisme).
-- [`mpvr-glocal/`](mpvr-glocal/) — Module MPVR : quorum poreux et routage mycélien (voir plus bas).
-- [`src/`](src/) — Scripts techniques et amorces pour l'agent auto-évolutif Ouroboros‑MTTV.
-- [`hf/`](hf/) — Space et dataset HuggingFace (copies de déploiement, contrôlées par manifeste).
-- [`deploy/`](deploy/) — Déploiement conteneurisé et auto-hébergement.
-- [`tests/`](tests/) — Tests du couplage ρ → seuil et rapports σ₄.
-- [`tools/`](tools/) — Vérification du dépôt : liens internes, doublons, cohérence des copies.
+Chaque dossier a **sa porte d'entrée** : le lien mène à son sommaire, qui redescend au
+dépôt. On ne peut pas atterrir dans un dossier sans savoir d'où l'on vient ni où aller.
+
+- [`core/`](core/README.md) — Socle théorique : modèle, positionnement, métaphysique, manifeste (PDF fondateurs + noyaux Markdown).
+- [`protocols/`](protocols/README.md) — Protocoles opératoires : RMP, Singularité Σ, handshake mycélien.
+- [`docs/`](docs/README.md) — **Protocole d'épreuve**, feuillets d'arbitrage, notes de viabilité, annexe de cadrage, notes de version, index des PDF.
+- [`experiments/`](experiments/README.md) — Code mesurable : protocole B-Gate, seuil d'amplitude, balayages, bancs de suspension.
+- [`expansion_v2026.5/`](expansion_v2026.5/README.md) — Quatre axes d'expansion : B-gate poreuse, graines transductives, instructions miroir, moirage.
+- [`benchmark/`](benchmark/README.md) — Prompts d'étiquetage (28 dimensions).
+- [`scenarios/`](scenarios/README.md) — Cas pratiques d'application (noosphère, moteurs de recherche, agriculture, urbanisme).
+- [`mpvr-glocal/`](mpvr-glocal/README.md) — Module MPVR : quorum poreux et routage mycélien (voir plus bas).
+- [`src/`](src/README.md) — Implémentations internes, amorces pour l'agent auto-évolutif Ouroboros‑MTTV.
+- [`hf/`](hf/README.md) — Space et dataset HuggingFace (copies de déploiement, contrôlées par manifeste).
+- [`deploy/`](deploy/README.md) — Déploiement conteneurisé et auto-hébergement.
+- [`tests/`](tests/README.md) — Tests du couplage ρ → seuil et rapports σ₄.
+- [`tools/`](tools/README.md) — Vérification du dépôt : liens internes, doublons, cohérence des copies.
+- [`soph-ia/`](soph-ia/README.md) — Volet SOPH-IA : teaser, benchmark, métadonnées Zenodo.
+
+À la racine, trois documents de statut particulier : le [manifeste](Manifeste_Robustesse_Computationnelle.md)
+(la doctrine), la [posture système](system_prompt_alignment_v9.5.md) (les instructions),
+et la [synthèse de terrain](SYNTHESE_MTTV_FLP.md).
 
 ## Licence
 

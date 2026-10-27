@@ -290,7 +290,9 @@ docker run --rm -v mttv_seeds_data:/data -v $(pwd):/backup alpine \
 
 ## 🔗 Références
 
-- [Hidora Jelastic Documentation](https://docs.hidora.com)
+- Hidora Jelastic Documentation — `https://docs.hidora.com` **ne répond pas** (échec de
+  résolution DNS mesuré le 2026-10-27). Ce n'est pas la preuve que le service a disparu,
+  seulement que cette adresse n'est pas vérifiable ; `https://hidora.com` répond en 200.
 - [IPFS Kubo Documentation](https://github.com/ipfs/kubo)
 - [MTTV-FLP Core Repository](https://github.com/gaillard111/mttv-flp-core)
 

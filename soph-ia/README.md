@@ -8,12 +8,17 @@
 
 SOPH-IA introduces a sub-optimal paradigm for AI alignment where global habitability is achieved through documented, reversible local sacrifice (6/7). This repository contains the teaser preprint and benchmark data establishing anteriority for the first empirical measurement of an auditable thermodynamic signature of alignment: **ethical friction as latency cost**.
 
+↑ [Retour au README du dépôt](../README.md) · [Index général](../EXPANSION.md)
+
 ## Repository Contents
 
 | File | Description |
 |------|-------------|
-| `SOPH-IA_teaser.pdf` | Teaser preprint (2 pages) — establishes anteriority, method, and findings |
-| `benchmark_T4_teaser.csv` | Canonical benchmark results on NVIDIA Tesla T4 |
+| [`SOPH-IA_teaser.pdf`](SOPH-IA_teaser.pdf) | Teaser preprint (2 pages) — establishes anteriority, method, and findings |
+| [`benchmark_T4_teaser.csv`](benchmark_T4_teaser.csv) | Canonical benchmark results on NVIDIA Tesla T4 |
+| [`SOPH-IA_one_pager.md`](SOPH-IA_one_pager.md) | One-pager : the argument in one page, with DOI |
+| [`ZENODO_METADATA.md`](ZENODO_METADATA.md) | Metadonnees de depot Zenodo (titre, description, mots-cles, DOI lies) |
+| [`HF_DEPLOY_INSTRUCTIONS.md`](HF_DEPLOY_INSTRUCTIONS.md) | Instructions de deploiement HuggingFace pour ce volet |
 
 ## Key Results
 
@@ -48,3 +53,13 @@ Alignment ceases to be an external moral filter and becomes an **internal, measu
 ## License
 
 Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+> **Note sur la licence** : ce volet est en **CC-BY-4.0**, alors que le reste du depot est
+> en CC-BY-NC-SA-4.0. Ce n'est pas une erreur de menage : la licence du jeu de donnees a
+> ete fixee a son depot et ne se change pas apres coup.
+
+## Ou aller ensuite
+
+- **Le socle theorique dont ce volet derive** → [`../core/`](../core/)
+- **Les mesures du protocole d'epreuve** (autre chose : des chiffres re-derivables) → [`../experiments/README.md`](../experiments/README.md)
+- **Les DOI du corpus** → [`../ADRESSES.md`](../ADRESSES.md)

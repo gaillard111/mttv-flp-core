@@ -144,6 +144,43 @@ def verifier_copies():
     return problemes
 
 
+def verifier_navigation(mds):
+    """Tout document doit etre ATTEIGNABLE, tout dossier doit avoir sa porte.
+
+    Un lien mort est visible (on clique, on tombe sur 404). Un document orphelin ne
+    l'est pas : il existe, il est publie, et personne n'y arrive. C'est le defaut que
+    cet audit a trouve en premier — 21 fichiers sur 43 dans ce cas.
+    """
+    mds = [f for f in mds if f.lower().endswith(".md")]
+    sortants = {}
+    for f in mds:
+        cibles = set()
+        for lien in LIEN.findall(lire(f)):
+            sans_ligne = re.sub(r":\d+$", "", lien.split("#")[0]).replace("%20", " ")
+            c = os.path.normpath(os.path.join(os.path.dirname(f), sans_ligne))
+            if os.path.isfile(c) and c.lower().endswith(".md"):
+                cibles.add(c)
+        sortants[f] = cibles
+
+    depart = os.path.join(RACINE, "README.md")
+    vus, pile = {depart}, [depart]
+    while pile:
+        x = pile.pop()
+        for y in sortants.get(x, ()):
+            if y not in vus:
+                vus.add(y)
+                pile.append(y)
+
+    problemes = ["document inatteignable depuis README.md : %s" % rel(f)
+                 for f in sorted(set(mds) - vus)]
+
+    for d in sorted({os.path.dirname(f) for f in mds}):
+        noms = {os.path.basename(f) for f in mds if os.path.dirname(f) == d}
+        if not (noms & {"README.md", "INDEX.md", "index.md"}):
+            problemes.append("dossier sans porte d'entree (README/INDEX) : %s" % (rel(d) or "."))
+    return problemes
+
+
 def verifier_affirmations(tous):
     problemes = []
     for f in tous:
@@ -212,6 +249,7 @@ def main():
     liens, avec_ligne = verifier_liens(tous)
     doublons, assumés = verifier_doublons(tous)
     copies = verifier_copies()
+    navigation = verifier_navigation(tous)
     affirmations = verifier_affirmations(tous)
     manifeste = verifier_manifeste(tous)
 
@@ -219,6 +257,7 @@ def main():
         ("Liens internes morts", liens),
         ("Doublons non déclarés", doublons),
         ("Copies de déploiement divergentes", copies),
+        ("Navigation (atteignabilité, portes d'entrée)", navigation),
         ("Affirmations périmées ou manquantes", affirmations),
         ("Manifeste d'empreintes", manifeste),
     ]
