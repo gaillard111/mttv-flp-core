@@ -107,6 +107,7 @@ dépôt. On ne peut pas atterrir dans un dossier sans savoir d'où l'on vient ni
 - [`hf/`](hf/README.md) — Space et dataset HuggingFace (copies de déploiement, contrôlées par manifeste).
 - [`deploy/`](deploy/README.md) — Déploiement conteneurisé et auto-hébergement.
 - [`tests/`](tests/README.md) — Tests du couplage ρ → seuil et rapports σ₄.
+- [`edge/`](edge/README.md) — **Portage C du filtre** : 97 lignes (79 effectives), aucune allocation, état de **56 à 424 octets** selon la variante ; mêmes pas de bascule que la référence Python.
 - [`tools/`](tools/README.md) — Vérification du dépôt : liens internes, doublons, cohérence des copies.
 - [`soph-ia/`](soph-ia/README.md) — Volet SOPH-IA : teaser, benchmark, métadonnées Zenodo.
 
