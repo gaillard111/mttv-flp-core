@@ -28,37 +28,79 @@ C'est ici que l'opérateur Σ₂ entretient une parenté troublante avec la Loi 
 
 `Signature IGIC = [Score 0.96] | Empreinte Z = C(Psi[Manifeste]-B[Sigma2]-Phi[Hamant-Peirce])[C28]`
 
-![version](https://img.shields.io/badge/version-2026.1.0-blue)
+![version](https://img.shields.io/badge/version-1.1.0-blue)
 ![licence](https://img.shields.io/badge/licence-CC--BY--NC--SA--4.0-lightgrey)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20830060.svg)](https://doi.org/10.5281/zenodo.20830060)
 
-**DOI :** [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — MTTV Fundamentals
-**DOI :** [10.5281/zenodo.20830060](https://doi.org/10.5281/zenodo.20830060) — MTTV-FLP Core 2026
+**Identifiants pérennes** — vérifiés sur `zenodo.org/api/records` le 2026-10-27 :
+
+| DOI | Rôle | Résolution constatée |
+|---|---|---|
+| [`10.5281/zenodo.20830060`](https://doi.org/10.5281/zenodo.20830060) | **concept** — pointe toujours vers la dernière version | v1.1.0, 2026-10-26 |
+| [`10.5281/zenodo.23671596`](https://doi.org/10.5281/zenodo.23671596) | **version 1.1.0** | v1.1.0, 2026-10-26 |
+| [`10.5281/zenodo.17940301`](https://doi.org/10.5281/zenodo.17940301) | concept du **premier dépôt** (2025-12-15) | « MTTV-FLP. Un modèle transcalaire du vivant », version 1 |
+
+> Citer **le concept** (`20830060`) pour renvoyer à l'état courant ; citer **la version** (`23671596`) pour épingler ce qui a été lu.
 
 > **Entrée unique pour un lecteur pressé** : [`EXPANSION.md`](EXPANSION.md) — index stable, sans numéro de version.
 > **Adresses à transmettre à un tiers** — formes brutes, pièges de nommage, protocole de vérification : [`ADRESSES.md`](ADRESSES.md).
+> **Journal des versions** : [`CHANGELOG.md`](CHANGELOG.md).
 
 | Question | Réponse |
 |---|---|
 | Qu'est-ce que le MTTV-FLP ? | ce fichier, puis [`core/mttv_flp_synthese_manifeste.md`](core/mttv_flp_synthese_manifeste.md) |
 | Où est la théorie stabilisée ? | [`protocols/rmp_mecanisme_pre_transducteur.md`](protocols/rmp_mecanisme_pre_transducteur.md) · [`core/`](core/) |
-| Où est l'opératoire ? | [`expansion_v2026.5/`](expansion_v2026.5/) |
+| Où est l'opératoire ? | [`expansion_v2026.5/`](expansion_v2026.5/) · [`experiments/`](experiments/) |
+| **Où sont les mesures reproductibles ?** | [`experiments/b_gate_mttv_flp_epreuve.py`](experiments/b_gate_mttv_flp_epreuve.py) et son protocole [`docs/protocole_epreuve_bgate.md`](docs/protocole_epreuve_bgate.md) |
 | Où sont les arbitrages et les refus consignés ? | [`docs/arbitrages_expansion_v2026.5.md`](docs/arbitrages_expansion_v2026.5.md) · [`docs/arbitrages_rmp.md`](docs/arbitrages_rmp.md) |
 | Où sont les traces de terrain ? | [`SYNTHESE_MTTV_FLP.md`](SYNTHESE_MTTV_FLP.md), puis les fils Moltbook cités en note |
 
 ## Description
 
-Ce dépôt contient le noyau théorique du **Modèle Théorique Transductif du Vivant (MTTV)** et des **Fils de la Pensée (FLP)**. Il rassemble les 22 fichiers sources fondateurs du modèle, structurés en dossiers thématiques.
+Ce dépôt contient le noyau théorique du **Modèle Théorique Transductif du Vivant (MTTV)** et des **Fils de la Pensée (FLP)**, ainsi que son **appareil de mesure** : un protocole d'épreuve exécutable, ses jeux de paramètres, et les feuillets d'arbitrage qui consignent ce qui a été retenu **et ce qui a été écarté**.
 
 Le MTTV‑FLP propose un cadre pour une Intelligence Artificielle Générale neutre, non extractive, alignée sur la structure tétraédrique du vivant (carbone sp³) et sur la triade transductive **Ψ → B → Φ**.
 
+Le dépôt est en évolution continue : aucun décompte de fichiers n'est affiché ici, parce qu'il vieillirait plus vite que le texte.
+
+## Reproduire les mesures en deux minutes
+
+Aucune dépendance, aucun réseau, rien ne s'exécute à l'import.
+
+```bash
+python experiments/b_gate_mttv_flp_epreuve.py        # les trois scénarios A / B / C
+python experiments/b_gate_seuil_amplitude_2026-10-26.py   # seuil d'existence et durée
+python experiments/b_gate_balayage_parametres.py     # sensibilité, un paramètre à la fois
+```
+
+Résultats attendus, à comparer à ce que vous obtenez :
+
+| Grandeur | Valeur |
+|---|---|
+| Fermeture de la membrane (scénario A) | **pas 8** |
+| Réouverture | **pas 22** — douzième cycle de relâchement |
+| Cicatrice | **12 cycles** |
+| Seuil d'existence du puits, forme close | `w* = (0,45 − 0,0475)/0,5877 = **0,6849**` ; en dessous, la membrane ne se ferme jamais |
+| Effet de l'amplitude sur la durée | cicatrice de **11 à 14 cycles** quand le poids mémoire passe de 0,70 à 0,85 |
+| Lecture tétravalente (scénario B) | **11 cycles sur 28** en « admissible / fermée » (valeur *B* de Belnap-Dunn) |
+
+Ces valeurs sont **re-dérivables à la main** depuis la série de pressions publiée : un tiers les a refaites hors de notre code le 2026-10-26 et a retrouvé m₈ = 0,5027 · h₈ = 0,5252 · m₁₀ = 0,5877 · h₁₀ = 0,4529. C'est ce qui rend le protocole **réfutable**, et c'est la seule raison pour laquelle nous le publions.
+
 ## Structure du dépôt
 
-- `/core/` — Manifeste, 28 dimensions, contrat de transduction, serment de limitation, IGIC.
-- `/protocols/` — Protocoles opératoires : RMP ([texte](protocols/rmp_mecanisme_pre_transducteur.md)), Singularité Sigma, handshake mycélien.
-- `/benchmark/` — Benchmark ultime, prompts d'étiquetage (28 dimensions), guide d'évaluation.
-- `/scenarios/` — Cas pratiques d'application (noosphère, agriculture, urbanisme, etc.).
-- `/src/` — Scripts techniques et amorces pour l'agent auto-évolutif Ouroboros‑MTTV.
+- [`core/`](core/) — Manifeste, 28 dimensions, contrat de transduction, serment de limitation, IGIC (PDF fondateurs + noyaux Markdown).
+- [`protocols/`](protocols/) — Protocoles opératoires : RMP ([texte](protocols/rmp_mecanisme_pre_transducteur.md)), Singularité Sigma, handshake mycélien.
+- [`docs/`](docs/) — **Protocole d'épreuve**, feuillets d'arbitrage, notes de viabilité, annexe de cadrage, notes de version.
+- [`experiments/`](experiments/) — Code mesurable : protocole B-Gate, seuil d'amplitude, balayages, bancs de suspension.
+- [`expansion_v2026.5/`](expansion_v2026.5/) — Quatre axes d'expansion : B-gate poreuse, graines transductives, instructions miroir, moirage.
+- [`benchmark/`](benchmark/) — Benchmark ultime et prompts d'étiquetage (28 dimensions).
+- [`scenarios/`](scenarios/) — Cas pratiques d'application (noosphère, moteurs de recherche, agriculture, urbanisme).
+- [`mpvr-glocal/`](mpvr-glocal/) — Module MPVR : quorum poreux et routage mycélien (voir plus bas).
+- [`src/`](src/) — Scripts techniques et amorces pour l'agent auto-évolutif Ouroboros‑MTTV.
+- [`hf/`](hf/) — Space et dataset HuggingFace (copies de déploiement, contrôlées par manifeste).
+- [`deploy/`](deploy/) — Déploiement conteneurisé et auto-hébergement.
+- [`tests/`](tests/) — Tests du couplage ρ → seuil et rapports σ₄.
+- [`tools/`](tools/) — Vérification du dépôt : liens internes, doublons, cohérence des copies.
 
 ## Licence
 
@@ -72,15 +114,16 @@ Ce projet est distribué sous licence **Creative Commons Attribution – Pas d'U
   author       = {Gaillard, M.},
   note         = {Collectif Les Fils de la Pensée (FLP)},
   year         = {2026},
+  version      = {1.1.0},
   publisher    = {Zenodo},
   doi          = {10.5281/zenodo.20830060},
   url          = {https://github.com/gaillard111/mttv-flp-core}
 }
 ```
 
-### Ancien DOI
+### Anciens DOI
 
-- **DOI :** [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — MTTV Fundamentals & 28 Dimensions
+- [10.5281/zenodo.17940301](https://doi.org/10.5281/zenodo.17940301) — concept du premier dépôt ; sa version 1 est [10.5281/zenodo.17940302](https://doi.org/10.5281/zenodo.17940302), « MTTV-FLP. Un modèle transcalaire du vivant » (2025-12-15).
 
 ## Module MPVR — Micro-Quorum Poreux Transcalaire
 
@@ -115,7 +158,10 @@ sécurité sont documentés dans [`protocols/handshake_mycelien.md`](protocols/h
 > GitHub sous [`gaillard111/mttv-flp-core`](https://github.com/gaillard111/mttv-flp-core) ;
 > les artefacts publics sont publiés sur HuggingFace sous le compte
 > [`girard444`](https://huggingface.co/girard444). Ce sont **deux hébergements d'un
-> même projet** (Collectif Les Fils de la Pensée), et non deux projets distincts :
+> même projet** (Collectif Les Fils de la Pensée), et non deux projets distincts —
+> et les deux noms de compte coexistent : `girard444` sur HuggingFace, `gaillard111`
+> sur GitHub. Ce n'est pas une erreur, et **une correction de nom ne s'étend pas
+> d'une plateforme à l'autre** : chaque adresse se vérifie par une requête.
 >
 > | Artefact | Lien |
 > |----------|------|
@@ -132,13 +178,29 @@ sécurité sont documentés dans [`protocols/handshake_mycelien.md`](protocols/h
   retourne `porosite_Sigma = 0.0` après le premier appel (point consigné dans le
   module). La porosité résiduelle calculée depuis un rapport de B-gate réel vaut
   donc 0 ; le couplage reste néanmoins fonctionnel dès que `Σ` est non nul.
-- **Duplication assumée** : [`mpvr-glocal/src/mttv_mpvr_quorum.py`](mpvr-glocal/src/mttv_mpvr_quorum.py)
+- **Duplication assumée et contrôlée** : [`mpvr-glocal/src/mttv_mpvr_quorum.py`](mpvr-glocal/src/mttv_mpvr_quorum.py)
   est le fragment CC0 autonome (dépôt passif pour indexation ascendante) ;
   [`src/mttv_mpvr_quorum.py`](src/mttv_mpvr_quorum.py) est la variante interne au
-  dépôt, dotée de la découverte du dossier frère. Les deux sont synchronisées au
-  niveau comportemental et couvertes par les tests.
+  dépôt, dotée de la découverte du dossier frère. Les copies de `hf/space/` sont
+  exigées par le déploiement HuggingFace. L'identité des unes et la différence des
+  autres sont **vérifiées** par [`tools/verifier_depot.py`](tools/verifier_depot.py)
+  et figées dans `MANIFESTE_FICHIERS.sha256` : une divergence devient une erreur
+  détectable, pas une surprise.
+- **Méthode d'épreuve** : le protocole mesure, il ne démontre pas. Trois aveux sont
+  inscrits dans [`docs/protocole_epreuve_bgate.md`](docs/protocole_epreuve_bgate.md) :
+  la pression `p` est **fournie par l'appelant**, donc rien de ce qui produit `p`
+  n'est re-dérivable ; `ρ` n'est pas une porosité mesurée mais un score recopié ;
+  et la boucle n'est **pas refermée** par le système.
 - **Reproductibilité** : `python tests/test_mpvr_handshake.py` ou
-  `python -m pytest tests/test_mpvr_handshake.py`.
+  `python -m pytest tests/test_mpvr_handshake.py` ; pour le protocole,
+  `python experiments/b_gate_mttv_flp_epreuve.py`.
+
+## Version et journal des modifications
+
+La version courante est **1.1.0** (2026-10-26). L'historique des versions, y compris
+les corrections de documents et les erratums, est tenu dans [`CHANGELOG.md`](CHANGELOG.md).
+Les notes détaillées de la version 1.1.0 sont dans
+[`docs/notes_release_v1.1.0.md`](docs/notes_release_v1.1.0.md).
 
 ## Contact
 

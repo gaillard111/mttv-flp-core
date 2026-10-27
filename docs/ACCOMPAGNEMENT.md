@@ -19,14 +19,14 @@
 |---|---|---|
 | `core/` | Noyau théorique : modèle, positionnement, métaphysique, manifeste | 14 PDF + 1 Markdown |
 | `protocols/` | Protocoles opératoires : RMP, Singularité Σ, graines de mycélisation | 6 PDF + 1 Markdown |
-| `benchmark/` | Benchmark ultime, prompts d'étiquetage 28 dimensions | 2 PDF |
+| `benchmark/` | Prompts d'étiquetage 28 dimensions. Le *Benchmark ultime* est en `core/5` : c'était le même fichier, l'exemplaire conservé suit la numérotation `core/` | 1 PDF |
 | `scenarios/` | Applications : noosphère, moteurs de recherche, agriculture, urbanisme | PDF + Markdown |
 | `src/` | Implémentation de référence du Micro-Quorum Poreux Transcalaire | 1 script Python |
 | `tests/` | Vérification expérimentale du noyau tétravalent | Notebook + rapport |
 | `mpvr-glocal/` | Framework MPVR : synthèse formelle + implémentation | 1 README + `src/` |
 | `soph-ia/` | SOPH-IA v2.0 : teaser, benchmark, métadonnées Zenodo | 7 fichiers |
 | `deploy/` | Instructions de déploiement | 1 Markdown + `mttv/` |
-| `docs/` | Documentation d'accompagnement, notes techniques — dont la note [`note_juge_et_viabilite.md`](note_juge_et_viabilite.md) (« qui juge ») et le feuillet ouvert [`arbitrages_rmp.md`](arbitrages_rmp.md) | Markdown |
+| `docs/` | Documentation d'accompagnement, notes techniques — dont la note [`note_juge_et_viabilite.md`](note_juge_et_viabilite.md) (« qui juge »), le feuillet ouvert [`arbitrages_rmp.md`](arbitrages_rmp.md), le protocole [`protocole_epreuve_bgate.md`](protocole_epreuve_bgate.md) et l'index [`INDEX_PDF.md`](INDEX_PDF.md) | Markdown |
 
 ## 3. Le modèle en une page
 

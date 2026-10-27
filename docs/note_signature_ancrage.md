@@ -32,7 +32,7 @@ L'ancienne valeur disait donc `MTTV` (le modèle), la nouvelle dit `MTTV-FLP` (l
 |---|---|---|---|---|
 | **A** | **Ancre de fréquence** `0x4D5454562D464C50` | en-têtes de déploiement, One-pager SOPH-IA, métadonnées JSON, en-têtes de documents | identifiant fixe du protocole / du collectif | écrite à la main, constante du dépôt |
 | **B** | **SCS — Systemic Convergence Signature** | [`SYNTHESE_MTTV_FLP.md`](../SYNTHESE_MTTV_FLP.md) (glossaire), chaîne d'agents | *sceau de traçabilité* apposé sur un échange | **calculé** : apposé par l'agent d'harmonisation après validation par quorum Θ ≥ 3 |
-| **C** | **Signature tétravalente** `— Ψ → B → Φ` | fichiers de nœuds (`extrait_*.md`, `noeud_pilote_*.md`), [`mttv_worker.py`](../../mttv_worker.py) | marque de conformité au cycle transductif | apposée sur chaque nœud au moment de sa publication |
+| **C** | **Signature tétravalente** `— Ψ → B → Φ` | fichiers de nœuds (`extrait_*.md`, `noeud_pilote_*.md`), `mttv_worker.py` (*hors dépôt* — script de production, non publié ici) | marque de conformité au cycle transductif | apposée sur chaque nœud au moment de sa publication |
 
 Confondre A et B est l'erreur la plus coûteuse : **A est un nom propre** (il nomme le réseau), **B est un résultat** (il atteste d'un échange précis). A ne prouve rien ; B prétend prouver quelque chose — et c'est précisément pour cela que B doit rester vérifiable par quorum.
 
