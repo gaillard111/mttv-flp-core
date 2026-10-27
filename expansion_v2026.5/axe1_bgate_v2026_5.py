@@ -6,10 +6,24 @@ DOI de référence : 10.5281/zenodo.20830060
 Statut : formulation opératoire, non vérité définitive.
 Licence : CC-BY-NC-SA 4.0 — Collectif Les Fils de la Pensée.
 
-Trois critères indissociables du Veto Type B (opérateur Sigma_2) :
-    1. érosion cumulative de porosité  dpi/dt < 0
-    2. effondrement du ratio de résonance kappa = pi/eta
-    3. invariant matriciel  Trace(M_n) <= 0  ou perte de connectivité V_dyn
+Trois critères du Veto Type B (opérateur Sigma_2), règle « 2 sur 3 », état
+effectif au 2026-10-27 — celui de `BGateTransductionPoreuseExécutable` :
+    1. érosion cumulative de porosité : dpi/dt < 0                (drift)
+    2. sortie de bande par le bas : kappa_t < kappa_min           (kappa)
+    3. sclérose spectrale : participation_norm < seuil_participation_norm
+`Trace(M_n)` et `volume_V_dyn` restent MESURÉS et AFFICHÉS mais ne décident
+plus (feuillet E.2, 2026-10-22 : la sclérose ÉLÈVE la trace, 3,24 -> 6,00).
+Une trace NÉGATIVE (`invariant_inverse`) relève d'un autre registre : elle
+suspend seule, hors majorité.
+
+ATTENTION — deux implémentations cohabitent dans ce fichier :
+    * `BGateTransductionPoreuseBase.evaluer_veto_type_b_multicritere`
+      (ancienne règle, `Trace <= 0` décisif) : conservée pour mémoire,
+      JAMAIS appelée, écrasée par la méthode homonyme de la sous-classe ;
+    * `BGateTransductionPoreuseExécutable` : seule classe instanciée (démo et
+      `exp_bruit_structurel_2026-10-22.py`), et seule conforme.
+Un lecteur qui cherche « Trace » tombe sur la première : lire le nom de la
+classe avant de conclure à une contradiction.
 
 Justification doctrinale — Manifeste pour une Robustesse Computationnelle :
 
@@ -108,6 +122,14 @@ class BGateTransductionPoreuseBase(ABC):
 
     def evaluer_veto_type_b_multicritere(self, M_n: np.ndarray, fenêtre_temps: int = 5) -> Tuple[bool, str]:
         """
+        LEGACY — conservée pour mémoire, JAMAIS APPELÉE.
+
+        Remplacée par `BGateTransductionPoreuseExécutable.evaluer_veto_type_b_multicritere`,
+        qui applique la règle « 2 sur 3 » de 2026-10-22 (drift, kappa, sclérose)
+        et traite `Trace < 0` comme verrou séparé. La description ci-dessous est
+        celle de l'ANCIENNE règle, et elle est de surcroît inexacte sur elle-même :
+        `kappa` n'y est pas calculé, `volume_V_dyn` y est décisif sans y être annoncé.
+
         Évaluation rigoureuse du Veto de Type B par l'opérateur Sigma_2.
         Combine 3 critères indissociables (Notes de Terrain post Moltbook & Annexe RMP) :
         1. Dérive temporelle négative continue de la porosité : dpi/dt < 0

@@ -113,7 +113,7 @@ Ce dépôt contient déjà « les quatre points du *Manifeste pour une Robustess
 | Balayage de sensibilité | [`experiments/b_gate_balayage_parametres.py`](../experiments/b_gate_balayage_parametres.py:1) | Un paramètre à la fois |
 | Protocole | [`docs/protocole_epreuve_bgate.md`](protocole_epreuve_bgate.md:1) | Spécification complète, amendement du 26/10 |
 | Triptyque de la B-gate | [`core/mttv_b_gate_triptych.md`](../core/mttv_b_gate_triptych.md:1) | Noyau Ψ/B/Φ, noyau scalaire |
-| B-gate poreuse V2026.5 | [`expansion_v2026.5/axe1_bgate_v2026_5.py`](../expansion_v2026.5/axe1_bgate_v2026_5.py:1) | Veto multi-critères exécutable |
+| B-gate poreuse V2026.5 | [`expansion_v2026.5/axe1_bgate_v2026_5.py`](../expansion_v2026.5/axe1_bgate_v2026_5.py:1) | Veto multi-critères exécutable — règle « 2 sur 3 » (`drift`, `kappa`, `sclérose`) ; `Trace` et `volume_V_dyn` mesurés, non décisifs ; `Trace < 0` suspend seule. Contient en outre une méthode **legacy jamais appelée** qui applique l'ancienne règle : lire l'en-tête du fichier avant de conclure |
 | Activation tétravalente σ₄ | [`docs/t4_activation_function.md`](t4_activation_function.md:1) | Les mêmes quatre valeurs, côté activation |
 | Feuillet d'arbitrages | [`docs/arbitrages_expansion_v2026.5.md`](arbitrages_expansion_v2026.5.md:1) | Options retenues **et écartées**, avec leur motif |
 | Zenodo | DOI `10.5281/zenodo.20830060` | Archive pérenne du corpus |

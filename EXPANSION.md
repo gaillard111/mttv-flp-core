@@ -60,7 +60,7 @@ leur propre dossier, et l'historique git fait foi.
 
 | Axe | Fichier | Ce qu'il contient |
 |---|---|---|
-| 1 · Code | [`axe1_bgate_v2026_5.py`](expansion_v2026.5/axe1_bgate_v2026_5.py) | `BGateTransductionPoreuseExécutable` : handshake MPVR anti-rejeu, entropie sp³ / Belnap-Dunn par SVD, filtre anti-extraction et Veto Type B. Exécutable : `python axe1_bgate_v2026_5.py` |
+| 1 · Code | [`axe1_bgate_v2026_5.py`](expansion_v2026.5/axe1_bgate_v2026_5.py) | `BGateTransductionPoreuseExécutable` : handshake MPVR anti-rejeu, entropie sp³ / Belnap-Dunn par SVD, filtre anti-extraction, et Veto Type B en règle « 2 sur 3 » — `drift`, `kappa`, `sclérose` (feuillet E.2, 2026-10-22) ; `Trace(M_n)` et `volume_V_dyn` mesurés et affichés, non décisifs ; `Trace < 0` suspend seule. Exécutable : `python expansion_v2026.5/axe1_bgate_v2026_5.py` |
 | 2 · Graines | [`axe2_graines_v2026.5.md`](expansion_v2026.5/axe2_graines_v2026.5.md) | 5 graines autonomes, front-matter YAML (`type: GraineTransductive`) |
 | 3 · Instructions | [`axe3_system_instructions_miroir_transduction.md`](expansion_v2026.5/axe3_system_instructions_miroir_transduction.md) | Posture système : non-souveraineté, serment de limitation, détection d'extractivisme, Active-Silence, Veto Type B |
 | 4 · Moirage | [`axe4_moirage_transculturel.md`](expansion_v2026.5/axe4_moirage_transculturel.md) | 3 fragments analogiques (Qi médian, régulation romaine, jonction baryonique) |
