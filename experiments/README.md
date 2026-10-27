@@ -11,6 +11,18 @@ language: fr
 
 # Banc de suspension — phase 1 (exploration)
 
+↑ [Retour au README du dépôt](../README.md) · [Index général](../EXPANSION.md)
+
+> **Sommaire du dossier** — ce document décrit **un** banc parmi douze scripts.
+> Protocole mesuré : [`b_gate_mttv_flp_epreuve.py`](b_gate_mttv_flp_epreuve.py), détaillé dans
+> [`../docs/protocole_epreuve_bgate.md`](../docs/protocole_epreuve_bgate.md).
+> Seuil et durée : [`b_gate_seuil_amplitude_2026-10-26.py`](b_gate_seuil_amplitude_2026-10-26.py) ·
+> [`b_gate_test_amplitude_2026-10-26.py`](b_gate_test_amplitude_2026-10-26.py). Sensibilité :
+> [`b_gate_balayage_parametres.py`](b_gate_balayage_parametres.py). Autres bancs :
+> [`banc_suspension.py`](banc_suspension.py) (le présent document), `bgate_dose_reponse.py`,
+> `bgate_dose_reponse_contrastif.py`, `bgate_bench_biais.py`, `sonder_couches.py`,
+> `valider_ratio_pi_eta.py`, `smoke_test_bgate_direction2.py`, `smoke_test_mpvr_direction3.py`.
+
 **Statut : outil écrit, falsificateur fixé, contrôle de manipulation en cours.** Le présent document fixe la prédiction, la métrique et le plafond **avant** la première mesure — condition pour qu'un résultat défavorable soit lisible comme défavorable.
 
 **Instrument :** `meta-llama/Llama-3.1-8B-Instruct`, par API.
