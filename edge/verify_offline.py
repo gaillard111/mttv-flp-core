@@ -81,12 +81,20 @@ def cas_porte_ouverte(Gate, n=40):
     return {"bascules": bascules, "regime_final": regime, "h_final": h}
 
 
-def cas_porte_fermee(Gate, pression=0.95, n_pression=10, n_silence=60):
-    """Choc jusqu'à la fermeture, puis entrée strictement nulle."""
+PRESSION_PROTOCOLE = [0.55, 0.70, 0.85] + [0.95] * 7   # série publiée, cf. crosscheck_bgate.py
+
+
+def cas_porte_fermee(Gate, n_silence=60):
+    """Choc selon la série du protocole, puis entrée strictement nulle.
+
+    La série est celle du protocole publié — et non une pression constante — pour que ce
+    script reproduise exactement le couple annoncé (fermeture au pas 8, réouverture au 22).
+    Une pression constante ferme au pas 7 et rendrait le chiffre publié invérifiable ici.
+    """
     gate = Gate()
     fermeture = None
-    for i in range(1, n_pression + 1):
-        _, _, regime = gate.forward([1.0], pression=pression, redondance=0.35,
+    for i, p in enumerate(PRESSION_PROTOCOLE, 1):
+        _, _, regime = gate.forward([1.0], pression=p, redondance=0.35,
                                     cout_transduction=0.25)
         if fermeture is None and regime == "ACTIVE_SILENCE":
             fermeture = i
@@ -95,7 +103,7 @@ def cas_porte_fermee(Gate, pression=0.95, n_pression=10, n_silence=60):
         _, h, regime = gate.forward([1.0], pression=0.0, redondance=0.0,
                                     cout_transduction=0.0)
         if reouverture is None and regime == "TRANSDUCTION":
-            reouverture = n_pression + j
+            reouverture = len(PRESSION_PROTOCOLE) + j
     return {"fermeture": fermeture, "reouverture": reouverture,
             "h_final": h, "regime_final": regime}
 
