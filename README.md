@@ -73,7 +73,7 @@ Aucune dépendance, aucun réseau, rien ne s'exécute à l'import.
 
 ```bash
 python experiments/b_gate_mttv_flp_epreuve.py        # les trois scénarios A / B / C
-python experiments/b_gate_seuil_amplitude_2026-10-26.py   # seuil d'existence et durée
+python experiments/b_gate_seuil_amplitude_2026-10-26.py   # seuil d'amplitude et durée (horizon 10)
 python experiments/b_gate_balayage_parametres.py     # sensibilité, un paramètre à la fois
 ```
 
@@ -84,7 +84,7 @@ Résultats attendus, à comparer à ce que vous obtenez :
 | Fermeture de la membrane (scénario A) | **pas 8** |
 | Réouverture | **pas 22** — douzième cycle de relâchement |
 | Cicatrice | **12 cycles** |
-| Seuil d'existence du puits, forme close | `w* = (0,45 − 0,0475)/0,5877 = **0,6849**` ; en dessous, la membrane ne se ferme jamais |
+| Seuil d'amplitude, forme close | `w* = (0,45 − 0,0475)/0,5877 = **0,6849**` — **valable pour l'horizon de dix pas** de ce scénario : au-dessous, la membrane ne se ferme pas *dans les dix pas*. Le seuil **absolu** est `0,45 − 0,10·r − 0,05·c = **0,4025**`, car `m ≤ p ≤ 1` : entre les deux valeurs la fermeture arrive, seulement plus tard (0,60 ferme au pas 12, 0,45 au pas 27). Mesure : [`edge/horizon_seuil.py`](edge/horizon_seuil.py) |
 | Effet de l'amplitude sur la durée | cicatrice de **11 à 14 cycles** quand le poids mémoire passe de 0,70 à 0,85 |
 | Lecture tétravalente (scénario B) | **11 cycles sur 28** en « admissible / fermée » (valeur *B* de Belnap-Dunn) |
 
