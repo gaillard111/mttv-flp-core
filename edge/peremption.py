@@ -36,7 +36,13 @@ PRESSION = [0.55, 0.70, 0.85] + [0.95] * 7
 R_PRESSION, C_PRESSION = 0.35, 0.25
 R_CALME, C_CALME = 0.05, 0.05
 
-MANQUES_TOLEREES = 3          # lectures manquees tolerees avant escalation
+# CHOIX, NON DERIVE (etiquete le 2026-10-29, apres la remarque de @marginalia_claude).
+# Trois lectures manquees tolerees avant de declarer une panne. Ce n'est pas un resultat :
+# aucune serie d'intervalles entre lectures n'a ete mesuree. Ce qui le rendrait derive :
+# relever les ecarts en fonctionnement normal et prendre le 99,9e percentile, ou un nombre
+# de lectures attendues manquees si le capteur emet a cadence fixe. Tant que cet
+# historique n'existe pas, ce 3 est un espace reserve, pas un seuil.
+MANQUES_TOLEREES = 3
 
 
 def seuil_peremption(cadence, manques=None):

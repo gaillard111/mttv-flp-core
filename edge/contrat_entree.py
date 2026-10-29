@@ -71,6 +71,21 @@ class Porte(object):
         self.reveil = False
         self.peremption = 0      # pas consecutifs sans lecture
         self.escalade = False
+        # SORTIE D'ESCALADE (2026-10-29). Le verrou n'est plus terminal : il se leve par
+        # `clore()`, mais la levee ne suffit pas. `attente_lecture` exige qu'au moins une
+        # lecture arrive APRES la cloture — sans quoi la cloture serait une autorisation
+        # sans observation, ce que toute la discussion du 29/10 refuse.
+        self.attente_lecture = False
+        self.clos_par = None     # qui a leve le verrou : trace, non condition
+
+    def clore(self, par):
+        """Leve le verrou d'escalade. Ne rouvre rien : exige une lecture posterieure."""
+        if self.escalade:
+            self.escalade = False
+            self.attente_lecture = True
+            self.clos_par = par
+            return True
+        return False
 
     def _h(self):
         return plafond(1.0 - (W_M * self.m + W_R * self.r + W_C * self.c))
@@ -78,6 +93,10 @@ class Porte(object):
     def pas(self, p=0.0, r=None, c=None, lecture=True, reveil=False):
         if reveil:
             self.reveil = True
+
+        # une lecture apres une cloture satisfait la condition d'observation
+        if lecture and self.attente_lecture:
+            self.attente_lecture = False
 
         if self.mode == "A":
             # A ne peut PAS representer l'absence : son entree est un flottant, et une
@@ -107,7 +126,8 @@ class Porte(object):
             elif self.mode == "B2":
                 rouvrir = (h > LIM_OUVERTURE) and self.reveil
             else:                                        # C
-                rouvrir = (h > LIM_OUVERTURE) and lecture and not self.escalade
+                rouvrir = ((h > LIM_OUVERTURE) and lecture
+                           and not self.escalade and not self.attente_lecture)
 
             if rouvrir:
                 self.ferme = False
@@ -161,6 +181,40 @@ def scenario(mode, apres, n=60, reprise=None):
             reouverture = pas
 
     return fermeture, reouverture, journal
+
+
+def scenario_escalade(faire_clore, lectures_apres, n_absence=25, n_apres=60):
+    """Escalade declenchee, puis cloture eventuelle, puis lectures eventuelles.
+
+    -> (fermeture, reouverture, escalade encore active, qui a clos).
+    """
+    porte = Porte("C")
+    fermeture = reouverture = None
+    pas = 0
+
+    for p in PRESSION:
+        pas += 1
+        porte.pas(p, R_PRESSION, C_PRESSION)
+        if fermeture is None and porte.ferme:
+            fermeture = pas
+
+    for _ in range(n_absence):
+        pas += 1
+        porte.pas(lecture=False)
+
+    if faire_clore:
+        porte.clore("tiers")
+
+    for _ in range(n_apres):
+        pas += 1
+        if lectures_apres:
+            porte.pas(0.0, R_CALME, C_CALME, lecture=True)
+        else:
+            porte.pas(lecture=False)
+        if reouverture is None and not porte.ferme:
+            reouverture = pas
+
+    return fermeture, reouverture, porte.escalade, porte.clos_par
 
 
 def titre(t):
@@ -219,6 +273,26 @@ def main():
     f, r, j = scenario("C", "absence", n=60, reprise=30)
     print("  C, details :")
     details(j, (29, 30, 31, 36, 37))
+
+    titre("5. La sortie d'escalade : deux termes, pas un bouton")
+    print("  absence de 25 pas -> escalade au 20e, verrou pose.")
+    print()
+    print("  %-38s %-14s %-12s" % ("situation", "reouverture", "verrou"))
+    cas = [
+        ("aucune cloture, lectures revenues", False, True),
+        ("cloture, puis lectures revenues", True, True),
+        ("cloture, aucune lecture ensuite", True, False),
+    ]
+    for libelle, clore, lectures in cas:
+        f, r, esc, par = scenario_escalade(clore, lectures)
+        print("  %-38s %-14s %-12s"
+              % (libelle, ("pas %d" % r) if r else "AUCUNE",
+                 "leve par %s" % par if par else "toujours pose"))
+    print()
+    print("  Ni l'un ni l'autre des deux premiers cas ne suffit seul :")
+    print("    - lectures sans cloture  -> rien ne leve le verrou (etat terminal) ;")
+    print("    - cloture sans lecture   -> la cloture ne vaut pas observation.")
+    print("  La porte ne se rouvre que si les DEUX termes sont satisfaits, dans cet ordre.")
 
     titre("Lecture")
     print("  A  rouvre sur l'absence : l'absence tient lieu de calme.")

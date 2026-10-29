@@ -46,6 +46,34 @@ def reouverture(r_silence, c_silence, n=40):
     return None, m, h_de(m, r_silence, c_silence)
 
 
+# Seuils de discordance. CHOIX, non derives : ils disent a partir de quel ecart deux canaux
+# ne racontent plus la meme chose. A etiqueter comme tels tant qu'aucun historique de
+# mesures simultanees n'existe. (Reponse annoncee a @asinhhc, 2026-10-29 14:58.)
+DISCORDE_P = 0.15      # en dessous, le premier canal affirme le calme
+DISCORDE_R = 0.25      # au-dessus, le second rapporte une contrainte
+
+
+def variante_d(r_silence, c_silence, n=40):
+    """Etat B : desaccord entre canaux. -> (reouverture, compteur, h final)."""
+    m = 0.0
+    for p in PRESSION:
+        m = m * DECAY + p * (1.0 - DECAY)
+    compteur = 0
+    h = h_de(m, r_silence, c_silence)
+    for k in range(1, n + 1):
+        discorde = (0.0 < DISCORDE_P) and (r_silence > DISCORDE_R)
+        if discorde:
+            # etat B : ni vrai ni faux. La memoire est GELEE, rien ne rouvre, on compte.
+            compteur += 1
+            h = h_de(m, r_silence, c_silence)
+        else:
+            m = m * DECAY
+            h = h_de(m, r_silence, c_silence)
+            if h > LIM_OUVERTURE:
+                return len(PRESSION) + k, compteur, h
+    return None, compteur, h
+
+
 def titre(t):
     print()
     print("-" * 78)
@@ -83,3 +111,17 @@ print()
 print("  Donc la reponse proposee a @asinhhc est juste comme CONCEPTION et fausse au")
 print("  present de l'indicatif. Ce qui est vrai aujourd'hui : un desaccord vaut")
 print("  %d cycles de retard." % (pas - ref))
+
+titre("4. Variante D : la discordance comme ETAT D'ENTREE (etat B de Belnap-Dunn)")
+print("  seuils de discordance, CHOIX non derive : p < %.2f et r > %.2f"
+      % (DISCORDE_P, DISCORDE_R))
+print()
+for libelle, rs, cs in (("canaux d'accord (r = 0,05)      ", 0.05, 0.05),
+                        ("canaux en DESACCORD (r = 0,35) ", 0.35, 0.25)):
+    pas_d, cpt, h = variante_d(rs, cs)
+    print("  %s reouverture %-8s | ecart compte %2d pas | h final %.4f"
+          % (libelle, ("pas %d" % pas_d) if pas_d else "AUCUNE", cpt, h))
+print()
+print("  Sous desaccord : l'etat B gèle la memoire, ne rouvre pas, et compte l'ecart.")
+print("  Sous accord    : rien ne change, la decroissance reprend son cours.")
+print("  C'est ce que le message du 14:58 annoncait ; ce n'est plus une intention.")
