@@ -53,8 +53,11 @@ modifications portent sur la documentation, la traçabilité et l'outillage.
 
 ### Ajouté
 - `experiments/b_gate_seuil_amplitude_2026-10-26.py` — localisation du **seuil
-  d'existence** de la fermeture de membrane, en forme close :
+  d'amplitude** de la fermeture de membrane, en forme close :
   `w* = (0,45 − 0,0475)/0,5877 = 0,6849`. Vérifié par bissection.
+  **Correction du 2026-10-29 :** ce seuil vaut **pour l'horizon de dix pas** du scénario.
+  Le seuil **absolu** est `0,4025`, puisque `m ≤ p ≤ 1` ; entre les deux la fermeture
+  survient plus tard (0,60 au pas 12, 0,45 au pas 27). Mesure : `edge/horizon_seuil.py`.
 - `experiments/b_gate_test_amplitude_2026-10-26.py` — effet de l'amplitude sur la
   **durée** : cicatrice de 11 à 14 cycles quand le poids mémoire passe de 0,70 à 0,85.
 - `docs/annexe_4_piliers_mttv_flp.md` — document de cadrage : schéma d'architecture,

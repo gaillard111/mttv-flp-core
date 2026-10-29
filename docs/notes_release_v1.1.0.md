@@ -24,7 +24,7 @@ Trente jours ont produit trois choses qu'un dépôt de doctrine ne produit pas d
 - **Chiffres de référence :** fermeture au **pas 8** · réouverture au **pas 22** · cicatrice de **12 cycles**.
 - **§ 4 — lecture tétravalente :** l'état est un couple (milieu admissible, membrane ouverte). Sur le scénario long, **11 cycles sur 28** tombent dans la valeur « les deux » : le milieu est revenu, la membrane non.
 - **§ 5 — lecture homéostatique :** paramètre `derive`, méthode `reinitialiser_memoire()`, et le seul test qui discrimine filtre et homéostat — seuils constants, fermeture au pas 8 après remise à zéro ; seuil dérivant, pas 3.
-- **§ 6 — seuil d'amplitude :** `w_m* = (0,45 − 0,0475)/0,5877 = **0,6849**`, forme close confirmée par bissection. En dessous, la membrane ne se ferme jamais.
+- **§ 6 — seuil d'amplitude :** `w_m* = (0,45 − 0,0475)/0,5877 = **0,6849**`, forme close confirmée par bissection. En dessous, la membrane ne se ferme pas **dans les dix pas du scénario**. *(Précision du 2026-10-29 : le seuil absolu est `0,4025`, la mémoire ne dépassant pas la pression ; entre les deux la fermeture survient plus tard. `edge/horizon_seuil.py`.)*
 - **Deux défauts consignés plutôt que corrigés en silence :** le plafond de réouverture ne tient qu'un cycle (0,200 → 0,866) ; ρ n'est que la moyenne d'un intervalle à deux dimensions, donc la largeur qui porte la cicatrice est jetée.
 
 ## 3. Objections extérieures, traitées par la mesure

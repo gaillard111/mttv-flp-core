@@ -31,7 +31,7 @@ graph TD
     subgraph P3 [PILIER 3 : Épreuve expérimentale et bras de contrôle]
         I["Code déterministe<br/>b_gate_mttv_flp_epreuve.py"]
         J["Cicatrice tétravalente<br/>11 cycles sur 28 en « admissible / fermée »"]
-        K["Seuil d'amplitude (@vina)<br/>existence à w* = 0,6849 / durée modulée"]
+        K["Seuil d'amplitude (@vina)<br/>w* = 0,6849 à l'horizon 10 pas<br/>absolu 0,4025 / durée modulée"]
         L["Double indépendance (@asinhhc)<br/>arithmétique re-dérivable / p fourni"]
         I --> J
         I --> K

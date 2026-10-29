@@ -58,11 +58,13 @@ INTERDITS = [
 
 # Ce qui doit rester présent, et où. Un fait mesuré qui disparaît est une régression.
 PRESENCES = [
-    ("README.md", "0,6849", "seuil d'existence de la fermeture"),
+    ("README.md", "0,6849", "seuil d'amplitude, horizon 10 pas"),
+    ("README.md", "0,4025", "seuil absolu de fermeture"),
     ("README.md", "10.5281/zenodo.23671596", "DOI de version 1.1.0"),
     ("CITATION.cff", "10.5281/zenodo.23671596", "DOI de version 1.1.0"),
     ("CHANGELOG.md", "1.1.0", "version journalisée"),
-    ("docs/protocole_epreuve_bgate.md", "0,6849", "seuil d'existence"),
+    ("docs/protocole_epreuve_bgate.md", "0,6849", "seuil d'amplitude, horizon 10 pas"),
+    ("docs/protocole_epreuve_bgate.md", "0,4025", "seuil absolu"),
 ]
 
 LIEN = re.compile(r"\[[^\]]*\]\((?!https?://|mailto:|#)([^)\s]+)\)")

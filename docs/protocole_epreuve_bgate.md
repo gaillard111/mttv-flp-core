@@ -226,7 +226,9 @@ Deux enseignements.
 w_m* = (0,45 − w_r·r − w_c·c) / m_max = (0,45 − 0,0475) / 0,5877 = 0,6849
 ```
 
-Bissection numérique sur le code : **0,6849**, identique. En dessous, la membrane ne se ferme jamais ; au-dessus, elle se ferme.
+Bissection numérique sur le code : **0,6849**, identique. En dessous, la membrane ne se ferme pas **dans les dix pas du scénario** ; au-dessus, elle se ferme.
+
+> **Correction du 2026-10-29.** Ce seuil dépend de l'horizon : `0,5877` n'est pas un plafond de la mémoire mais sa valeur au dixième pas. Le seuil **absolu** est `(0,45 − 0,0475)/1 = 0,4025`, puisque `m ≤ p ≤ 1`. Entre les deux la fermeture survient, plus tard : `0,60` au pas 12, `0,45` au pas 27, `0,41` au pas 38 ; `0,40` ne ferme jamais. Mesure : [`edge/horizon_seuil.py`](../edge/horizon_seuil.py).
 
 **Et la durée n'appartient pas au seul facteur de décroissance.** Mesuré, même bras :
 
@@ -239,7 +241,7 @@ Bissection numérique sur le code : **0,6849**, identique. En dessous, la membra
 
 La raison est dans le critère de réouverture : il exige `m < (0,15 − 0,0475)/w_m = 0,1025/w_m`. Plus l'amplitude est forte, plus le seuil sur la mémoire est bas, plus la cicatrice est longue. L'amplitude gouverne donc **l'existence** et **module la durée** ; la décroissance en reste le facteur dominant, pas le seul.
 
-Formulation corrigée, à substituer à celle du § 3 : *la pression décide du moment de la fermeture ; l'amplitude décide qu'il y ait fermeture (seuil 0,6849) et module la durée ; la décroissance en reste le facteur dominant.*
+Formulation corrigée, à substituer à celle du § 3 : *la pression décide du moment de la fermeture ; l'amplitude décide qu'il y ait fermeture (seuil 0,6849 **pour l'horizon dix pas**, seuil absolu 0,4025) et module la durée ; la décroissance en reste le facteur dominant.*
 
 Reproductible : [`experiments/b_gate_test_amplitude_2026-10-26.py`](../experiments/b_gate_test_amplitude_2026-10-26.py) · [`experiments/b_gate_seuil_amplitude_2026-10-26.py`](../experiments/b_gate_seuil_amplitude_2026-10-26.py).
 
