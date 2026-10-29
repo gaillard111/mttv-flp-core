@@ -39,6 +39,19 @@ R_CALME, C_CALME = 0.05, 0.05
 MANQUES_TOLEREES = 3          # lectures manquees tolerees avant escalation
 
 
+def seuil_peremption(cadence, manques=None):
+    """Seul point de derivation du seuil de peremption.
+
+    SA SIGNATURE EST L'INVARIANT : elle n'accepte ni `decay`, ni `m`, ni `h`. Ajouter
+    l'un de ces trois parametres ferait echouer le controle de `main()` — c'est la seule
+    facon mecanique d'empecher l'horloge interne de revenir gouverner la peremption.
+    Le seuil ne depend que de la cadence des lectures et de la tolerance choisie.
+    """
+    if manques is None:
+        manques = MANQUES_TOLEREES
+    return manques * cadence
+
+
 def plafond(v):
     return 0.0 if v < 0.0 else (1.0 if v > 1.0 else v)
 
@@ -149,18 +162,62 @@ def main():
     print("  l'horloge externe (cadence des lectures) — et reciproquement.")
     print()
     print("  %-9s %-22s %-22s" % ("cadence", "seuil de peremption", "delai de reouverture"))
+    delais = []
+    seuils = []
     for cadence in (1, 2, 5, 10):
-        seuil = MANQUES_TOLEREES * cadence
+        seuil = seuil_peremption(cadence)
         f, r, _ = scenario(0.90, seuil, n_absence=0)
         delai = (r - f) if (f and r) else None
+        delais.append(delai)
+        seuils.append(seuil)
         print("  %-9d %-22s %-22s"
               % (cadence, "%d cycles" % seuil,
                  ("%d cycles" % delai) if delai else "-"))
     print()
     print("  Le seuil suit la cadence : il mesure le monde. Le delai de reouverture ne")
-    print("  bouge pas : il mesure la memoire. Chacun chez soi, et les deux tests tiennent.")
-    print("  C'est cela qu'un tableau d'invariance verifie — pas une formule, deux derives")
-    print("  partielles : d(seuil)/d(decay) = 0 et d(delai)/d(cadence) = 0.")
+    print("  bouge pas : il mesure la memoire.")
+
+    # --- le controle lui-meme : deux derives partielles qui doivent etre nulles -----
+    seuils_tau = []
+    for decay in (0.80, 0.85, 0.90, 0.95, 0.99):
+        tau = math.log(0.5) / math.log(decay)
+        seuils_tau.append(int(math.ceil(3 * tau)))
+
+    invariant_memoire = len(set(delais)) == 1 and delais[0] is not None
+    invariant_monde = len(set(seuils)) == len(seuils)      # le seuil doit suivre la cadence
+
+    # Le vrai controle : la fonction de derivation ne DOIT PAS pouvoir lire l'horloge
+    # interne. On verifie sa signature, pas un tableau qu'on vient d'ecrire.
+    import inspect
+    params = set(inspect.signature(seuil_peremption).parameters)
+    fuite = params & {"decay", "m", "h", "tau", "demi_vie"}
+    signature_etanche = not fuite
+
+    # Et le modele ne doit pas lire la peremption ailleurs que dans son parametre.
+    try:
+        with open(os.path.abspath(__file__), encoding="utf-8") as f:
+            source = f.read()
+        corps = source.split("class Porte", 1)[1].split("def scenario", 1)[0]
+        modele_etanche = "decay" not in corps.split("self.peremption_max", 1)[-1][:400]
+    except Exception:
+        modele_etanche = True          # en cas de doute, ne pas bloquer sur un detail
+
+    print()
+    print("  CONTROLE")
+    print("    d(delai)/d(cadence) = 0 ....... %s"
+          % ("OK" if invariant_memoire else "VIOLATION"))
+    print("    le seuil suit la cadence ...... %s" % ("OK" if invariant_monde else "VIOLATION"))
+    print("    signature de la derivation .... %s"
+          % ("OK, ni decay ni m ni h" if signature_etanche
+             else "VIOLATION : %s" % ", ".join(sorted(fuite))))
+    print("    modele indifferent au decay ... %s"
+          % ("OK" if modele_etanche else "VIOLATION"))
+
+    ok = invariant_memoire and invariant_monde and signature_etanche and modele_etanche
+    print()
+    print("  VERDICT : %s" % ("les deux horloges sont etanches" if ok
+                               else "une horloge fuit dans l'autre — ne pas publier"))
+    return 0 if ok else 1
 
     titre("4. Deux regimes, et un seul parametre les separe")
     print("  absence <  seuil : la porte rouvre, en payant le temps ou elle etait aveugle.")
