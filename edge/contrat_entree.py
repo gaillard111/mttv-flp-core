@@ -24,6 +24,7 @@ Ce que C doit montrer, et qui departage les deux autres :
 
 Aucune dependance.
 """
+import math
 import sys
 
 try:
@@ -36,7 +37,16 @@ W_M, W_R, W_C = 0.85, 0.10, 0.05
 SEUIL_FERMETURE = 0.45
 SEUIL_OUVERTURE = 0.15
 POROSITE_MAX = 0.20
-PEREMPTION = 20                  # au-dela, escalade au lieu de rouvrir
+
+# Seuil de peremption : il n'est pas choisi, il se derive. La demi-vie de la cicatrice est
+# le temps au bout duquel la memoire a perdu la moitie de son ecart au milieu :
+#     tau_m = ln(0,5) / ln(0,90) = 6,5788 cycles
+# On escalade apres trois demi-vies — au-dela, il ne reste que 12,5 % de l'ecart initial,
+# donc l'information portee par la memoire est trop degradee pour distinguer encore
+# « calme qui dure » et « silence qui s'installe ».
+DEMI_VIE = math.log(0.5) / math.log(DECAY)
+N_DEMI_VIES = 3
+PEREMPTION = int(math.ceil(N_DEMI_VIES * DEMI_VIE))    # -> 20
 
 PRESSION = [0.55, 0.70, 0.85] + [0.95] * 7
 R_PRESSION, C_PRESSION = 0.35, 0.25
@@ -169,6 +179,13 @@ def details(journal, pas_voulus):
 
 
 def main():
+    titre("Le seuil d'escalade n'est pas choisi, il est derive")
+    print("  demi-vie de la cicatrice : tau_m = ln(0,5)/ln(0,90) = %.4f cycles" % DEMI_VIE)
+    print("  seuil d'escalade         : %d demi-vies -> %d cycles (%.2f tau_m)"
+          % (N_DEMI_VIES, PEREMPTION, PEREMPTION / DEMI_VIE))
+    print("  memoire restante au seuil : %.1f %% de l'ecart initial"
+          % (100.0 * DECAY ** PEREMPTION))
+
     titre("A — implementation actuelle (regression : doit donner 8 et 22)")
     f, r, j = scenario("A", "absence", n=30)
     print("  fermeture %s | reouverture %s" % (f, r))
