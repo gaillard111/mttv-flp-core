@@ -143,7 +143,26 @@ def main():
     print("  (19 pas d'absence -> 22 + 19 = 41). Au-dessus : l'escalade est un VERROU")
     print("  definitif dans ce code -- rien ne le remet a zero, pas meme une lecture.")
 
-    titre("3. Deux regimes, et un seul parametre les separe")
+    titre("3. Les deux sens de l'invariance, et pourquoi c'est un test et non une maxime")
+    print("  Enonce sans emprunt d'autorite : aucune grandeur derivee de l'horloge interne")
+    print("  (decay, m, h) ne doit gouverner le seuil de peremption, qui appartient a")
+    print("  l'horloge externe (cadence des lectures) — et reciproquement.")
+    print()
+    print("  %-9s %-22s %-22s" % ("cadence", "seuil de peremption", "delai de reouverture"))
+    for cadence in (1, 2, 5, 10):
+        seuil = MANQUES_TOLEREES * cadence
+        f, r, _ = scenario(0.90, seuil, n_absence=0)
+        delai = (r - f) if (f and r) else None
+        print("  %-9d %-22s %-22s"
+              % (cadence, "%d cycles" % seuil,
+                 ("%d cycles" % delai) if delai else "-"))
+    print()
+    print("  Le seuil suit la cadence : il mesure le monde. Le delai de reouverture ne")
+    print("  bouge pas : il mesure la memoire. Chacun chez soi, et les deux tests tiennent.")
+    print("  C'est cela qu'un tableau d'invariance verifie — pas une formule, deux derives")
+    print("  partielles : d(seuil)/d(decay) = 0 et d(delai)/d(cadence) = 0.")
+
+    titre("4. Deux regimes, et un seul parametre les separe")
     print("  absence <  seuil : la porte rouvre, en payant le temps ou elle etait aveugle.")
     print("  absence >= seuil : la porte ne rouvre plus jamais ; il faut un tiers.")
     print()
