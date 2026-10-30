@@ -6,6 +6,12 @@ Ce dossier ne contient pas de doctrine. Il contient des **graines exécutables**
 réellement commis, sa correction minimale, et **le test qui échoue** si le défaut est présent
 ou si la correction sur-corrige.
 
+> **Gist public de la graine 1** — <https://gist.github.com/gaillard111/1664ef5ce4c82ec3b69f77cc91a7353b>
+> Copie du fichier canonique, faite mécaniquement (`gist_graine_1/creer_le_gist.bat`), **à ne
+> jamais éditer** : une mise à jour se fait en recopiant depuis ce dépôt, sinon les deux
+> divergent. Le gist diffère du dépôt d'un octet par ligne (CRLF local contre LF du dépôt) :
+> même texte, forme de fichier différente.
+
 ## Ne pas confondre avec les graines transductives
 
 Le corpus contient déjà des graines **doctrinales** — [`expansion_v2026.5/graines_manifeste.yaml`](../expansion_v2026.5/graines_manifeste.yaml:1)
