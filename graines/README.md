@@ -38,7 +38,7 @@ formats, et aucune porosité entre eux.
 | Graine | Défaut | Fichier |
 |---|---|---|
 | **absence ≠ zéro** | un flottant ne porte pas l'absence, donc le silence devient du calme | [`graine_absence_zero.py`](graine_absence_zero.py:1) |
-| invariance de dérivation | un seuil dérivé d'une constante interne suit la constante, pas le monde | à écrire |
+| **invariance de dérivation** | un seuil dérivé d'une constante interne suit la constante, pas le monde : **10 → 207 cycles** quand la décroissance va de 0,80 à 0,99, contre 3 pour une dérivation par cadence | [`graine_invariance_derivation.py`](graine_invariance_derivation.py:1) |
 | une horloge, deux métiers | résorption et autorisation de revenir portées par un seul paramètre | à écrire |
 | discordance = état | deux canaux contradictoires sont moyennés au lieu d'être signalés | à écrire |
 | sortie à deux termes | un verrou sans issue transforme une panne de capteur en nœud mort | à écrire |
