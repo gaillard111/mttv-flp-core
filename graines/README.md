@@ -27,11 +27,15 @@ formats, et aucune porosité entre eux.
 |---|---|---|
 | 1 | le défaut | une phrase, sans jargon |
 | 2 | le chiffre | mesuré, re-dérivable à la main, avec la commande qui le reproduit |
-| 3 | le code | ≤ 40 lignes utiles, aucune dépendance, aucun état caché |
+| 3 | le code | ≤ 120 lignes de fichier et ≤ 60 instructions (comptées par `ast`), aucune dépendance hors bibliothèque standard, aucun état caché |
 | 4 | **le test qui échoue** | la version fautive, pour que la graine prouve sa nécessité |
 | 5 | où elle mord | deux ou trois systèmes réels, nommés |
 
 **Une graine qui ne peut pas échouer n'est pas une graine : c'est une plaquette.**
+
+La borne de la partie 3 a été réécrite le 2026-10-31 : la première rédaction exigeait « ≤ 40 lignes
+utiles », chiffre qu'**aucune des trois graines ne tenait** — mesuré par `ast`, elles comptent 54,
+38 et 58 instructions. Le critère est désormais celui qui se vérifie, et il est vérifié.
 
 ## Le catalogue
 

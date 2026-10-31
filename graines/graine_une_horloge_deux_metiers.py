@@ -75,8 +75,10 @@ def main():
     assert (f, r0) == (8, 22), "reference : fermeture 8, reouverture 22, mesure %s" % ((f, r0),)
 
     delais = []
+    # Seuil volontairement fixe a 20, au-dessus des trois absences testees : on
+    # mesure le regime « trou » et non le regime « panne ».
     for absence in (0, 5, 19):
-        _, r, esc = course(0.90, seuil_cadence(1) * 7, absence)   # seuil 21 > 19
+        _, r, esc = course(0.90, 20, absence)
         assert esc is False and r is not None
         delais.append(r - f)
     # Pente exactement 1 : l'aveuglement coute sa duree, pas une cicatrice en plus.
