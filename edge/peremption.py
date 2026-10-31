@@ -219,12 +219,6 @@ def main():
     print("    modele indifferent au decay ... %s"
           % ("OK" if modele_etanche else "VIOLATION"))
 
-    ok = invariant_memoire and invariant_monde and signature_etanche and modele_etanche
-    print()
-    print("  VERDICT : %s" % ("les deux horloges sont etanches" if ok
-                               else "une horloge fuit dans l'autre — ne pas publier"))
-    return 0 if ok else 1
-
     titre("4. Deux regimes, et un seul parametre les separe")
     print("  absence <  seuil : la porte rouvre, en payant le temps ou elle etait aveugle.")
     print("  absence >= seuil : la porte ne rouvre plus jamais ; il faut un tiers.")
@@ -232,7 +226,14 @@ def main():
     print("  Le seuil n'est donc pas un reglage de duree de cicatrice, c'est le point ou")
     print("  l'absence cesse d'etre un trou ordinaire et devient une panne declaree.")
     print("  Sa valeur vient de la cadence du capteur, pas de la constante de decroissance.")
-    return 0
+
+    # Le verdict est imprime APRES la section 4. Il l'etait avant, ce qui rendait
+    # les quatre lignes ci-dessus inatteignables -- defaut corrige le 2026-10-31.
+    print()
+    ok = invariant_memoire and invariant_monde and signature_etanche and modele_etanche
+    print("  VERDICT : %s" % ("les deux horloges sont etanches" if ok
+                               else "une horloge fuit dans l'autre — ne pas publier"))
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

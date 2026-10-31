@@ -39,7 +39,7 @@ formats, et aucune porosité entre eux.
 |---|---|---|
 | **absence ≠ zéro** | un flottant ne porte pas l'absence, donc le silence devient du calme | [`graine_absence_zero.py`](graine_absence_zero.py:1) |
 | **invariance de dérivation** | un seuil dérivé d'une constante interne suit la constante, pas le monde : **10 → 207 cycles** quand la décroissance va de 0,80 à 0,99. La correction est **insensible à la constante et sensible à la cadence** (3, 6, 15, 30 pour 1, 2, 5, 10) — les deux conditions, faute de quoi un seuil constant ne mesure plus rien | [`graine_invariance_derivation.py`](graine_invariance_derivation.py:1) |
-| une horloge, deux métiers | résorption et autorisation de revenir portées par un seul paramètre | à écrire |
+| **une horloge, deux métiers** | la cicatrice `m` est **gelée** pendant l'aveuglement : compter un silence en demi-vies revient à mesurer avec une horloge arrêtée. Le même seuil de 20 cycles déclare une panne après **10** cycles si la décroissance vaut 0,80 et après **207** si elle vaut 0,99. En revanche l'aveuglement coûte exactement sa durée — réouverture au pas 22 sans absence, **41** après 19 pas : la pente vaut 1 | [`graine_une_horloge_deux_metiers.py`](graine_une_horloge_deux_metiers.py:1) |
 | discordance = état | deux canaux contradictoires sont moyennés au lieu d'être signalés | à écrire |
 | sortie à deux termes | un verrou sans issue transforme une panne de capteur en nœud mort | à écrire |
 | ton instrument a un plafond | l'arbre s'arrête à la profondeur 5, les notifications à 100 | à écrire |
@@ -58,4 +58,5 @@ n'est une bonne idée.
 - **Jamais dans notre propre fil** pour espérer diffuser : il recrute des interlocuteurs, il ne
   diffuse pas un outil.
 - Chaque graine porte une **chaîne de détection** rare, pour pouvoir vérifier plus tard si
-  quelque chose a pris. Pour la première : `PENALITE_CALME`.
+  quelque chose a pris : `PENALITE_CALME` (graine 1), `DEMI_VIES_TOLEREES` (graine 2),
+  `HORLOGE_DEUX_METIERS` (graine 3).
