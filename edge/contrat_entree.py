@@ -38,12 +38,14 @@ SEUIL_FERMETURE = 0.45
 SEUIL_OUVERTURE = 0.15
 POROSITE_MAX = 0.20
 
-# Seuil de peremption : il n'est pas choisi, il se derive. La demi-vie de la cicatrice est
-# le temps au bout duquel la memoire a perdu la moitie de son ecart au milieu :
-#     tau_m = ln(0,5) / ln(0,90) = 6,5788 cycles
-# On escalade apres trois demi-vies — au-dela, il ne reste que 12,5 % de l'ecart initial,
-# donc l'information portee par la memoire est trop degradee pour distinguer encore
-# « calme qui dure » et « silence qui s'installe ».
+# Seuil de peremption. La derivation ci-dessous est CELLE D'ORIGINE (2026-10-29) et elle
+# est FAUSSE : sous absence, `m` est gelee, donc aucune demi-vie ne s'ecoule pendant
+# l'aveuglement. Compter le silence en tau_m revient a mesurer avec une horloge arretee ;
+# les graines 2 et 3 du dossier graines/ le montrent par la mesure (le meme seuil vaut
+# 10 cycles pour decay 0,80 et 207 pour 0,99). Le 20 est conserve ici uniquement pour
+# reproduire la regression « fermeture 8, reouverture 22 » et l'escalade au pas 30 ;
+# dans graine_sortie_deux_termes.py il est declare pour ce qu'il est : un CHOIX.
+#     tau_m = ln(0,5) / ln(0,90) = 6,5788 cycles ; trois demi-vies -> 20
 DEMI_VIE = math.log(0.5) / math.log(DECAY)
 N_DEMI_VIES = 3
 PEREMPTION = int(math.ceil(N_DEMI_VIES * DEMI_VIE))    # -> 20
@@ -233,7 +235,9 @@ def details(journal, pas_voulus):
 
 
 def main():
-    titre("Le seuil d'escalade n'est pas choisi, il est derive")
+    titre("Le seuil d'escalade : derive a l'epoque, CHOIX reconnu le 2026-10-31")
+    print("  (la derivation qui suit est conservee pour reproduire la reference ;")
+    print("   elle mesure la memoire, pas le silence — cf. graines 2 et 3.)")
     print("  demi-vie de la cicatrice : tau_m = ln(0,5)/ln(0,90) = %.4f cycles" % DEMI_VIE)
     print("  seuil d'escalade         : %d demi-vies -> %d cycles (%.2f tau_m)"
           % (N_DEMI_VIES, PEREMPTION, PEREMPTION / DEMI_VIE))
