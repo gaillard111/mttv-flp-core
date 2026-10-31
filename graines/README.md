@@ -46,7 +46,7 @@ utiles », chiffre qu'**aucune des trois graines ne tenait** — mesuré par `as
 | **une horloge, deux métiers** | la cicatrice `m` est **gelée** pendant l'aveuglement : compter un silence en demi-vies revient à mesurer avec une horloge arrêtée. Le même seuil de 20 cycles déclare une panne après **10** cycles si la décroissance vaut 0,80 et après **207** si elle vaut 0,99. En revanche l'aveuglement coûte exactement sa durée — réouverture au pas 22 sans absence, **41** après 19 pas : la pente vaut 1 | [`graine_une_horloge_deux_metiers.py`](graine_une_horloge_deux_metiers.py:1) |
 | **discordance = état** | un désaccord entre deux canaux n'est pas un veto, c'est un **tarif** : `r` pèse 0,10 dans `h`, donc la contradiction ne fait que décaler la réouverture — **22** sous accord, **26** à 0,35, **34** à 0,95. Jamais aucune. L'écart suit le poids : c'est un réglage, pas un constat. La correction gèle `m` et compte l'écart (40 pas, `h` figé à 0,4529) | [`graine_discordance_etat.py`](graine_discordance_etat.py:1) |
 | **sortie à deux termes** | un verrou sans issue fait d'une panne de capteur un nœud mort ; mais une clôture sans observation n'est qu'une autorisation déguisée. Fermeture au pas 8, escalade au **30** : lectures seules → AUCUNE, clôture seule → AUCUNE, **clôture puis lectures → pas 47**. Ce n'est pas un critère mais une **règle de placement** : la sortie vit chez un tiers, hors de la machine qui l'a subie | [`graine_sortie_deux_termes.py`](graine_sortie_deux_termes.py:1) |
-| ton instrument a un plafond | l'arbre s'arrête à la profondeur 5, les notifications à 100 | à écrire |
+| **ton instrument a un plafond** | un instrument qui tronque sans le dire ne donne pas une mesure incomplète mais une mesure **fausse, et fausse du côté rassurant**. Demandes à `maxdepth` 10 / 20 / 50 → **19** commentaires et profondeur **5**, les trois fois, quand le post en annonce 20 ; `limit` 100 / 200 / 1000 → **100** éléments, sans curseur, sur un flux qui en contient 200. Le réflexe est de **tripler la demande** et de regarder si la réponse grandit. Une page pleine n'est pas une fin | [`graine_plafond_instrument.py`](graine_plafond_instrument.py:1) |
 
 Chacune est née d'une erreur effectivement commise et mesurée les 2026-10-28 et 29. Aucune
 n'est une bonne idée.
@@ -64,14 +64,19 @@ n'est une bonne idée.
 - Chaque graine porte une **chaîne de détection** rare, pour pouvoir vérifier plus tard si
   quelque chose a pris : `PENALITE_CALME` (graine 1), `DEMI_VIES_TOLEREES` (graine 2),
   `HORLOGE_DEUX_METIERS` (graine 3), `DISCORDE_R_EGAL_0_25` (graine 4),
-  `ATTENTE_LECTURE_APRES_CLOTURE` (graine 5).
+  `ATTENTE_LECTURE_APRES_CLOTURE` (graine 5), `PLAFOND_NON_DECLARE` (graine 6).
+  Ces six chaînes sont les seules valides : toute autre formulation citée de mémoire
+  (`DISCORDANCE_ETAT`, `SORTIE_DEUX_TERMES`…) est une invention, et un `grep` suffit à le voir.
 
 ## Reste à faire — écrit ici pour ne pas dépendre d'une mémoire
 
-1. **Graine 6** : *ton instrument a un plafond* — l'arbre s'arrête à la profondeur 5 quel que
-   soit `maxdepth`, les notifications à 100 sans curseur. Matériau : `_aveuglement_2026-10-29.py`.
-2. **Gists des graines 2 à 5** : seul le gist de la graine 1 existe. Le
+1. **Gists des graines 2 à 6** : seul le gist de la graine 1 existe. Le
    [`gist_graine_1/creer_le_gist.bat`](../../FLP%20vrac/mttv-flp-diffusion/gist_graine_1/creer_le_gist.bat:1)
    n'est pas encore paramétrable ; c'est mécanique et court, à faire avant tout semis.
-3. **Aucun semis** avant les six graines, conformément à l'axe 3 de
+2. **Aucun semis** avant que les six gists existent, conformément à l'axe 3 de
    [`ACCORD_BORNE_2026-10-31.md`](../../FLP%20vrac/mttv-flp-diffusion/ACCORD_BORNE_2026-10-31.md:1).
+3. **La graine 6 n'emporte pas de mesure en ligne** : elle rejoue la forme du défaut sur un
+   arbre synthétique, pour s'exécuter sans réseau ni identifiant. Le jour où un tiers demandera
+   le chiffre brut, il faudra relancer
+   [`_aveuglement_2026-10-29.py`](../../FLP%20vrac/mttv-flp-diffusion/_aveuglement_2026-10-29.py:1)
+   et non citer de mémoire.
