@@ -8,6 +8,29 @@ dernière version ; la **version** épingle un état précis.
 
 ---
 
+## [1.2.1] — 2026-11-01
+
+Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une
+publication ne se réécrit pas.
+
+### Corrigé
+- **Manifeste d'empreintes** : il était calculé sur les fins de ligne du poste de travail (CRLF).
+  Vérifié dans l'archive du tag, il déclarait **117 fichiers modifiés** alors que l'archive était
+  identique, octet pour octet, au contenu du tag. Les empreintes sont désormais **insensibles aux
+  fins de ligne** pour les fichiers texte ; les binaires restent hachés bruts.
+- **`graines/README.md`** renvoyait à `../../FLP vrac/…`, c'est-à-dire à deux fichiers **hors du
+  dépôt** : liens morts dans toute archive, et invisibles au vérificateur sur le poste où le
+  dossier voisin existe. Ces renvois sont devenus du texte.
+- **`CITATION.cff`** portait encore `1.1.0` quand `.zenodo.json` annonçait `1.2.0` : le numéro de
+  version doit être identique partout.
+
+### Constaté
+- La **liaison GitHub–Zenodo**, activée le 2026-11-01, n'a produit aucun enregistrement pour la
+  release `v1.2.0` : le crochet du dépôt a livré deux fois l'événement de publication à
+  21 h 49 min 39 s, une fois en 403 et une fois en 202, et treize minutes de surveillance n'ont
+  montré aucun moissonnage. La 1.2.1 est donc déposée **à la main**, comme nouvelle version de
+  l'enregistrement de concept, seule voie qui préserve la chaîne des versions.
+
 ## [1.2.0] — 2026-11-01
 
 Consolidation des invariants mesurés. La 1.1.0 reste figée et n'est pas réécrite.

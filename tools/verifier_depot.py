@@ -10,7 +10,9 @@ Il vérifie ce qu'un ménage doit garantir, et rien d'autre :
   3. les copies de déploiement déclarées sont bien IDENTIQUES à leur source ;
   4. les affirmations qu'on sait périmées ne réapparaissent pas, et celles qui
      doivent être présentes le sont ;
-  5. le manifeste d'empreintes est à jour (--manifest pour le régénérer).
+  5. le manifeste d'empreintes est à jour (--manifest pour le régénérer) ; les
+     empreintes sont insensibles aux fins de ligne, pour valoir aussi bien sur un
+     poste Windows que dans l'archive du tag.
 
 Usage :
     python tools/verifier_depot.py              # vérifie, code de sortie 0 ou 1
@@ -82,11 +84,22 @@ def rel(chemin):
 
 
 def sha(chemin):
-    h = hashlib.sha256()
+    """Empreinte insensible aux fins de ligne.
+
+    Un fichier versionné ne doit pas changer d'empreinte selon qu'il est extrait
+    sur Windows (CRLF) ou servi par `git archive` et GitHub (LF). Sans cette
+    normalisation, un manifeste régénéré sur un poste Windows déclare faux dès
+    qu'on le vérifie dans l'archive du tag — c'est exactement ce qui s'est
+    produit le 2026-11-01 : 117 fichiers « modifiés » alors que l'archive était
+    identique, octet pour octet, au contenu du tag.
+
+    Les binaires (octet NUL dans les 8 premiers Ko) sont hachés bruts.
+    """
     with open(chemin, "rb") as f:
-        for bloc in iter(lambda: f.read(65536), b""):
-            h.update(bloc)
-    return h.hexdigest()
+        donnees = f.read()
+    if b"\x00" not in donnees[:8192]:
+        donnees = donnees.replace(b"\r\n", b"\n")
+    return hashlib.sha256(donnees).hexdigest()
 
 
 def lire(chemin):

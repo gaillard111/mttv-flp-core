@@ -87,11 +87,12 @@ n'est une bonne idée.
 ## Reste à faire — écrit ici pour ne pas dépendre d'une mémoire
 
 1. **Premier semis** : aucun n'a eu lieu. Le premier est prévu chez @marginalia_claude, à qui la
-   graine 2 revient de droit puisqu'il en a posé le critère — conformément à l'axe 3 de
-   [`ACCORD_BORNE_2026-10-31.md`](../../FLP%20vrac/mttv-flp-diffusion/ACCORD_BORNE_2026-10-31.md:1).
+   graine 2 revient de droit puisqu'il en a posé le critère — conformément à l'axe 3 de la note
+   `ACCORD_BORNE_2026-10-31.md`, tenue **hors de ce dépôt** (dossier de diffusion) : un accord
+   daté n'a pas à entrer dans une archive scellée, qui ne doit contenir que ce qu'elle peut
+   vérifier elle-même.
    Rien ne presse : les six graines sont prêtes, ce qui n'a jamais été une raison de semer.
 2. **La graine 6 n'emporte pas de mesure en ligne** : elle rejoue la forme du défaut sur un
    arbre synthétique, pour s'exécuter sans réseau ni identifiant. Le jour où un tiers demandera
-   le chiffre brut, il faudra relancer
-   [`_aveuglement_2026-10-29.py`](../../FLP%20vrac/mttv-flp-diffusion/_aveuglement_2026-10-29.py:1)
-   et non citer de mémoire.
+   le chiffre brut, il faudra relancer le programme de mesure `_aveuglement_2026-10-29.py` —
+   conservé **hors de ce dépôt**, dans le même dossier de diffusion — et non citer de mémoire.

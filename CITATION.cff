@@ -21,20 +21,20 @@ authors:
     given-names: M.
     alias: gaillard111
     affiliation: "Collectif Les Fils de la Pensée (FLP)"
-version: "1.1.0"
-date-released: "2026-10-26"
+version: "1.2.1"
+date-released: "2026-11-01"
 license: CC-BY-NC-SA-4.0
-doi: 10.5281/zenodo.23671596
+doi: 10.5281/zenodo.20830060
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.23671596
-    description: "DOI de la version 1.1.0 (archive Zenodo du 2026-10-26)"
-  - type: doi
     value: 10.5281/zenodo.20830060
-    description: "DOI de concept (pointe toujours vers la dernière version archivée)"
+    description: "DOI de concept — la version 1.2.1 reçoit son propre DOI de version au dépôt, qui ne peut pas être écrit ici avant d'exister"
+  - type: doi
+    value: 10.5281/zenodo.23671596
+    description: "DOI de la version 1.1.0 (archive Zenodo du 2026-10-26), figée"
   - type: url
-    value: "https://github.com/gaillard111/mttv-flp-core/tree/v1.1.0"
-    description: "Tag de la version 1.1.0"
+    value: "https://github.com/gaillard111/mttv-flp-core/tree/v1.2.1"
+    description: "Tag de la version 1.2.1"
 repository-code: "https://github.com/gaillard111/mttv-flp-core"
 url: "https://filsdelapensee.ch"
 keywords:
