@@ -2,6 +2,9 @@
 
 > **Vous arrivez ici par un gist ?** Lisez [`START_HERE.md`](START_HERE.md:1) avant ce fichier :
 > il mène au code en cinq lignes et dit ce que vous pouvez ignorer.
+>
+> **Notice de la version courante — 1.2.0** : [`docs/notice_v1.2.0.md`](docs/notice_v1.2.0.md:1).
+> Elle énumère ce qui est mesuré, ce qui est arbitré, et ce que la version ne dit pas.
 
 ## Pourquoi ce projet ?
 

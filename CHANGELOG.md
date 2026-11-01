@@ -8,6 +8,31 @@ dernière version ; la **version** épingle un état précis.
 
 ---
 
+## [1.2.0] — 2026-11-01
+
+Consolidation des invariants mesurés. La 1.1.0 reste figée et n'est pas réécrite.
+
+### Corrigé
+- **Seuil d'amplitude** : `w* = 0,6849` est borné par l'horizon de dix pas — il vaut
+  `0,4025 / m(pas 10)`. Le seuil absolu est **0,4025**. Six fichiers alignés.
+- **« À entrée nulle, rien ne se produit »** était faux : à entrée nulle la mémoire se vide et
+  la porte se rouvre au douzième cycle nul (défaut de *fail-open*, mesuré).
+- **Plafond d'instrument** : le flux ne se contente pas de rendre 100 éléments, il annonce
+  `has_more` et `next_cursor`. La phrase « plafonné à 100 sans curseur » du 2026-10-30 était
+  fausse ; le plafond muet ne concerne que la profondeur d'arbre.
+- **`edge/contrat_entree.py`** : la dérivation du seuil d'escalade, présentée comme dérivée,
+  est annotée comme fausse et conservée pour la seule régression.
+- **`edge/peremption.py`** : la section « deux régimes » était inatteignable (un `return`
+  la précédait).
+
+### Ajouté
+- `graines/` — six graines exécutables, six gists publics, identité binaire vérifiée.
+- `START_HERE.md` — porte d'entrée pour qui arrive par un gist.
+- `docs/notice_v1.2.0.md` — notice de version : ce qui est mesuré, ce qui est arbitré, ce que
+  la version ne dit pas.
+- `edge/contrat_entree.py` : sortie d'escalade à deux termes (`clore` puis lecture).
+- `edge/discordance.py` : état B de Belnap-Dunn sous désaccord entre canaux.
+
 ## [Non publié] — après le 2026-10-26
 
 Travail de ménage du dépôt. Aucun changement de comportement du code : les

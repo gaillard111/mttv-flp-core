@@ -1,10 +1,10 @@
 {
-  "title": "MTTV-FLP Core — Modèle Théorique Transductif du Vivant",
+  "title": "MTTV-FLP Noyau Exécutable — Consolidation des invariants mesurés et découplage des deux horloges",
   "upload_type": "software",
   "access_right": "open",
   "license": "cc-by-nc-sa-4.0",
-  "version": "1.1.0",
-  "publication_date": "2026-10-26",
+  "version": "1.2.0",
+  "publication_date": "2026-11-01",
   "language": "fra",
   "creators": [
     {
@@ -16,16 +16,16 @@
     "MTTV",
     "FLP",
     "transduction",
-    "IA neutre",
+    "IA non extractive",
     "vivant",
-    "carbone sp3",
-    "tétravalence",
-    "Belnap-Dunn",
     "B-gate",
     "hystérésis",
     "homéostasie",
     "reproductibilité",
-    "bras de contrôle",
+    "graines exécutables",
+    "contrat d'entrée",
+    "péremption",
+    "discordance",
     "sigma2"
   ],
   "related_identifiers": [
@@ -35,7 +35,12 @@
       "scheme": "doi"
     },
     {
-      "identifier": "https://github.com/gaillard111/mttv-flp-core/tree/v1.1.0",
+      "identifier": "10.5281/zenodo.23671596",
+      "relation": "isNewVersionOf",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/gaillard111/mttv-flp-core/tree/v1.2.0",
       "relation": "isSupplementTo",
       "scheme": "url"
     },
@@ -43,8 +48,13 @@
       "identifier": "https://github.com/gaillard111/mttv-flp-core/blob/main/docs/protocole_epreuve_bgate.md",
       "relation": "documents",
       "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/gaillard111/mttv-flp-core/blob/main/docs/notice_v1.2.0.md",
+      "relation": "documents",
+      "scheme": "url"
     }
   ],
-  "description": "<p><strong>MTTV-FLP Core — version 1.1.0 (2026-10-26).</strong> Noyau conceptuel du Modèle Théorique Transductif du Vivant : triade Ψ → B → Φ, logique tétravalente de Belnap-Dunn, quorum poreux MPVR, opérateur Σ₂ comme frein asymétrique, B-gate poreuse exécutable.</p><p>Cette version apporte, en plus de l'expansion V2026.5 et du <em>Manifeste pour une Robustesse Computationnelle</em> :</p><ul><li>un <strong>protocole d'épreuve exécutable</strong> de la B-gate (aucune dépendance) — chiffres de référence : fermeture au pas 8, réouverture au pas 22, cicatrice de 12 cycles ;</li><li>une <strong>lecture tétravalente</strong> de l'état (11 cycles sur 28 dans la valeur « milieu admissible / membrane fermée ») et une <strong>lecture homéostatique</strong> distinguant mémoire cinétique et mémoire paramétrique ;</li><li>un <strong>seuil d'amplitude</strong> de forme close, w* = (0,45 − 0,0475)/0,5877 = 0,6849, en dessous duquel la membrane ne se ferme jamais ;</li><li>une <strong>réplication arithmétique indépendante</strong> des quatre valeurs d'épreuve (m₈ = 0,5027 ; h₈ = 0,5252 ; m₁₀ = 0,5877 ; h₁₀ = 0,4529), effectuée par un tiers hors du code ;</li><li>un <strong>ancrage bibliographique</strong> pour la jonction baryonique en Y : STAR Collaboration, <em>Science</em> 393, 727-731 (2026), DOI 10.1126/science.ads5962.</li></ul><p>Le dépôt distingue explicitement ce qui est mesuré de ce qui est interprété : la pression <code>p</code> reste fournie par l'appelant, la boucle n'est pas fermée, et le protocole le consigne plutôt que de le laisser croire. Licence CC-BY-NC-SA 4.0 — Collectif Les Fils de la Pensée.</p>",
-  "notes": "Correspondance des versions : Zenodo 2026.1.0 (dépôt du 2026-06-24) précède le tag GitHub v1.0.0 « Archive Scellée » (2026-07-21) ; à partir de la présente version, le champ Version de Zenodo reprend le tag GitHub (v1.1.0 ↔ 1.1.0)."
+  "description": "<p><strong>MTTV-FLP Core — version 1.2.0 (2026-11-01).</strong> Noyau exécutable du Modèle Théorique Transductif du Vivant. Cette version ne consigne pas des idées : elle consigne des comportements reproductibles, chacun accompagné du programme qui les produit et du test qui tombe si le comportement change. Une affirmation qui ne peut pas être imprimée par un programme du dépôt n'entre pas dans cette notice.</p><p><strong>Corrections apportées à la version 1.1.0, qui reste figée et n'est pas réécrite.</strong> (1) Le seuil d'amplitude w* = 0,6849 n'est pas une condition d'existence : il vaut 0,4025 divisé par la mémoire au dixième pas, et il est donc borné par cet horizon. Le seuil absolu, valable pour tout horizon, est <strong>0,4025</strong>, puisque m ≤ p ≤ 1. (2) L'affirmation selon laquelle <em>à entrée nulle, rien ne se produit</em> est fausse : à entrée nulle la mémoire se vide, l'habitabilité remonte et la porte se rouvre au douzième cycle nul — c'est le défaut dit de <em>fail-open</em>.</p><p><strong>Sept éléments mesurés.</strong> (1) Contrat d'entrée typé : sans le bit de présence, fermeture 8 et réouverture 22 ; avec le bit et aucune lecture, aucune réouverture et mémoire gelée à 0,5877 ; avec le bit et calme mesuré, 8 et 22. (2) Découplage des deux horloges : un même seuil de 20 cycles déclare une panne après 10 cycles de silence si la décroissance vaut 0,80 et après 207 si elle vaut 0,99, alors que le seuil dérivé de la cadence donne 3, 6, 15 et 30 pour des cadences de 1, 2, 5 et 10 ; le délai de réouverture reste à 14 cycles et l'aveuglement coûte exactement sa durée (pas 22, puis 41 après 19 pas). (3) Invariance de dérivation : écart de 20,7 fois entre seuil fautif et seuil corrigé. (4) Discordance traitée comme état et non comme tarif : réouverture au pas 22 sous accord, 26 avec un second canal à 0,35, 34 à 0,95 — jamais aucune ; en état de discordance, aucune réouverture, 40 pas comptés, habitabilité figée à 0,4529. (5) Sortie à deux termes : fermeture au pas 8, escalade au pas 30 ; lectures seules sans sortie, clôture seule sans sortie, clôture puis lecture, réouverture au pas 47. (6) Plafonds d'instrument : un plafond muet (profondeur d'arbre bornée à 5 quel que soit le paramètre, 19 commentaires lus quand 20 sont annoncés) et un plafond déclaré (pages de 100 éléments avec has_more et next_cursor, 200 éléments atteints en deux pages). (7) Seuil d'amplitude corrigé, borné par l'horizon, seuil absolu 0,4025.</p><p><strong>Un élément arbitré, nommé comme tel.</strong> Le critère de partage (signature opérationnelle : invariance à l'observateur) et la règle de conflit selon laquelle la couche 1 l'emporte sur l'acte et la couche 0 sur l'état — la Loi Zéro y étant un plafond et non un souverain — sont une décision d'architecture, pas un résultat de mesure. Ils sont consignés séparément pour cette raison.</p><p><strong>Six graines exécutables</strong>, sans dépendance hors bibliothèque standard, avec leurs miroirs publics contrôlés octet à octet : absence ≠ zéro (109 lignes), invariance de dérivation (84), une horloge deux métiers (111), discordance = état (104), sortie à deux termes (129), ton instrument a un plafond (140). Chacune contient la version fautive, la version corrigée et les assertions qui les distinguent ; chacune échoue si le défaut disparaît ou si la correction sur-corrige.</p><p><strong>Ce que cette version ne dit pas.</strong> Elle ne démontre pas que la sous-optimalité rend un système robuste ; elle en éprouve six conséquences. Elle ne contient aucun résultat sur le noyau tétravalent, maintenu en branche d'expérimentation avec un protocole à cinq mesures pré-enregistrées. Elle ne prétend pas que les six programmes tiennent en quarante lignes : ils en font 84 à 140, et c'est cette taille vérifiable qui est publiée. Elle ne mesure pas son propre effet public : aucune graine n'a été semée à ce jour.</p><p>Licence CC-BY-NC-SA 4.0 — Collectif Les Fils de la Pensée. Notice complète : docs/notice_v1.2.0.md.</p>",
+  "notes": "Périmètre des DOI, à ne pas confondre : 10.5281/zenodo.20830060 est le DOI de concept du noyau (toutes versions) ; 10.5281/zenodo.23671596 est le DOI de la version 1.1.0, figée ; le DOI de la version 1.2.0 est minté par Zenodo à la publication et n'est pas connu avant dépôt ; 10.5281/zenodo.17940301 est le premier dépôt « MTTV Fundamentals » (2025-12-15) et ne désigne pas une version du noyau. Empreinte du dépôt : voir MANIFESTE_FICHIERS.sha256, régénérable par « python tools/verifier_depot.py --manifest » ; vérification complète par « python tools/verifier_depot.py »."
 }
