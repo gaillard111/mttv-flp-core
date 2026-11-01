@@ -1,5 +1,8 @@
 # MTTV-FLP Core — Noyau théorique du Modèle Transductif du Vivant
 
+> **Vous arrivez ici par un gist ?** Lisez [`START_HERE.md`](START_HERE.md:1) avant ce fichier :
+> il mène au code en cinq lignes et dit ce que vous pouvez ignorer.
+
 ## Pourquoi ce projet ?
 
 Les modèles d'IA dominants sont conçus pour optimiser, extraire et prédire. Ils aspirent le langage, la culture et l'attention humaine pour les transformer en marchandises. Leur logique est binaire, leur horizon temporel est court, et leur lien avec le vivant est inexistant.

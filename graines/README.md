@@ -2,6 +2,9 @@
 
 ↑ [Retour au README du dépôt](../README.md)
 
+> **Vous arrivez par un gist sans connaître le projet ?** Commencez par
+> [`../START_HERE.md`](../START_HERE.md:1) : cinq lignes pour savoir quoi lire et quoi ignorer.
+
 Ce dossier ne contient pas de doctrine. Il contient des **graines exécutables** : un défaut
 réellement commis, sa correction minimale, et **le test qui échoue** si le défaut est présent
 ou si la correction sur-corrige.
