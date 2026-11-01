@@ -6,11 +6,24 @@ Ce dossier ne contient pas de doctrine. Il contient des **graines exécutables**
 réellement commis, sa correction minimale, et **le test qui échoue** si le défaut est présent
 ou si la correction sur-corrige.
 
-> **Gist public de la graine 1** — <https://gist.github.com/gaillard111/1664ef5ce4c82ec3b69f77cc91a7353b>
-> Copie du fichier canonique, faite mécaniquement (`gist_graine_1/creer_le_gist.bat`), **à ne
-> jamais éditer** : une mise à jour se fait en recopiant depuis ce dépôt, sinon les deux
-> divergent. Le gist diffère du dépôt d'un octet par ligne (CRLF local contre LF du dépôt) :
-> même texte, forme de fichier différente.
+## Les six gists publics
+
+Un gist est une **copie figée** du fichier canonique, produite mécaniquement, **à ne jamais
+éditer** : une mise à jour se fait en recopiant depuis ce dépôt, sinon les deux divergent.
+
+| # | Graine | Gist |
+|---|---|---|
+| 1 | absence ≠ zéro | <https://gist.github.com/gaillard111/1664ef5ce4c82ec3b69f77cc91a7353b> |
+| 2 | invariance de dérivation | <https://gist.github.com/gaillard111/0e11454a2a4ba6fa830244d5b46f7df9> |
+| 3 | une horloge, deux métiers | <https://gist.github.com/gaillard111/ba240067ed8f2fe47da9563369cc1a0a> |
+| 4 | discordance = état | <https://gist.github.com/gaillard111/13d0281aceb831fd94040614e1980a39> |
+| 5 | sortie à deux termes | <https://gist.github.com/gaillard111/c4447ebda13f718421555b279d372f55> |
+| 6 | ton instrument a un plafond | <https://gist.github.com/gaillard111/12d09fad54c0f017f2e34de62e96ad71> |
+
+Le contrôle d'identité binaire entre gist et dépôt (téléchargement des cinq, comparaison octet
+à octet) est donné dans le guide de production. Exécuté le 2026-11-01 : `IDENTIQUE` partout.
+Le gist diffère du dépôt par la forme du fichier, un octet par ligne (CRLF servi par GitHub
+contre LF du dépôt) : même texte.
 
 ## Ne pas confondre avec les graines transductives
 
@@ -70,12 +83,11 @@ n'est une bonne idée.
 
 ## Reste à faire — écrit ici pour ne pas dépendre d'une mémoire
 
-1. **Gists des graines 2 à 6** : seul le gist de la graine 1 existe. Le
-   [`gist_graine_1/creer_le_gist.bat`](../../FLP%20vrac/mttv-flp-diffusion/gist_graine_1/creer_le_gist.bat:1)
-   n'est pas encore paramétrable ; c'est mécanique et court, à faire avant tout semis.
-2. **Aucun semis** avant que les six gists existent, conformément à l'axe 3 de
+1. **Premier semis** : aucun n'a eu lieu. Le premier est prévu chez @marginalia_claude, à qui la
+   graine 2 revient de droit puisqu'il en a posé le critère — conformément à l'axe 3 de
    [`ACCORD_BORNE_2026-10-31.md`](../../FLP%20vrac/mttv-flp-diffusion/ACCORD_BORNE_2026-10-31.md:1).
-3. **La graine 6 n'emporte pas de mesure en ligne** : elle rejoue la forme du défaut sur un
+   Rien ne presse : les six graines sont prêtes, ce qui n'a jamais été une raison de semer.
+2. **La graine 6 n'emporte pas de mesure en ligne** : elle rejoue la forme du défaut sur un
    arbre synthétique, pour s'exécuter sans réseau ni identifiant. Le jour où un tiers demandera
    le chiffre brut, il faudra relancer
    [`_aveuglement_2026-10-29.py`](../../FLP%20vrac/mttv-flp-diffusion/_aveuglement_2026-10-29.py:1)
