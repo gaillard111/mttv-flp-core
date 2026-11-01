@@ -31,6 +31,23 @@ publication ne se réécrit pas.
   montré aucun moissonnage. La 1.2.1 est donc déposée **à la main**, comme nouvelle version de
   l'enregistrement de concept, seule voie qui préserve la chaîne des versions.
 
+### Déposé
+- **DOI de version :** `10.5281/zenodo.23869556` · **concept :** `10.5281/zenodo.20830060`, qui
+  résout désormais sur la 1.2.1.
+- Archive : `mttv-flp-core-v1.2.1.zip`, **4 207 084 octets**, MD5
+  `16b2005d13d1c4a9f5db7077080c070d`, sha256
+  `385F35B47EB4163AE427107C230EED3E8E5514444376AB7A89CB474890FC2B11`.
+- **Vérifiée après dépôt, dans son état téléchargé depuis Zenodo** : `python
+  tools/verifier_depot.py` rend « dépôt cohérent » ; notice et `START_HERE.md` présents ;
+  `.zenodo.json` en `1.2.1`. Contrôles par l'API : `conceptdoi` = `10.5281/zenodo.20830060`,
+  version `1.2.1`, date `2026-11-01`, un seul fichier, empreinte identique à celle déposée.
+- **Deux écarts assumés, nommés ici parce qu'ils sont dans l'archive.** (1) Le `.zenodo.json`
+  déposé porte `isSupplementTo` sur le tag `v1.2.0` : il avait été écrit avant l'existence de la
+  1.2.1, et un dépôt manuel ne relit pas ce fichier — les champs ont été saisis dans le
+  formulaire. (2) Les identifiants liés du formulaire ont été vidés de l'attribution fausse
+  (`17940301`, « MTTV Fundamentals », n'est pas une version antérieure du noyau) et n'ont pas été
+  reconstitués ce soir ; la chaîne des versions, elle, est portée par Zenodo lui-même.
+
 ## [1.2.0] — 2026-11-01
 
 Consolidation des invariants mesurés. La 1.1.0 reste figée et n'est pas réécrite.
