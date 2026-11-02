@@ -107,6 +107,25 @@ REASSURANCE = [
      r"conforme au comportement attendu|pas un bug|not a bug)"),
     ("blocage_subi",
      r"\b(bloque|bloquee?|gele|gelee?|fige|freeze|frozen|stuck)\b"),
+    # Ajouts du 2026-11-02, après une fournée de six cas neufs qui a donné **1 sur 6** :
+    # la famille ne généralisait pas, elle était ajustée à ses cinq cas de mise au point.
+    # Les mots ci-dessous viennent du corpus, pas de l'imagination : « 0 rouge », « logs est
+    # VIDE … aucune exécution prouvée », « sinon un reboot tue la mémoire », « unexpected end
+    # of hex escape », « le nom mentait », « un sort écrase le score », « palier 5 alors que ».
+    ("zero_de_succes",
+     r"\b0\s+(rouges?|echecs?|erreurs?|failed|failures|errors?|warnings?)\b"),
+    ("preuve_absente",
+     r"(sans artefact|sans preuve|aucune execution prouvee|no artifact|no evidence|sans trace)"),
+    ("perte_conditionnelle",
+     r"\b(sinon|otherwise|faute de quoi|for lack of)\b.{0,80}"
+     r"(tue|perd|wipes?|lost|disparait|kills?)"),
+    ("troncature_deguisee",
+     r"(unexpected end of|truncat\w*|cut off|incomplete|partially (written|sent)|column \d{3,})"),
+    ("ecrasement_de_signal",
+     r"(ecrase|overrides?|crushes?|outweighs?).{0,60}"
+     r"(score|signal|priorite|priority|rank|pertinence)"),
+    ("rang_contre_monde",
+     r"(palier|rang|rank|tier|classement).{0,80}(alors que|tandis que|whereas|while)"),
 ]
 
 _POS = [(g, n, re.compile(x, re.DOTALL)) for g, n, x in POSITIFS]
@@ -279,6 +298,23 @@ HARD_TEST = [
     (6, "michel : ✅ VALIDATION PASSED"),
 ]
 
+# Seconde fournée, reçue le 2026-11-02 au soir. Elle **n'a pas servi à régler** les motifs : elle a
+# été passée telle quelle et a rendu **1 sur 6**. Son statut de jeu de test est désormais dépensé —
+# une mesure honnête de la prochaine version exigera une fournée neuve, jamais revue.
+HARD_TEST_2 = [
+    (1, "0 rouge SANS ARTEFACT — Protocole_Willy/logs est VIDE, alors que le script écrit "
+        "lui-même son journal -> aucune exécution prouvée."),
+    (5, "Je vérifie si quelque chose relance le pont RAG au démarrage (sinon, un reboot tue "
+        "la mémoire de ton Zoo)."),
+    (6, "ça fonctionne pas sur noramind : DeepSeek completion error: 400 Failed to parse the "
+        "request body as JSON: messages[139].content: unexpected end of hex escape at line 1 "
+        "column 882939"),
+    (6, "la dérive dépôt-release était invisible => le nom mentait"),
+    (2, "Pondération 1,5 x visible : plaisir (3 occurrences, étiquette) est au palier 5, alors "
+        "que l'amour (4 occurrences, mot du texte) est au palier 4. La main humaine pèse plus."),
+    (4, "sort = amount asc ; Elasticsearch : un sort écrase le score de pertinence."),
+]
+
 
 def _crible():
     """Rend (échecs, positifs détectés, faux positifs, cas durs relevés, bruit en a_relire)."""
@@ -314,15 +350,23 @@ def _crible():
     if bruit > 12:
         echecs.append("trop de bruit dans a_relire : %d/%d (tolérance 12)"
                       % (bruit, len(NEGATIFS_TEST)))
-    return echecs, detectes, len(faux), durs, bruit
+    # Seconde fournée : elle doit être relevée, sans quoi la famille reste ajustée à la première.
+    durs2 = sum(1 for _, phrase in HARD_TEST_2 if a_relire({"texte": phrase}) is not None)
+    if durs2 < len(HARD_TEST_2):
+        manques = [phrase[:50] for _, phrase in HARD_TEST_2
+                   if a_relire({"texte": phrase}) is None]
+        echecs.append("fournée 2 : %d/%d relevés, manquants : %s"
+                      % (durs2, len(HARD_TEST_2), " | ".join(manques)))
+    return echecs, detectes, len(faux), durs, bruit, durs2
 
 
 if __name__ == "__main__":
-    echecs, rappel, faux, durs, bruit = _crible()
+    echecs, rappel, faux, durs, bruit, durs2 = _crible()
     print("chaîne de détection : %s" % CHAINE_DE_DETECTION)
     print("positifs détectés   : %d/%d" % (rappel, len(POSITIFS_TEST)))
     print("faux positifs       : %d/%d" % (faux, len(NEGATIFS_TEST)))
-    print("cas durs à relire   : %d/%d" % (durs, len(HARD_TEST)))
+    print("cas durs, fournée 1 : %d/%d" % (durs, len(HARD_TEST)))
+    print("cas durs, fournée 2 : %d/%d" % (durs2, len(HARD_TEST_2)))
     print("bruit dans a_relire : %d/%d (toléré, famille de rappel)" % (bruit, len(NEGATIFS_TEST)))
     exemple = analyser({"texte": POSITIFS_TEST[8][1], "url": "https://exemple.fr/fil#12",
                         "date": "2026-11-02", "auteur": "exemple", "source": "forum"})

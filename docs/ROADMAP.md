@@ -165,6 +165,21 @@ sémantique des agrégats se discute (`pola-rs/polars`, `apache/arrow` — nul, 
 vérifier que la friction y est **dans ses mots**. Une graine muette ne dit jamais si le monde est
 calme ou si l'on regarde au mauvais endroit.
 
+**Quatrième défaut, mesuré le 2026-11-02 au soir : le sur-ajustement.** La famille `a_relire`, réglée
+sur cinq cas, appliquée **sans retouche** à six cas neufs, en relève **un seul**. Après extension du
+vocabulaire par les mots réellement employés — `0 rouge`, « logs est VIDE », « sinon un reboot tue la
+mémoire », « unexpected end of hex escape », « le nom mentait », « un sort écrase le score » — la
+seconde fournée passe à 6/6 sans dégrader le reste.
+
+**Protocole qui en découle, et qui vaut pour toute la suite :** garder toujours **deux fournées**,
+l'une pour régler, l'autre pour mesurer ; et **ne jamais regarder une fournée de mesure avant de la
+passer**. Une famille qui ne se trompe jamais sur ses propres exemples ne prouve rien : elle se
+souvient.
+
+**Deux sources que ce test a révélées, à ouvrir :** les **scripts** sont une mine pour G6 — un
+garde-fou nomme souvent le défaut qu'il répare — et les **rapports de classement** sont la porte
+d'entrée de G2, là où un rang suit un poids interne au lieu du monde mesuré.
+
 **Interdit architectural.** Aucune fonction d'écriture dans le code du détecteur, jeton en lecture
 seule. Une consigne se contourne ; une fonction absente, non.
 

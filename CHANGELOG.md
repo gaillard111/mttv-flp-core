@@ -88,6 +88,16 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - Mesure : **cas durs relevés 5/5**, **bruit 0/30** sur les leurres, et la suite d'origine reste à
   **10/10 et 0/30**. Les cinq cas sont désormais dans le banc (`HARD_TEST`), et le test échoue si
   l'un d'eux cesse d'être dur ou cesse d'être relevé.
+- **Contre-épreuve du même soir, et elle est sévère.** Six frictions neuves, dont deux graines
+  jusque-là vides (G2 et G4), passées **sans réglage préalable** : **1 sur 6**. Seul `invisible` a
+  été relevé. La famille de réassurance était donc **ajustée à ses cinq cas de mise au point** —
+  sur-ajustement caractérisé, révélé par une fournée fraîche.
+- Après extension du vocabulaire **à partir du corpus** et non de l'imagination — `0 rouge`,
+  « logs est VIDE … aucune exécution prouvée », « sinon un reboot tue la mémoire », « unexpected end
+  of hex escape », « le nom mentait », « un sort écrase le score », « palier 5 alors que » — la
+  seconde fournée passe à **6/6**, sans dégrader le reste : 10/10, 0/30, 5/5, 0/30.
+- **Le jeu de test est dépensé.** Ces six cas sont désormais dans l'entraînement. Toute mesure
+  honnête de la version suivante exigera une fournée neuve, jamais relue avant d'être passée.
 
 ### Ajouté — collecteur L1 bis, « dépôts surveillés » : l'entonnoir se resserre
 - `experiments/collecteur_depots.py` — 19 dépôts, une graine par dépôt, `Link: rel="next"` suivi,
