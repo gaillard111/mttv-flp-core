@@ -33,6 +33,17 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - `docs/ROADMAP.md` — ce qui est fait sur `main`, ce qui est différé avec ses critères de sortie, et
   les interdits qui restent des interdits.
 
+### Ajouté — contre-exemple outillé
+- `experiments/connecteur_binaire_tetravalent.py` — un « Interoperability Gateway » reçu le
+  2026-11-02 comme « spécifications de référence conformes au jalon Zenodo », rejoué hors de son
+  cadre HTTP et conservé au crible. Trois défauts **mesurés** : la valuation est **constante**
+  (`BOTH` quelle que soit l'entrée ; `T` et `F` jamais produits, `NEITHER` seulement si une chaîne
+  est vide) ; l'identifiant est `hash()` de Python étiqueté « sha256 », donc **instable entre
+  processus** (`9194…` puis `8684…` pour la même entrée) ; la « frugalité » vaut
+  `1/(durée × 1000)` et **lève une division par zéro** quand la machine est trop rapide.
+  Le crible échoue si l'un de ces défauts disparaît : un contre-exemple qui ne démontre plus rien
+  est un contre-exemple mort. Chaîne de détection : `GATEWAY_BOTH_CONSTANT`.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une

@@ -22,6 +22,11 @@ language: fr
 > [`banc_suspension.py`](banc_suspension.py) (le présent document), `bgate_dose_reponse.py`,
 > `bgate_dose_reponse_contrastif.py`, `bgate_bench_biais.py`, `sonder_couches.py`,
 > `valider_ratio_pi_eta.py`, `smoke_test_bgate_direction2.py`, `smoke_test_mpvr_direction3.py`.
+>
+> **Contre-exemple (2026-11-02)** — [`connecteur_binaire_tetravalent.py`](connecteur_binaire_tetravalent.py:1) :
+> un connecteur qui annonce une logique tétravalente et n'en calcule aucune (valuation constante,
+> identifiant non stable, « frugalité » qui est l'inverse d'une latence, aucun contrat d'entrée).
+> Gardé pour la régression, chaîne de détection `GATEWAY_BOTH_CONSTANT`.
 
 **Statut : outil écrit, falsificateur fixé, contrôle de manipulation en cours.** Le présent document fixe la prédiction, la métrique et le plafond **avant** la première mesure — condition pour qu'un résultat défavorable soit lisible comme défavorable.
 
