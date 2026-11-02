@@ -118,6 +118,18 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - **La famille `a_relire` sort 198 textes sur 427 items (46 %)** : elle n'a pas encore son budget de
   volume, et à ce niveau elle n'est pas relisible. À traiter comme un défaut ouvert, pas comme un
   succès.
+- **Passe du soir, arbitrée** : `ros2/ros2` retiré (friction absente — 18 issues d'installation et de
+  tickets générés par IA), `pola-rs/polars` et `apache/arrow` ajoutés en graine 4, fenêtre ramenée de
+  14 à 7 jours. **La passe s'est arrêtée au dixième dépôt sur vingt : quota GitHub épuisé** (60
+  requêtes/heure sans jeton). Le collecteur l'a déclaré — neuf `NON LU` avec motif, aucun faux
+  « calme » — puis insistait neuf fois pour rien : il **s'arrête désormais au premier 403** et marque
+  le reste « non tenté ».
+- Sur les dix dépôts effectivement lus : 196 items, **19 candidats**, **précision 8/19 = 42 %** —
+  meilleure que les 35 % de la veille, sur un échantillon plus petit. Trois nouveaux cas de graine 1
+  valent d'être notés : `empty tables fail column checks and nullable=False` (pandera),
+  `len(array)==0 omits missing array properties` (weaviate), et le déjà vu `unset` vs `none`.
+- **Les deux dépôts ajoutés n'ont pas été atteints** : leur valeur reste inconnue, et ne sera pas
+  affirmée avant d'avoir été mesurée.
 
 ## [1.2.1] — 2026-11-01
 
