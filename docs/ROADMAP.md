@@ -121,6 +121,24 @@ texte** : motifs trop larges, et un corpus public désormais saturé de tickets 
 inférieur à **30 candidats par passe** — sinon la revue humaine ne se fait pas, et un filtre qu'on
 ne relit pas ne vaut pas mieux qu'un filtre muet.
 
+**Troisième voie, née d'une mesure du 2026-11-02.** Cinq frictions réelles et **dures** fournies par
+l'orchestrateur FLP 2.0 — un zéro qui avait l'air d'une réponse, une coche verte, l'étiquette
+« comportement normal », un instrument muet, un écran bloqué — sont passées au filtre : **0 sur 5**.
+La douleur n'y est pas nommée, elle est **recouverte par un signe de réassurance**. D'où une seconde
+famille, `a_relire`, sortie séparée des candidats : elle relève les signes de réussite et de
+normalité pour les faire relire. Mesure : **5/5** sur les cas durs, **0/30** de bruit. C'est le seul
+dispositif du projet qui atteigne les cas que les mots-clés ne peuvent pas voir.
+
+**Liste de dépôts — décidée le 2026-11-02 par l'agent, à valider par le collectif.**
+18 dépôts, chacun retenu parce qu'on sait **quelle graine y vit** : G1 `home-assistant/core`,
+`influxdata/telegraf`, `open-telemetry/opentelemetry-collector` · G2-G3 `resilience4j/resilience4j`,
+`App-vNext/Polly`, `jd/tenacity`, `envoyproxy/envoy` · G4 `ros2/ros2`,
+`great-expectations/great_expectations`, `unionai-oss/pandera` · G5 `celery/celery`,
+`sidekiq/sidekiq`, `temporalio/temporal`, `rabbitmq/rabbitmq-server` · G6 `elastic/elasticsearch-py`,
+`kubernetes/client-go`, `stripe/stripe-python` · transverse `prometheus/prometheus`.
+**Règle d'ajout :** un dépôt s'ajoute parce qu'une graine y vit, jamais parce qu'il est gros.
+**Revue mensuelle obligatoire** : un dépôt muet doit apparaître `NON LU` dans le rapport, pas calme.
+
 **Interdit architectural.** Aucune fonction d'écriture dans le code du détecteur, jeton en lecture
 seule. Une consigne se contourne ; une fonction absente, non.
 

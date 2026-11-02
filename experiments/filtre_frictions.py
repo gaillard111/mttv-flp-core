@@ -84,8 +84,34 @@ NEGATIFS = [
     ("recrutement", r"(nous recrutons|we are hiring|job opening|offre d'emploi)"),
 ]
 
+# --- seconde famille : les SIGNES DE RÉASSURANCE ---------------------------------
+# Mesure du 2026-11-02 : sur cinq frictions réelles et dures, fournies par l'orchestrateur
+# FLP 2.0 (un zéro qui ment, une coche verte, l'étiquette « comportement normal », un
+# instrument muet, un écran bloqué), la famille « douleur nommée » ci-dessus détecte
+# **0/5**. La raison est structurelle : dans ces cas, la douleur n'est pas dans les mots,
+# elle est dans un signe de réussite ou de normalité qui recouvre une absence.
+#
+# Cette seconde famille ne rend pas des « frictions » mais des **textes à relire** : le
+# signe de réassurance est peut-être vrai. Sa précision est faible par construction, son
+# volume doit rester petit, et elle ne remplace pas la première — elle la complète.
+REASSURANCE = [
+    ("reussite_affirmee",
+     r"(valid\w*|passed|success|green).{0,40}(passed|valid\w*|test|check|ci|audit|sonde|instrument|run)"),
+    ("zero_presente_comme_reponse",
+     r"\b0\s*(resultats?|results?|elements?|items?|commentaires?|matchs?)\b"),
+    ("mutisme_declare",
+     r"(n'affiche rien|n affiche rien|aucun detail|aucun message|muet|muets|muette|"
+     r"silencieu\w*|invisible|ne montre pas|rien ne s'affiche|n'a rien affiche)"),
+    ("etiquette_de_normalite",
+     r"(comportement normal|normal behavior|by design|works as intended|expected behavior|"
+     r"conforme au comportement attendu|pas un bug|not a bug)"),
+    ("blocage_subi",
+     r"\b(bloque|bloquee?|gele|gelee?|fige|freeze|frozen|stuck)\b"),
+]
+
 _POS = [(g, n, re.compile(x, re.DOTALL)) for g, n, x in POSITIFS]
 _NEG = [(n, re.compile(x, re.DOTALL)) for n, x in NEGATIFS]
+_REA = [(n, re.compile(x, re.DOTALL)) for n, x in REASSURANCE]
 
 REFUTATIONS = {
     "absence_traitee_comme_zero": "il parle d'un zéro réellement mesuré, pas d'une lecture absente",
@@ -146,6 +172,30 @@ def analyser(item: dict):
         "source_lecture": bool(item.get("source_lecture", True)),
         "source_plafond": bool(item.get("source_plafond", False)),
         "ce_qui_refuterait_le_rapprochement": REFUTATIONS.get(motif, "à écrire"),
+    }
+
+
+def a_relire(item: dict):
+    """Rend un « texte à relire » : un signe de réassurance à vérifier, jamais une conclusion.
+
+    Sortie distincte de `analyser` **exprès** : mélanger les deux ferait passer un doute pour
+    un candidat, et c'est exactement la faute que nous reprochons aux autres.
+    """
+    texte = _norm(item.get("texte", ""))
+    if not texte:
+        return None
+    phrases = _phrases(texte)
+    signes = [n for n, rx in _REA if _chercher(rx, phrases)]
+    if not signes:
+        return None
+    return {
+        "type": "a_relire",
+        "signes": signes,
+        "citation": item.get("texte", "").strip()[:300],
+        "url": item.get("url"),
+        "date": item.get("date"),
+        "auteur": item.get("auteur"),
+        "question_a_poser": "le signe de réassurance couvre-t-il une absence, ou est-il exact ?",
     }
 
 
@@ -214,8 +264,24 @@ NEGATIFS_TEST = [
 ]
 
 
+# Cas durs — cinq frictions **réelles**, fournies le 2026-11-02 par l'orchestrateur FLP 2.0,
+# avec leur évaluation de dureté. Elles ont un point commun : la douleur n'y est pas nommée.
+# Un zéro qui avait l'air d'une réponse, une coche verte, l'étiquette « comportement normal »,
+# un instrument muet, un écran bloqué. Mesure du jour : `analyser` en détecte **0 sur 5** —
+# c'est pourquoi la famille `a_relire` existe, et pourquoi elle est jugée séparément.
+HARD_TEST = [
+    (1, "En --ci, validate_zoo.sh n'affiche rien (toutes les fonctions sont muettes) mais "
+        "renvoie rc=1 ; le hook n'a donc aucun détail à montrer"),
+    (1, "la recherche ne marchait plus (humo stupi : 0 résultat au lieu de 33)"),
+    (1, "Modifs invisibles dans le panel — Le dashboard ne montre pas les changements faits "
+        "en SSH — Comportement normal"),
+    (5, "l'overlay a déjà bloqué tous les clics une fois"),
+    (6, "michel : ✅ VALIDATION PASSED"),
+]
+
+
 def _crible():
-    """Rend (liste d'échecs, nombre de positifs détectés, nombre de faux positifs)."""
+    """Rend (échecs, positifs détectés, faux positifs, cas durs relevés, bruit en a_relire)."""
     echecs, detectes = [], 0
     for graine_attendue, phrase in POSITIFS_TEST:
         candidat = analyser({"texte": phrase})
@@ -234,14 +300,30 @@ def _crible():
     if faux:
         echecs.append("précision insuffisante : %d faux positif(s) sur %d"
                       % (len(faux), len(NEGATIFS_TEST)))
-    return echecs, detectes, len(faux)
+    # Cas durs : la douleur est portée par un signe de réassurance, pas par un mot de douleur.
+    durs = 0
+    for graine, phrase in HARD_TEST:
+        if analyser({"texte": phrase}) is not None:
+            echecs.append("cas dur %d attrapé par les mots de douleur : il n'est plus dur" % graine)
+        if a_relire({"texte": phrase}) is not None:
+            durs += 1
+        else:
+            echecs.append("cas dur %d non relevé comme signe de réassurance" % graine)
+
+    bruit = sum(1 for t in NEGATIFS_TEST if a_relire({"texte": t}) is not None)
+    if bruit > 12:
+        echecs.append("trop de bruit dans a_relire : %d/%d (tolérance 12)"
+                      % (bruit, len(NEGATIFS_TEST)))
+    return echecs, detectes, len(faux), durs, bruit
 
 
 if __name__ == "__main__":
-    echecs, rappel, faux = _crible()
+    echecs, rappel, faux, durs, bruit = _crible()
     print("chaîne de détection : %s" % CHAINE_DE_DETECTION)
     print("positifs détectés   : %d/%d" % (rappel, len(POSITIFS_TEST)))
     print("faux positifs       : %d/%d" % (faux, len(NEGATIFS_TEST)))
+    print("cas durs à relire   : %d/%d" % (durs, len(HARD_TEST)))
+    print("bruit dans a_relire : %d/%d (toléré, famille de rappel)" % (bruit, len(NEGATIFS_TEST)))
     exemple = analyser({"texte": POSITIFS_TEST[8][1], "url": "https://exemple.fr/fil#12",
                         "date": "2026-11-02", "auteur": "exemple", "source": "forum"})
     print("candidat d'exemple :")

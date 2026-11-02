@@ -75,6 +75,20 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - Le code et son banc restent ; l'entonnoir est déclaré **inutilisable en l'état**, et les deux
   pistes de correction sont inscrites dans `docs/ROADMAP.md` **à mesurer avant d'être affirmées**.
 
+### Ajouté — seconde famille : les signes de réassurance
+- Cinq frictions **réelles et dures**, fournies le 2026-11-02 par l'orchestrateur FLP 2.0 (un zéro
+  qui avait l'air d'une réponse, une coche verte `✅ VALIDATION PASSED`, l'étiquette « comportement
+  normal », un instrument muet, un écran bloqué), ont été passées au filtre : **0 sur 5 détectées**.
+  Diagnostic : dans ces cas la douleur n'est pas dans les mots, elle est dans un **signe de
+  réussite** qui recouvre une absence. Un filtre à mots de douleur y est structurellement aveugle.
+- Ajout d'une seconde famille, `a_relire` — réussite affirmée, zéro présenté comme réponse, mutisme
+  déclaré, étiquette de normalité, blocage subi. Elle ne rend pas des candidats mais des **textes à
+  relire**, avec la question à poser : « le signe couvre-t-il une absence, ou est-il exact ? »
+  Sortie volontairement séparée : mêler un doute à un candidat serait la faute reprochée aux autres.
+- Mesure : **cas durs relevés 5/5**, **bruit 0/30** sur les leurres, et la suite d'origine reste à
+  **10/10 et 0/30**. Les cinq cas sont désormais dans le banc (`HARD_TEST`), et le test échoue si
+  l'un d'eux cesse d'être dur ou cesse d'être relevé.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une
