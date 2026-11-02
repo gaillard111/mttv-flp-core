@@ -7,6 +7,13 @@
    tronquer, et une seule est une faute de l'instrument : la seconde est une faute de
    lecture, et c'est la plus embarrassante.
 
+   Enonce elargi le 2026-11-02, pour couvrir le plafond, la troncature ET la granularite :
+   « l'instrument declare moins qu'il ne sait ». C'est cet enonce qui rattache a cette graine
+   une duree totale attribuee a un plugin sans que l'instance soit nommee : la valeur est
+   juste, la resolution manque, et rien dans l'artefact ne dit a quelle finesse elle vaut.
+   Ce cas est une **classe** de ce defaut et non une graine : corriger le nom ne fait rien
+   basculer (cf. CONTRIBUTING.md, section 5, clause de bascule).
+
 2. LE CHIFFRE
    python3 graines/graine_plafond_instrument.py
    Plafond MUET -- arbre demande a maxdepth 10 / 20 / 50 : 19 commentaires lus,
