@@ -89,6 +89,26 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
   **10/10 et 0/30**. Les cinq cas sont désormais dans le banc (`HARD_TEST`), et le test échoue si
   l'un d'eux cesse d'être dur ou cesse d'être relevé.
 
+### Ajouté — collecteur L1 bis, « dépôts surveillés » : l'entonnoir se resserre
+- `experiments/collecteur_depots.py` — 19 dépôts, une graine par dépôt, `Link: rel="next"` suivi,
+  plafond déclaré, fenêtre `since` de 14 jours, **pull requests exclues à la lecture** (`pull_request`
+  présent), trois états par dépôt. Banc hors ligne : pagination à deux pages, PR à écarter, dépôt
+  muet, et un zéro qui avait l'air d'une réponse.
+- **Passe réelle du 2026-11-02** : 19 dépôts, **427 items**, **0 dépôt muet**, 5 tronqués,
+  **49 candidats — 11,5 %** des items, contre 46 % pour la recherche plein texte.
+- **Précision mesurée à la main, vingt premiers candidats : 7/20, soit 35 %** — au-dessus du seuil
+  de 30 % fixé d'avance. Retenus : `estimated_distance always reports 0.0 m due to falsy tx_power`,
+  `an hour with no usable observations makes the AQI sensor report 0`, `battery sensors not
+  discovered if value is none`, `config flow hangs forever`, `need a way to differentiate between
+  unset and none programmatically`, `batch processor timeout accumulates drift over time`, et le
+  `is_not_in` qui garde les lignes nulles sur pandas et les jette ailleurs.
+- **Volume : 49 candidats par passe, au-dessus du seuil de 30.** Non corrigé ici : la fenêtre de
+  14 jours en est la cause probable, et une fenêtre de 7 jours la diviserait par deux — à mesurer,
+  pas à affirmer.
+- **La famille `a_relire` sort 198 textes sur 427 items (46 %)** : elle n'a pas encore son budget de
+  volume, et à ce niveau elle n'est pas relisible. À traiter comme un défaut ouvert, pas comme un
+  succès.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une

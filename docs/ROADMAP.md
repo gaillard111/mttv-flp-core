@@ -139,6 +139,19 @@ dispositif du projet qui atteigne les cas que les mots-clés ne peuvent pas voir
 **Règle d'ajout :** un dépôt s'ajoute parce qu'une graine y vit, jamais parce qu'il est gros.
 **Revue mensuelle obligatoire** : un dépôt muet doit apparaître `NON LU` dans le rapport, pas calme.
 
+**Première passe réelle sur cette liste — 2026-11-02.** 427 items, **0 dépôt muet**, 5 tronqués,
+**49 candidats (11,5 %)**, **précision 7/20 = 35 %** (seuil 30 % tenu). La variante « dépôts »
+fait passer le rendement de 46 % à 11,5 % et double la précision utile : c'est la bonne architecture.
+
+**Deux défauts ouverts, à traiter par la mesure :**
+
+1. **Volume : 49 candidats par passe, seuil fixé à 30.** Hypothèse la plus simple à tester : ramener
+   la fenêtre `since` de 14 à 7 jours, ce qui divise le volume par deux sans toucher aux motifs.
+2. **`a_relire` sort 198 textes sur 427 (46 %)** : la famille de réassurance n'a pas de budget de
+   volume, et à ce niveau elle n'est pas relisible par un humain. Il faut soit resserrer ses motifs
+   (exiger un signe *et* une absence de contenu, par exemple), soit accepter de ne la faire tourner
+   que sur les dépôts des graines 1 et 6 — à mesurer.
+
 **Interdit architectural.** Aucune fonction d'écriture dans le code du détecteur, jeton en lecture
 seule. Une consigne se contourne ; une fonction absente, non.
 

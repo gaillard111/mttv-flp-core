@@ -1,0 +1,231 @@
+# -*- coding: utf-8 -*-
+"""Collecteur L1 bis — dépôts surveillés, lecture seule, pagination déclarée.
+
+Remplaçant de `collecteur_github.py`, dont la recherche plein texte a été mesurée à **5 % de
+précision** le 2026-11-02. Ici, on ne cherche plus une aiguille dans une botte de foin : on
+choisit les bottes. Dix-huit dépôts, une graine par dépôt, et seules leurs issues récentes
+sont lues.
+
+Deux plafonds, tous deux **déclarés** :
+    - l'en-tête `Link: rel="next"` dit s'il reste des pages : on le suit jusqu'à épuisement, et
+      on déclare le plafond si l'on s'arrête avant ;
+    - la fenêtre `since` borne ce qu'on regarde : c'est une portée, pas un plafond, et elle est
+      écrite dans le rapport.
+
+Les pull requests sont **exclues à la lecture** (`pull_request` présent dans l'objet), et non par
+un qualificatif de requête : une PR décrit un correctif, pas une plainte.
+
+Usage :
+    python experiments/collecteur_depots.py              # banc hors ligne (aucun réseau)
+    python experiments/collecteur_depots.py --collecter  # passe réelle, sortie hors dépôt
+
+Aucune dépendance, aucune écriture réseau, aucune fonction d'écriture n'existe ici.
+"""
+import datetime
+import json
+import os
+import sys
+import urllib.request
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import filtre_frictions as l2  # noqa: E402
+
+CHAINE_DE_DETECTION = "FRICTION_REPOS_L1"
+
+API = "https://api.github.com/repos"
+MAX_PAGES = 3
+PER_PAGE = 100
+FENETRE_JOURS = 14
+
+# Liste arrêtée le 2026-11-02 (proposition de l'agent, arbitrage Gemini : Stripe retiré,
+# weaviate et kafka-go ajoutés). Règle d'ajout : un dépôt s'ajoute parce qu'une graine y vit,
+# jamais parce qu'il est gros. Revue mensuelle obligatoire.
+DEPOTS = [
+    ("home-assistant/core", 1),
+    ("influxdata/telegraf", 1),
+    ("open-telemetry/opentelemetry-collector", 1),
+    ("resilience4j/resilience4j", 2),
+    ("App-vNext/Polly", 2),
+    ("jd/tenacity", 3),
+    ("envoyproxy/envoy", 3),
+    ("ros2/ros2", 4),
+    ("great-expectations/great_expectations", 4),
+    ("unionai-oss/pandera", 4),
+    ("weaviate/weaviate", 4),
+    ("celery/celery", 5),
+    ("sidekiq/sidekiq", 5),
+    ("temporalio/temporal", 5),
+    ("rabbitmq/rabbitmq-server", 5),
+    ("segmentio/kafka-go", 5),
+    ("elastic/elasticsearch-py", 6),
+    ("kubernetes/client-go", 6),
+    ("prometheus/prometheus", 6),
+]
+
+
+def _url(depot: str, page: int, depuis: str) -> str:
+    return ("%s/%s/issues?state=all&sort=created&direction=desc&since=%s&per_page=%d&page=%d"
+            % (API, depot, depuis, PER_PAGE, page))
+
+
+def _fetcher_http(url: str):
+    """Rend (charge utile, en-tête Link). Aucun jeton : 60 requêtes/heure suffisent ici."""
+    requete = urllib.request.Request(url, headers={
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "flp-frictions/0.2 (lecture seule)",
+    })
+    with urllib.request.urlopen(requete, timeout=20) as reponse:
+        return json.loads(reponse.read().decode("utf-8")), reponse.headers.get("Link")
+
+
+def _a_page_suivante(lien) -> bool:
+    return bool(lien) and 'rel="next"' in lien
+
+
+def _item_brut(hit: dict, depot: str) -> dict:
+    return {
+        "source": "github:" + depot,
+        "url": hit.get("html_url"),
+        "date": (hit.get("created_at") or "")[:10],
+        "auteur": (hit.get("user") or {}).get("login"),
+        "texte": ((hit.get("title") or "") + " \n " + (hit.get("body") or "")).strip(),
+    }
+
+
+def collecter(fetcher=None, depots=None, depuis=None, max_pages=MAX_PAGES):
+    """Rend (items bruts, état par dépôt). `fetcher` est injectable : tout se teste hors ligne."""
+    fetcher = fetcher or _fetcher_http
+    depots = depots or DEPOTS
+    if depuis is None:
+        depuis = (datetime.date.today() - datetime.timedelta(days=FENETRE_JOURS)).isoformat()
+
+    items, etats, vus = [], {}, set()
+    for depot, graine in depots:
+        lus, plafond, erreur, pages = 0, False, None, 0
+        try:
+            for page in range(1, max_pages + 1):
+                charge, lien = fetcher(_url(depot, page, depuis))
+                pages += 1
+                if not isinstance(charge, list) or not charge:
+                    break
+                for hit in charge:
+                    if "pull_request" in hit:          # une PR n'est pas une plainte
+                        continue
+                    url = hit.get("html_url")
+                    if url in vus:
+                        continue
+                    vus.add(url)
+                    items.append(_item_brut(hit, depot))
+                    lus += 1
+                if not _a_page_suivante(lien):
+                    break
+                if page == max_pages:
+                    plafond = True                       # il restait des pages, on s'arrête
+        except Exception as e:
+            erreur = "%s: %s" % (type(e).__name__, e)
+
+        etats[depot] = {"graine": graine, "lecture": erreur is None, "lus": lus, "rendus": lus,
+                        "plafond": plafond, "pages": pages, "fenetre_depuis": depuis,
+                        "motif": erreur}
+    return items, etats
+
+
+def _fixture_fetcher(url: str):
+    """Trois dépôts simulés : pagination avec `Link`, PR à exclure, dépôt muet."""
+    if "home-assistant" in url:
+        page = int(url.rsplit("page=", 1)[1])
+        if page == 1:
+            return ([{"html_url": "https://g/ha/1", "title": "Sensor unavailable becomes 0",
+                      "body": "When the sensor goes silent the controller reads a zero and opens the valve.",
+                      "created_at": "2026-11-01T10:00:00Z", "user": {"login": "a"}},
+                     {"html_url": "https://g/ha/2", "title": "feat: new card",
+                      "body": "Adds a card.", "created_at": "2026-11-01T10:00:00Z",
+                      "user": {"login": "b"}, "pull_request": {"url": "x"}}],
+                    '<https://api.github.com/...&page=2>; rel="next"')
+        return ([{"html_url": "https://g/ha/3", "title": "Lock stays engaged",
+                  "body": "We have a lock that never reopens after an escalation.",
+                  "created_at": "2026-10-31T10:00:00Z", "user": {"login": "c"}}], None)
+    if "opentelemetry" in url:
+        raise RuntimeError("HTTP 403 rate limit")      # un collecteur qui ne peut pas lire le dit
+    if "weaviate" in url:
+        # cas dur de classe B : un zéro qui avait l'air d'une réponse, et l'étiquette « normal »
+        return ([{"html_url": "https://g/wv/1", "title": "Search returns nothing",
+                  "body": "la recherche ne marchait plus : 0 résultat au lieu de 33. Comportement normal.",
+                  "created_at": "2026-11-01T10:00:00Z", "user": {"login": "d"}}], None)
+    return ([], None)
+
+
+def _crible():
+    echecs = []
+    items, etats = collecter(fetcher=_fixture_fetcher, depuis="2026-10-18")
+
+    ha = etats.get("home-assistant/core", {})
+    if ha.get("lus") != 2:
+        echecs.append("home-assistant : %s lus au lieu de 2 (la PR doit être exclue)" % ha.get("lus"))
+    if ha.get("pages") != 2:
+        echecs.append("home-assistant : %s pages au lieu de 2 (Link rel=next non suivi)" % ha.get("pages"))
+    if ha.get("plafond"):
+        echecs.append("home-assistant : plafond déclaré à tort, la pagination était épuisée")
+
+    oa = etats.get("open-telemetry/opentelemetry-collector", {})
+    if oa.get("lecture") is not False or not oa.get("motif"):
+        echecs.append("un dépôt muet doit être NON LU avec son motif")
+
+    cands = [c for c in (l2.analyser(i) for i in items) if c]
+    relire = [r for r in (l2.a_relire(i) for i in items) if r]
+    if len(cands) < 2:
+        echecs.append("moins de deux candidats sur un jeu qui en contient deux")
+    if not any("zero" in (c["motif_declencheur"] or "") for c in cands):
+        echecs.append("le cas « silence lu comme zéro » n'est pas ressorti")
+    if not relire:
+        echecs.append("aucun texte à relire alors que le jeu contient un signe de réassurance")
+    if not any("zero_presente_comme_reponse" in r["signes"] for r in relire):
+        echecs.append("le zéro présenté comme réponse n'a pas été relevé comme texte à relire")
+    return echecs, items, etats, cands, relire
+
+
+if __name__ == "__main__":
+    if "--collecter" not in sys.argv:
+        echecs, items, etats, cands, relire = _crible()
+        print("chaîne de détection : %s" % CHAINE_DE_DETECTION)
+        print("dépôts simulés      : %d" % len(etats))
+        print("items               : %d | candidats %d | à relire %d"
+              % (len(items), len(cands), len(relire)))
+        for depot, e in list(etats.items())[:3]:
+            etat = "lu" if e["lecture"] else "NON LU"
+            print("  %-40s %-6s lus=%d pages=%d" % (depot, etat, e["lus"], e["pages"]))
+        if echecs:
+            print("\nCOLLECTEUR DEPOTS : ECHEC")
+            for x in echecs:
+                print("  - " + x)
+            sys.exit(1)
+        print("\nCOLLECTEUR DEPOTS : OK — pagination suivie, PR exclues, dépôt muet distingué")
+    else:
+        items, etats = collecter()
+        cands = [c for c in (l2.analyser(i) for i in items) if c]
+        relire = [r for r in (l2.a_relire(i) for i in items) if r]
+        dossier = os.environ.get("FLP_COLLECTE") or os.path.join(
+            os.path.expanduser("~"), "mttv_collecte")
+        os.makedirs(dossier, exist_ok=True)
+        for nom, lignes in (("candidats_depots.jsonl", cands), ("a_relire_depots.jsonl", relire)):
+            with open(os.path.join(dossier, nom), "w", encoding="utf-8", newline="\n") as f:
+                for ligne in lignes:
+                    f.write(json.dumps(ligne, ensure_ascii=False) + "\n")
+        rapport = {
+            "couverture_complete": all(e["lecture"] and not e["plafond"] for e in etats.values()),
+            "depots": {d: {"etat": ("lu" if e["lecture"] else "NON LU")
+                           + (" · TRONQUE" if e["plafond"] else ""),
+                           "graine": e["graine"], "lus": e["lus"], "pages": e["pages"],
+                           "motif": e["motif"]} for d, e in etats.items()},
+            "items": len(items), "candidats": len(cands), "a_relire": len(relire),
+            "dossier": dossier,
+        }
+        with open(os.path.join(dossier, "rapport_depots.json"), "w",
+                  encoding="utf-8", newline="\n") as f:
+            json.dump(rapport, f, ensure_ascii=False, indent=2)
+        print(json.dumps(rapport, ensure_ascii=False, indent=2))
