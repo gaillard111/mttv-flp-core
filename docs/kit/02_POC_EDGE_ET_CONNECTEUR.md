@@ -230,4 +230,5 @@ chaque fois. Un seul `200` invalide le PoC.
 
 ---
 
-*Collectif Les Fils de la Pensée — CC-BY-NC-SA 4.0. Référence noyau : `10.5281/zenodo.23869556`.*
+*Collectif Les Fils de la Pensée — document : CC-BY-SA 4.0 · noyau cité : CC-BY-NC-SA 4.0.
+Référence noyau : `10.5281/zenodo.23869556`.*

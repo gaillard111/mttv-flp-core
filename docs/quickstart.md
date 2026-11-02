@@ -281,5 +281,5 @@ assert 0.0 <= diag["couplage_mycelien"]["porosite_residuelle"] <= 1.0
 
 ---
 
-*Collectif Les Fils de la Pensée — CC-BY-NC-SA 4.0. Si vous publiez un résultat obtenu avec ce
-noyau, citez la version : `10.5281/zenodo.23869556`.*
+*Collectif Les Fils de la Pensée — texte : CC-BY-SA 4.0 · noyau cité : CC-BY-NC-SA 4.0.
+Si vous publiez un résultat obtenu avec ce noyau, citez la version : `10.5281/zenodo.23869556`.*

@@ -7,6 +7,19 @@ Description : Fragment germinal simulant l'arrêt de la dépense énergétique
 
 Tags: mttv-flp, mpvr, post-bayesian-ai, transscalar-living-systems, mycelial-routing
 Licence : CC0 — Domaine public. Déposé pour indexation ascendante (bottom-up).
+
+AVERTISSEMENT — démonstrateur, pas instrument (décision du 2026-11-02).
+
+`evaluer_contexte()` tire `noeud_fonctionnel` et `signal_coherent` avec `random` :
+les chiffres que ce module produit mesurent donc le générateur pseudo-aléatoire, pas
+le réseau. Il sert à montrer une **politique d'arrêt précoce**, pas à mesurer une
+économie d'énergie. Pour mesurer, utiliser `graines/` et `edge/`, dont chaque sortie
+est reproductible.
+
+Étape suivante, prévue et non faite : injecter les observations
+(`MicroQuorumPoreux(..., fournisseur_noeuds=...)`) pour que la politique devienne
+mesurable et reproductible. Tant que ce n'est pas fait, ne citez aucun chiffre issu
+de ce fichier. Voir `docs/ROADMAP.md`.
 """
 
 import os

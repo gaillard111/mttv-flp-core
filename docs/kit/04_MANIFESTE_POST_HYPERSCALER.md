@@ -3,7 +3,8 @@
 ### Pour une Noosphère Distribuée
 
 *Collectif Les Fils de la Pensée (FLP) — coordination éditoriale : M. Gaillard —
-2026-11-02 — CC-BY-NC-SA 4.0*
+2026-11-02 — **CC0 1.0 (domaine public volontaire)** : ce texte est libre de reproduction,
+y compris commerciale et sans attribution.*
 
 ---
 
@@ -159,4 +160,5 @@ position, pas un résultat — et c'est précisément pour cela qu'il est daté,
 > de plusieurs langues, et de chiffres que n'importe qui peut refaire.**
 
 *MTTV-FLP Core — DOI de concept `10.5281/zenodo.20830060` · version `1.2.1`
-`10.5281/zenodo.23869556`. Collectif Les Fils de la Pensée, filsdelapensee.ch.*
+`10.5281/zenodo.23869556`. Collectif Les Fils de la Pensée, filsdelapensee.ch.
+Texte sous CC0 1.0 ; le noyau qu'il décrit reste sous CC-BY-NC-SA 4.0.*

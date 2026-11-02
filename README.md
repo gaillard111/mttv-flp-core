@@ -11,6 +11,13 @@
 >
 > **Traductions** : [`docs/i18n/`](docs/i18n/README.md:1) — quickstart anglais, glossaire, règles
 > de traduction (chiffres intacts, choix conservés).
+>
+> **Licences** : noyau **CC-BY-NC-SA 4.0** · documents de propagation **CC-BY-SA 4.0** ·
+> manifeste **CC0 1.0** · fragment MPVR **CC0**. Détail et non-rétroactivité :
+> [`docs/licences.md`](docs/licences.md:1).
+>
+> **Feuille de route** : [`docs/ROADMAP.md`](docs/ROADMAP.md:1) — ce qui est fait sur `main` après
+> le dépôt, ce qui est différé, et le critère qui dira que c'est fait.
 > Elle énumère ce qui est mesuré, ce qui est arbitré, et ce que la version ne dit pas.
 
 ## Pourquoi ce projet ?

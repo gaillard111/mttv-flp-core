@@ -43,6 +43,8 @@ d'épreuve**, les feuillets d'arbitrage, les notes de viabilité et l'index des 
 |---|---|
 | [`annexe_4_piliers_mttv_flp.md`](annexe_4_piliers_mttv_flp.md) | Les quatre piliers, schéma d'architecture, ancrage baryonique chiffré |
 | [`notes_release_v1.1.0.md`](notes_release_v1.1.0.md) | Notes de la version 1.1.0 |
+| [`licences.md`](licences.md) | **Qui est sous quelle licence** : noyau, documents, manifeste, MPVR — et pourquoi la 1.2.1 déposée n'est pas concernée |
+| [`ROADMAP.md`](ROADMAP.md) | **Feuille de route** : fait sur `main`, différé avec critères de sortie, interdits qui restent |
 | [`INDEX_PDF.md`](INDEX_PDF.md) | Index des 24 PDF : identifiants courts, chemins exacts |
 
 ## Où aller ensuite

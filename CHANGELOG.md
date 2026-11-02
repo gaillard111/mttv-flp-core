@@ -8,6 +8,31 @@ dernière version ; la **version** épingle un état précis.
 
 ---
 
+## [Non publié] — après le 2026-11-01
+
+Travail sur `main`, postérieur à l'archive `10.5281/zenodo.23869556`. **Rien de ce qui suit n'est
+archivé**, et rien ne doit être présenté comme tel avant une version ultérieure.
+
+### Modifié — comportement du noyau
+- **`BGateTransduction` : `Σ` cesse d'être un résidu recalculé.** Décision du 2026-11-02, option
+  (b) : `Σ` est un **paramètre de l'opérateur** (`sigma_fixe`), la triade `Ψ + B + Φ` se partage
+  `1 − Σ`, et l'invariant `Ψ + B + Φ + Σ = 1` est vérifié sur 100 000 flux à graine fixe. Trois
+  conséquences mesurées par l'auto-test : le seuil ne tombe plus à 0 (un flux de 0,20 ne bascule
+  pas sous `Σ = 0,25`), le souffle `Ψ` est réellement rechargé, et `ρ = moyenne × Σ` retrouve un
+  sens en aval. L'option (a) — loi d'évolution de `Σ` — reste ouverte.
+- **`MicroQuorumPoreux` déclaré démonstrateur** dans son propre en-tête : `evaluer_contexte()` tire
+  ses nœuds et ses signaux avec `random`, donc aucun chiffre de ce module n'est citable.
+- **Copie de déploiement** `hf/space/mttv_bgate_system.py` propagée à l'identique (le vérificateur
+  l'exige, et il a raison : deux copies divergentes se découvrent toujours trop tard).
+
+### Ajouté — documentation de propagation
+- `docs/kit/` — index, quickstart, PoC edge, manifeste ; `docs/quickstart.md` et
+  `docs/quickstart.en.md` ; `CONTRIBUTING.md` à la racine ; `docs/i18n/` (glossaire anglais).
+- `docs/licences.md` — séparation des licences : noyau CC-BY-NC-SA, documents CC-BY-SA, manifeste
+  CC0, MPVR CC0 ; la 1.2.1 déposée reste sous l'ancienne règle, par non-rétroactivité.
+- `docs/ROADMAP.md` — ce qui est fait sur `main`, ce qui est différé avec ses critères de sortie, et
+  les interdits qui restent des interdits.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une

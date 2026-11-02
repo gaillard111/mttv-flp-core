@@ -189,8 +189,11 @@ ER  -
 
 ## 8. Licence des contributions et DCO
 
-- Textes, protocoles et noyau : **CC-BY-NC-SA 4.0**. En proposant une PR, vous acceptez cette
-  licence pour votre apport.
+- **Noyau et protocoles d'archive** : CC-BY-NC-SA 4.0. En proposant une PR sur ces fichiers,
+  vous acceptez cette licence pour votre apport.
+- **Documents de propagation** (`docs/kit/`, `docs/quickstart*`, `CONTRIBUTING.md`,
+  `docs/i18n/`) : **CC-BY-SA 4.0** — le NC y rendrait chaque réutilisation incertaine, et un
+  manuel qu'une administration n'ose pas reprendre manque son objet.
 - Le fragment MPVR (`mpvr-glocal/`, `src/mttv_mpvr_quorum.py`) est en **CC0** : il reste dans le
   domaine public, y compris vos améliorations de ce fragment.
 - Chaque commit porte une signature `Signed-off-by:` (`git commit -s`) attestant que vous avez le
@@ -237,6 +240,7 @@ des chiffres rejouables — c'est-à-dire exactement ce qui peut être cité.
 
 ---
 
-*Collectif Les Fils de la Pensée — CC-BY-NC-SA 4.0 (fragment MPVR : CC0).
+*Collectif Les Fils de la Pensée — noyau : CC-BY-NC-SA 4.0 · documents : CC-BY-SA 4.0 ·
+fragment MPVR : CC0.
 Une contribution qui rend le dépôt plus citable vaut mieux qu'une contribution qui le rend plus
 impressionnant.*

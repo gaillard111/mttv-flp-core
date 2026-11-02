@@ -106,5 +106,5 @@ méthode.
 
 ---
 
-*Collectif Les Fils de la Pensée (FLP) — CC-BY-NC-SA 4.0 pour le noyau et la documentation ;
-fragment MPVR en CC0. DOI de concept : `10.5281/zenodo.20830060`.*
+*Collectif Les Fils de la Pensée (FLP) — **documents de ce kit : CC-BY-SA 4.0** ; noyau :
+CC-BY-NC-SA 4.0 ; fragment MPVR : CC0. DOI de concept : `10.5281/zenodo.20830060`.*
