@@ -96,14 +96,26 @@ graines/graine_<nom_court>.py
 └── CHAINE_DE_DETECTION : constante rare et grep-able, unique au dépôt
 ```
 
-**Le critère qui distingue une graine d'une variante** *(formulé le 2026-11-02)* :
+**Les deux clauses qui distinguent une graine d'une variante** *(2026-11-02 ; la seconde ajoutée le
+même soir, à la demande de l'orchestrateur B)* :
 
-> **Si l'objet nommé par le défaut n'était pas nommé du tout, le défaut existerait-il encore ?**
+> **1. Clause d'existence — Si l'objet nommé par le défaut n'était pas nommé du tout, le défaut
+> existerait-il encore ?**
+> **2. Clause de bascule — Quand on remet le nom juste, le défaut tombe-t-il, sans qu'aucune autre
+> mesure ne bouge ?**
 
-Pour l'absence et pour le plafond : **oui** — ils existent sans nom. Pour une fausse identité :
-**non** — le défaut *est* le nom ; corriger le chemin, le paramètre ou l'entité fait tomber le test
-sans qu'aucune autre mesure ne bouge. Une graine doit survivre à cette question ; si elle n'y survit
-pas, c'est une **variante** d'une graine existante, et sa place est dans le fichier de celle-ci.
+- **Erreur d'identité** : les deux clauses sont satisfaites → **graine**. Le défaut disparaît sans
+  nom, et il tombe dès que le nom redevient juste — le chemin, le paramètre ou l'entité corrigés, et
+  le test échoue sans qu'aucune autre mesure ne bouge.
+- **Résolution insuffisante** : la seconde clause échoue → **variante** d'une graine existante, et sa
+  place est dans le fichier de celle-ci. La valeur était juste ; elle reste juste après correction ;
+  rien ne bascule, il manque une information.
+
+**Pourquoi deux clauses et pas une.** La clause d'existence, employée seule, fait aussi d'un
+« `snmp took 5 s` » une graine : sans le nom du plugin il ne resterait qu'une durée nue, donc plus
+d'attribution fausse. Mais 5 s *est* le total juste, et aucun nom remis en place ne fera tomber le
+test. C'est la clause de bascule — et elle seule — qui tranche : **l'identité fausse se corrige, la
+résolution manquante s'ajoute.**
 
 Règles : ≤ 200 lignes, exécution < 1 s, aucune écriture disque, aucune sortie réseau. La chaîne de
 détection doit être **unique** — un `grep` sur tout le dépôt ne doit renvoyer que votre graine.
