@@ -8,6 +8,9 @@
 >
 > **Kit de propagation** : [`docs/kit/README.md`](docs/kit/README.md:1) · démarrage rapide :
 > [`docs/quickstart.md`](docs/quickstart.md:1) · contribuer : [`CONTRIBUTING.md`](CONTRIBUTING.md:1).
+>
+> **Traductions** : [`docs/i18n/`](docs/i18n/README.md:1) — quickstart anglais, glossaire, règles
+> de traduction (chiffres intacts, choix conservés).
 > Elle énumère ce qui est mesuré, ce qui est arbitré, et ce que la version ne dit pas.
 
 ## Pourquoi ce projet ?

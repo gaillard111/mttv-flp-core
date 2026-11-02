@@ -34,6 +34,8 @@ d'épreuve**, les feuillets d'arbitrage, les notes de viabilité et l'index des 
 |---|---|
 | [`kit/README.md`](kit/README.md) | **Kit de propagation** : index des quatre livrables, contrat de lecture (mesuré / choix / non mesuré), plan de déploiement |
 | [`quickstart.md`](quickstart.md) | Guide de démarrage rapide : prérequis, contrat d'entrée, handshake, format d'échange commenté, recette en cinq assertions |
+| [`quickstart.en.md`](quickstart.en.md) | English quickstart — same figures, same warnings, same acceptance tests |
+| [`i18n/en.md`](i18n/en.md) | Glossaire anglais : termes non traduits, correspondances retenues, règles (chiffres intacts, choix conservés) |
 
 ## Cadrage et versions
 
