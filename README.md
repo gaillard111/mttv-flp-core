@@ -5,6 +5,9 @@
 >
 > **Notice de la version courante — 1.2.1** : [`docs/notice_v1.2.0.md`](docs/notice_v1.2.0.md:1) ;
 > la 1.2.1 n'en change que deux défauts d'archive, voir [`CHANGELOG.md`](CHANGELOG.md:11).
+>
+> **Kit de propagation** : [`docs/kit/README.md`](docs/kit/README.md:1) · démarrage rapide :
+> [`docs/quickstart.md`](docs/quickstart.md:1) · contribuer : [`CONTRIBUTING.md`](CONTRIBUTING.md:1).
 > Elle énumère ce qui est mesuré, ce qui est arbitré, et ce que la version ne dit pas.
 
 ## Pourquoi ce projet ?

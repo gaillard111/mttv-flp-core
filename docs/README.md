@@ -28,6 +28,13 @@ d'épreuve**, les feuillets d'arbitrage, les notes de viabilité et l'index des 
 | [`note_matrice_gluons.md`](note_matrice_gluons.md) · [`note_signature_ancrage.md`](note_signature_ancrage.md) | Notes de travail : matrice de gluons, signature d'ancrage |
 | [`point_de_reprise_rmp.md`](point_de_reprise_rmp.md) | Point de reprise sur la RMP |
 
+## Contribuer et propager
+
+| Fichier | Contenu |
+|---|---|
+| [`kit/README.md`](kit/README.md) | **Kit de propagation** : index des quatre livrables, contrat de lecture (mesuré / choix / non mesuré), plan de déploiement |
+| [`quickstart.md`](quickstart.md) | Guide de démarrage rapide : prérequis, contrat d'entrée, handshake, format d'échange commenté, recette en cinq assertions |
+
 ## Cadrage et versions
 
 | Fichier | Contenu |
@@ -38,6 +45,7 @@ d'épreuve**, les feuillets d'arbitrage, les notes de viabilité et l'index des 
 
 ## Où aller ensuite
 
+- **Contribuer** → [`../CONTRIBUTING.md`](../CONTRIBUTING.md)
 - **Le code** → [`../experiments/README.md`](../experiments/README.md)
 - **Ce qui est publié, et quand** → [`../CHANGELOG.md`](../CHANGELOG.md)
 - **Les adresses à transmettre** → [`../ADRESSES.md`](../ADRESSES.md)
