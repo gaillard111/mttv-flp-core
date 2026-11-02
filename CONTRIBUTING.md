@@ -96,6 +96,15 @@ graines/graine_<nom_court>.py
 └── CHAINE_DE_DETECTION : constante rare et grep-able, unique au dépôt
 ```
 
+**Le critère qui distingue une graine d'une variante** *(formulé le 2026-11-02)* :
+
+> **Si l'objet nommé par le défaut n'était pas nommé du tout, le défaut existerait-il encore ?**
+
+Pour l'absence et pour le plafond : **oui** — ils existent sans nom. Pour une fausse identité :
+**non** — le défaut *est* le nom ; corriger le chemin, le paramètre ou l'entité fait tomber le test
+sans qu'aucune autre mesure ne bouge. Une graine doit survivre à cette question ; si elle n'y survit
+pas, c'est une **variante** d'une graine existante, et sa place est dans le fichier de celle-ci.
+
 Règles : ≤ 200 lignes, exécution < 1 s, aucune écriture disque, aucune sortie réseau. La chaîne de
 détection doit être **unique** — un `grep` sur tout le dépôt ne doit renvoyer que votre graine.
 
