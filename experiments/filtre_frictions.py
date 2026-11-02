@@ -93,6 +93,7 @@ REFUTATIONS = {
     "seuil_qui_derive": "le seuil suit volontairement un paramètre, et c'est documenté",
     "seuil_qui_derive_inverse": "il décrit un réglage voulu, pas une dérive subie",
     "horloge_arretee": "il parle de backoff réseau, pas d'une horloge interne arrêtée",
+    "horloge_arretee_inverse": "le paramètre interne est peut-être la cause voulue du réglage, pas une horloge déguisée",
     "moyenne_qui_masque": "il décrit une agrégation statistique, pas une perte d'état logique",
     "verrou_sans_sortie": "il décrit un verrou technique banal, avec une sortie connue",
     "plafond_muet": "le plafond est documenté dans son interface, même s'il est bas",
@@ -100,15 +101,36 @@ REFUTATIONS = {
 }
 
 
+def _phrases(texte: str):
+    return [p for p in re.split(r"(?<=[.!?;:])\s+", texte) if p]
+
+
+def _chercher(rx, phrases):
+    """Cherche dans une phrase, ou dans deux consécutives — jamais à travers un document.
+
+    Correction du 2026-11-02 après passage réel : sur des corps de 3 000 caractères, une
+    fenêtre glissante de 60–80 caractères rapprochait des mots de paragraphes différents.
+    Sur 183 candidats réels, les deux tiers étaient du bruit (des PR de widgets). Le
+    rapprochement est donc borné à la phrase.
+    """
+    for i, phrase in enumerate(phrases):
+        if rx.search(phrase):
+            return True
+        if i + 1 < len(phrases) and rx.search(phrase + " " + phrases[i + 1]):
+            return True
+    return False
+
+
 def analyser(item: dict):
     """Rend un candidat (dict) ou None. Aucun effet de bord."""
     texte = _norm(item.get("texte", ""))
     if not texte:
         return None
-    trouves = [(g, n) for g, n, rx in _POS if rx.search(texte)]
+    phrases = _phrases(texte)
+    trouves = [(g, n) for g, n, rx in _POS if _chercher(rx, phrases)]
     if not trouves:
         return None
-    disqualifiants = [n for n, rx in _NEG if rx.search(texte)]
+    disqualifiants = [n for n, rx in _NEG if _chercher(rx, phrases)]
     if disqualifiants:
         return None
     graine, motif = trouves[0]

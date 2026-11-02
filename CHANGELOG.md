@@ -59,6 +59,22 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - Budget mesuré : **≈ 1,8 ms par item de 300 caractères**. La rédaction initiale annonçait
   « < 50 ms pour 1 000 items » : c'était une promesse, et elle était fausse d'un facteur 35.
 
+### Ajouté — collecteur L1, et son échec mesuré
+- `experiments/collecteur_github.py` — recherche d'issues GitHub **en lecture seule**, pagination
+  suivie, plafond déclaré (`total_count`, `incomplete_results`), trois états par requête
+  (`lu` / `NON LU` / `TRONQUE`). Banc hors ligne à fixture : la pagination, le plafond et la source
+  muette sont testés **sans réseau**.
+- **Premier passage réel, et il ne passe pas** : 500 items, **228 candidats (46 %)**, et une
+  précision de **1/20, soit 5 %**, mesurée à la main sur les vingt premiers. Un seul candidat tient :
+  `unknown costs are not treated as zero`.
+- **Deux hypothèses réfutées, dans l'ordre** : borner le rapprochement à la phrase fait passer
+  183 → 180 candidats (négligeable) ; exclure les pull requests (`is:issue`) fait passer
+  180 → **228** (effet inverse). Le défaut n'est donc ni la fenêtre ni le type d'objet, mais la
+  **recherche plein texte** — motifs trop larges, et corpus public désormais peuplé de tickets
+  générés par des agents, qui emploient ce vocabulaire sans formuler aucune plainte.
+- Le code et son banc restent ; l'entonnoir est déclaré **inutilisable en l'état**, et les deux
+  pistes de correction sont inscrites dans `docs/ROADMAP.md` **à mesurer avant d'être affirmées**.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une

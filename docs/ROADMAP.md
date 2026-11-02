@@ -100,12 +100,26 @@ Désigner par écrit qui détient les droits sur le dépôt avant le premier con
 déterministe, `10/10` sur les positifs et `0/30` sur les leurres, chaîne `FRICTION_FILTER_L2`.
 Spécification : `SPEC_AGENT_DETECTEUR_FRICTIONS.md` (dossier de diffusion).
 
-**À faire.** L1 — collecteur en **lecture seule** (GitHub d'abord : API stable, pagination déclarée),
-avec `next_cursor` suivi jusqu'à `has_more=false` et plafond déclaré dans le rapport. L3 — file
-JSONL de candidats, append-only, une ligne par candidat.
+**L1 est écrite, et son premier passage réel échoue** — c'est un résultat, pas un incident.
+`experiments/collecteur_github.py` : 500 items, **228 candidats (46 %)**, précision mesurée
+**1/20 (5 %)**. Le rapport d'exécution distingue bien `lu` / `NON LU` / `TRONQUE`, et trois requêtes
+sur six ont été refusées par le quota — la mécanique est bonne, **l'entonnoir ne l'est pas**.
 
-**Critère de sortie.** Un rapport qui distingue, **par source**, `lu` / `NON LU` / `TRONQUÉ` ; et une
-passe réelle dont les candidats ont été revus à la main, avec le nombre de rejets consigné.
+**Deux hypothèses réfutées, à ne pas réessayer sans mesure** : borner le rapprochement à la phrase
+(183 → 180 candidats) et exclure les pull requests (180 → 228). Le défaut est la **recherche plein
+texte** : motifs trop larges, et un corpus public désormais saturé de tickets générés par des agents.
+
+**Deux pistes, à trancher par la mesure et non par le raisonnement** :
+
+1. **Ensemble curé de dépôts** — 10 à 30 dépôts choisis par domaine, seules leurs nouvelles issues
+   sont lues. Volume faible, densité forte ; le prix est une liste à maintenir.
+2. **Marqueur de douleur** en troisième condition — exiger, en plus du couple de mots, une marque
+   d'étrangeté ou d'échec (« jamais », « silencieusement », « ne devrait pas », « sans le dire »).
+   Le risque, déjà vu, est de tuer le rappel sans le mesurer.
+
+**Critère de sortie commun.** Précision **≥ 30 %** sur vingt candidats jugés à la main, et volume
+inférieur à **30 candidats par passe** — sinon la revue humaine ne se fait pas, et un filtre qu'on
+ne relit pas ne vaut pas mieux qu'un filtre muet.
 
 **Interdit architectural.** Aucune fonction d'écriture dans le code du détecteur, jeton en lecture
 seule. Une consigne se contourne ; une fonction absente, non.
