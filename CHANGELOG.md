@@ -44,6 +44,21 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
   Le crible échoue si l'un de ces défauts disparaît : un contre-exemple qui ne démontre plus rien
   est un contre-exemple mort. Chaîne de détection : `GATEWAY_BOTH_CONSTANT`.
 
+### Ajouté — détecteur de frictions, couche L2
+- `experiments/filtre_frictions.py` — filtre **lexical, déterministe, sans modèle** : des motifs
+  par graine, des motifs négatifs qui disqualifient (éthique générale, accord enthousiaste,
+  promotion, cadre complet), et un candidat qui porte **sa réfutation**. Aucun réseau, aucune
+  écriture, aucune dépendance.
+- **Jugé sur un jeu de référence** de dix frictions documentées et trente leurres, avec deux
+  seuils : `rappel ≥ 8/10` et **zéro faux positif**. Le second seuil existe parce qu'un filtre qui
+  ne rend rien aurait une précision parfaite et un rappel nul.
+- **Le test a d'abord trouvé trois défauts dans le filtre lui-même** : une phrase sur l'horloge
+  interne classée « seuil qui dérive » (motif générique évalué avant le spécifique), `announce`
+  absent du vocabulaire anglais, et `median` admis à tort comme indice d'absence — l'imputation par
+  la médiane est une pratique ordinaire, pas une friction. Après correction : **10/10 et 0/30**.
+- Budget mesuré : **≈ 1,8 ms par item de 300 caractères**. La rédaction initiale annonçait
+  « < 50 ms pour 1 000 items » : c'était une promesse, et elle était fausse d'un facteur 35.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une

@@ -27,6 +27,11 @@ language: fr
 > un connecteur qui annonce une logique tétravalente et n'en calcule aucune (valuation constante,
 > identifiant non stable, « frugalité » qui est l'inverse d'une latence, aucun contrat d'entrée).
 > Gardé pour la régression, chaîne de détection `GATEWAY_BOTH_CONSTANT`.
+>
+> **Filtre de frictions, couche L2 (2026-11-02)** — [`filtre_frictions.py`](filtre_frictions.py:1) :
+> motifs lexicaux déterministes, sans modèle, qui transforment des items bruts en candidats portant
+> leur réfutation. Jugé sur un jeu de référence de 10 frictions et 30 leurres : seuil `rappel ≥ 8/10`
+> et **zéro faux positif**. État mesuré : 10/10 et 0/30. Chaîne `FRICTION_FILTER_L2`.
 
 **Statut : outil écrit, falsificateur fixé, contrôle de manipulation en cours.** Le présent document fixe la prédiction, la métrique et le plafond **avant** la première mesure — condition pour qu'un résultat défavorable soit lisible comme défavorable.
 

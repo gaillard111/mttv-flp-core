@@ -94,6 +94,22 @@ distinctes : il n'existe pas d'association binationale unique.
 **Garde-fou.** Ne jamais inscrire dans un champ `creators` une entité qui n'existe pas juridiquement.
 Désigner par écrit qui détient les droits sur le dépôt avant le premier contrat.
 
+### 2.7 Détecteur de frictions — L1 et L3
+
+**État.** La couche **L2** est écrite et jugée : `experiments/filtre_frictions.py`, filtre lexical
+déterministe, `10/10` sur les positifs et `0/30` sur les leurres, chaîne `FRICTION_FILTER_L2`.
+Spécification : `SPEC_AGENT_DETECTEUR_FRICTIONS.md` (dossier de diffusion).
+
+**À faire.** L1 — collecteur en **lecture seule** (GitHub d'abord : API stable, pagination déclarée),
+avec `next_cursor` suivi jusqu'à `has_more=false` et plafond déclaré dans le rapport. L3 — file
+JSONL de candidats, append-only, une ligne par candidat.
+
+**Critère de sortie.** Un rapport qui distingue, **par source**, `lu` / `NON LU` / `TRONQUÉ` ; et une
+passe réelle dont les candidats ont été revus à la main, avec le nombre de rejets consigné.
+
+**Interdit architectural.** Aucune fonction d'écriture dans le code du détecteur, jeton en lecture
+seule. Une consigne se contourne ; une fonction absente, non.
+
 ## 3. Interdits qui restent des interdits
 
 - **Aucun chiffre de taille ou d'audience** issu d'une seule page de notifications : les comptes du
