@@ -76,12 +76,31 @@ def _url(depot: str, page: int, depuis: str) -> str:
             % (API, depot, depuis, PER_PAGE, page))
 
 
-def _fetcher_http(url: str):
-    """Rend (charge utile, en-tête Link). Aucun jeton : 60 requêtes/heure suffisent ici."""
-    requete = urllib.request.Request(url, headers={
+def _entetes() -> dict:
+    """En-têtes de la requête. Le jeton vient de l'environnement, jamais du code.
+
+    Sans jeton : 60 requêtes/heure, et le collecteur s'arrête au premier 403.
+    Avec un jeton finement gradué en **lecture seule** : 5 000 requêtes/heure.
+
+    Ce que doit contenir ce jeton, et rien de plus :
+        Repository access  -> Public repositories (read-only)
+        Permissions        -> Issues : Read-only   (+ Metadata, imposé)
+        Expiration         -> 90 jours
+    Aucun droit d'écriture, aucun accès aux contenus privés, aucun scope de compte.
+    """
+    entetes = {
         "Accept": "application/vnd.github+json",
         "User-Agent": "flp-frictions/0.2 (lecture seule)",
-    })
+    }
+    jeton = os.environ.get("GITHUB_TOKEN")
+    if jeton:
+        entetes["Authorization"] = "Bearer " + jeton
+    return entetes
+
+
+def _fetcher_http(url: str):
+    """Rend (charge utile, en-tête Link)."""
+    requete = urllib.request.Request(url, headers=_entetes())
     with urllib.request.urlopen(requete, timeout=20) as reponse:
         return json.loads(reponse.read().decode("utf-8")), reponse.headers.get("Link")
 
@@ -187,6 +206,17 @@ def _crible():
     oa = etats.get("open-telemetry/opentelemetry-collector", {})
     if oa.get("lecture") is not False or not oa.get("motif"):
         echecs.append("un dépôt muet doit être NON LU avec son motif")
+
+    # en-têtes : le jeton n'apparaît que s'il est dans l'environnement, et il n'est jamais imprimé
+    ancien = os.environ.pop("GITHUB_TOKEN", None)
+    if "Authorization" in _entetes():
+        echecs.append("sans GITHUB_TOKEN, aucun en-tête Authorization ne doit être envoyé")
+    os.environ["GITHUB_TOKEN"] = "jeton-de-test-factice"
+    if _entetes().get("Authorization") != "Bearer jeton-de-test-factice":
+        echecs.append("avec GITHUB_TOKEN, l'en-tête Authorization doit être posé")
+    os.environ.pop("GITHUB_TOKEN", None)
+    if ancien is not None:
+        os.environ["GITHUB_TOKEN"] = ancien
 
     # quota : au premier 403, on arrête tout et on marque le reste « non tenté »
     def _quota(url):
