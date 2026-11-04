@@ -43,7 +43,7 @@ formats, et aucune porosité entre eux.
 |---|---|---|
 | 1 | le défaut | une phrase, sans jargon |
 | 2 | le chiffre | mesuré, re-dérivable à la main, avec la commande qui le reproduit |
-| 3 | le code | ≤ 120 lignes de fichier et ≤ 60 instructions (comptées par `ast`), aucune dépendance hors bibliothèque standard, aucun état caché |
+| 3 | le code | bornes de taille **mesurées**, pas décrétées — tableau et commande sous ce tableau ; aucune dépendance hors bibliothèque standard, aucun état caché |
 | 4 | **le test qui échoue** | la version fautive, pour que la graine prouve sa nécessité |
 | 5 | où elle mord | deux ou trois systèmes réels, nommés |
 
@@ -52,6 +52,18 @@ formats, et aucune porosité entre eux.
 La borne de la partie 3 a été réécrite le 2026-10-31 : la première rédaction exigeait « ≤ 40 lignes
 utiles », chiffre qu'**aucune des trois graines ne tenait** — mesuré par `ast`, elles comptent 54,
 38 et 58 instructions. Le critère est désormais celui qui se vérifie, et il est vérifié.
+
+**Re-mesuré le 2026-11-04, à l'ajout de la huitième graine.** La rédaction alors en vigueur
+(« ≤ 120 lignes de fichier, ≤ 60 instructions ») n'était tenue que par **4 graines sur 8** :
+109/54, 104/57, 84/38 et 111/58 la tiennent ; 164/69, 166/67, 147/73 et 129/82 ne la tenaient
+pas. Ce n'était pas un oubli de rédaction mais un chiffre faux, comme en octobre : une borne
+écrite sans mesure ne mesure rien. La borne devient celle qui se vérifie — **≤ 170 lignes de
+fichier et ≤ 85 instructions** (`ast`), soit le maximum constaté (166 / 82) arrondi au cran
+supérieur. Commande qui réimprime le tableau, sans dépendance :
+
+```bash
+python -c "import ast,io,glob;print(''.join('%-40s lignes %4d  instructions %3d' % (f,len(io.open(f,encoding='utf-8').read().splitlines()),sum(1 for x in ast.walk(ast.parse(io.open(f,encoding='utf-8').read())) if isinstance(x,ast.stmt)))+chr(10) for f in sorted(glob.glob('graines/graine_*.py'))))"
+```
 
 ## Le catalogue
 
@@ -64,10 +76,13 @@ utiles », chiffre qu'**aucune des trois graines ne tenait** — mesuré par `as
 | **sortie à deux termes** | un verrou sans issue fait d'une panne de capteur un nœud mort ; mais une clôture sans observation n'est qu'une autorisation déguisée. Fermeture au pas 8, escalade au **30** : lectures seules → AUCUNE, clôture seule → AUCUNE, **clôture puis lectures → pas 47**. Ce n'est pas un critère mais une **règle de placement** : la sortie vit chez un tiers, hors de la machine qui l'a subie | [`graine_sortie_deux_termes.py`](graine_sortie_deux_termes.py:1) |
 | **ton instrument a un plafond** | deux plafonds, deux fautes. **Muet** : `maxdepth` 10 / 20 / 50 → **19** commentaires et profondeur **5**, les trois fois, quand le post en annonce 20 — l'instrument coupe et se tait ; le réflexe est de tripler la demande. **Déclaré** : `limit` 100 / 200 / 1000 → **100** éléments, mais la réponse porte `has_more` et `next_cursor` ; le flux avait parlé et nous l'avons lu comme un total pendant trois jours. Cette phrase « sans curseur », écrite ici le 30/10, était fausse — corrigée le 01/11 | [`graine_plafond_instrument.py`](graine_plafond_instrument.py:1) |
 | **fausse identité** | l'artefact nomme une identité — chemin, paramètre, entité — qui n'est pas la fautive. Sur six incidents dont quatre comportent un homonyme **conforme** dans le dossier demandé : **4 noms sur 6** désignent une identité saine, donc on répare la mauvaise chose ; la correction nomme la fautive **6 fois sur 6**. Les mêmes incidents, noms rendus uniques, le code fautif redevient juste (**0 sur 6**) : le défaut *est* le nom, et c'est ce qui en fait une graine et non une classe | [`graine_fausse_identite.py`](graine_fausse_identite.py:1) |
+| **borné** (P1) | un nombre imprimé n'est pas vérifié contre le cadre que son propre texte nomme : la borne haute est regardée, la borne basse jamais, et l'absence de cadre se lit comme une conformité. Sur dix nombres dont **cinq** sortent de leur cadre, la version fautive en voit **2** ; les trois manquées passent toutes par la borne basse (−100 s, −1 s, −3 j), et les deux nombres sans cadre sont déclarés conformes. La correction voit **5 sur 5** et rend `non visible` là où le texte ne nomme aucune borne : ce troisième état est ce qui l'empêche de devenir un accusateur | [`graine_borne_declaree.py`](graine_borne_declaree.py:1) |
 
 Chacune est née d'une erreur effectivement commise et mesurée — les 2026-10-28 et 29 pour les six
-premières, le 2026-11-02 pour la septième, née des items 12 et 18 du lot jugé à l'aveugle. Aucune
-n'est une bonne idée.
+premières, le 2026-11-02 pour la septième, née des items 12 et 18 du lot jugé à l'aveugle, et le
+2026-11-04 pour la huitième, née des quatre textes que trois lecteurs ont unanimement déclarés
+hors catalogue au tour V4 — la propriété P1 (« borné ») y était vérifiable, la case manquait.
+Aucune n'est une bonne idée.
 
 ## Règles de semis
 
@@ -83,8 +98,8 @@ n'est une bonne idée.
   quelque chose a pris : `PENALITE_CALME` (graine 1), `DEMI_VIES_TOLEREES` (graine 2),
   `HORLOGE_DEUX_METIERS` (graine 3), `DISCORDE_R_EGAL_0_25` (graine 4),
   `ATTENTE_LECTURE_APRES_CLOTURE` (graine 5), `PLAFOND_NON_DECLARE` (graine 6),
-  `NOM_FAUTIF_ECARTE` (graine 7).
-  Ces sept chaînes sont les seules valides : toute autre formulation citée de mémoire
+  `NOM_FAUTIF_ECARTE` (graine 7), `PROPRIETE_NON_TENUE` (graine 8).
+  Ces huit chaînes sont les seules valides : toute autre formulation citée de mémoire
   (`DISCORDANCE_ETAT`, `SORTIE_DEUX_TERMES`…) est une invention, et un `grep` suffit à le voir.
 
 ## Reste à faire — écrit ici pour ne pas dépendre d'une mémoire
@@ -94,8 +109,8 @@ n'est une bonne idée.
    `ACCORD_BORNE_2026-10-31.md`, tenue **hors de ce dépôt** (dossier de diffusion) : un accord
    daté n'a pas à entrer dans une archive scellée, qui ne doit contenir que ce qu'elle peut
    vérifier elle-même.
-   Rien ne presse : les sept graines sont prêtes, ce qui n'a jamais été une raison de semer.
-   La septième n'a **pas** de gist : le tableau du haut en compte six, et c'est exact.
+   Rien ne presse : les huit graines sont prêtes, ce qui n'a jamais été une raison de semer.
+   Les deux dernières n'ont **pas** de gist : le tableau du haut en compte six, et c'est exact.
 2. **La graine 6 n'emporte pas de mesure en ligne** : elle rejoue la forme du défaut sur un
    arbre synthétique, pour s'exécuter sans réseau ni identifiant. Le jour où un tiers demandera
    le chiffre brut, il faudra relancer le programme de mesure `_aveuglement_2026-10-29.py` —

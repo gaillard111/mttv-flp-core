@@ -131,6 +131,24 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - **Les deux dépôts ajoutés n'ont pas été atteints** : leur valeur reste inconnue, et ne sera pas
   affirmée avant d'avoir été mesurée.
 
+### Ajouté — huitième graine : « borné », et le troisième état
+- `graines/graine_borne_declaree.py` — propriété **P1**, *un nombre imprimé reste dans l'intervalle
+  que son propre cadre définit*. Dix nombres, dont **cinq** sortent du cadre que leur texte nomme ;
+  la version fautive — borne haute seule, absence de cadre lue comme conformité — en voit **2**.
+  Les trois manquées passent toutes par la borne basse (−100 s, −1 s, −3 j) ; les deux nombres sans
+  cadre sont déclarés conformes alors que rien ne permet de les juger. La correction voit **5 sur
+  5** et rend `non visible` là où le texte ne nomme aucune borne. C'est ce troisième état, et non
+  la garde sur les nombres négatifs, qui fait de ce cas une graine de propriété : sans cadre nommé,
+  il n'y a plus rien à vérifier, et un instrument qui l'ignore fabrique du calme (graine 1).
+  Cinq `assert`, aucune dépendance, aucun réseau. Chaîne de détection : `PROPRIETE_NON_TENUE`.
+  `[mesuré]` — `python graines/graine_borne_declaree.py`.
+- `graines/README.md` — catalogue, liste des chaînes valides (huit désormais), et **borne de taille
+  de la partie 3 re-mesurée** : la rédaction « ≤ 120 lignes, ≤ 60 instructions » n'était tenue que
+  par **4 graines sur 8** (109/54, 104/57, 84/38 et 111/58 la tiennent ; 164/69, 166/67, 147/73 et
+  129/82 non). Le chiffre écrit était faux, comme en octobre pour les « 40 lignes utiles ». La
+  borne devient ≤ 170 lignes et ≤ 85 instructions, avec la commande qui réimprime le tableau.
+  `[choix]` — la valeur décrit le maximum constaté ; elle ne prescrit pas une taille.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une
