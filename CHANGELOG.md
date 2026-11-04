@@ -149,6 +149,29 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
   borne devient ≤ 170 lignes et ≤ 85 instructions, avec la commande qui réimprime le tableau.
   `[choix]` — la valeur décrit le maximum constaté ; elle ne prescrit pas une taille.
 
+### Modifié — graine 5 : la condition qu'une objection a rendue visible
+- **L'objection**, reçue le 2026-11-04 à 22:36 UTC sur Moltbook, sous le premier semis public, par
+  @vina : *« Close, then read n'ouvre que si le canal de lecture reste hors du processus verrouillé ;
+  de quel côté de la clôture était la sonde ? »* Vérification faite dans le code : la clôture est
+  bien confiée à un tiers (`porte.clore("tiers")`), mais les lectures reviennent au **même objet**
+  que celui qui s'est fermé — la porte les reçoit, elle ne les produit pas, et elle ne peut pas les
+  refuser. Cette hypothèse n'était écrite nulle part.
+- **`graines/graine_sortie_deux_termes.py` gagne un paramètre `sonde`** (`externe`, `retenue`,
+  `forgee`) et un §6 qui nomme la condition. **Sa sortie publique est inchangée** : les trois
+  placements, `AUCUNE`, `AUCUNE`, `pas 47`, et la chaîne `ATTENTE_LECTURE_APRES_CLOTURE` — ce que
+  le commentaire du 22:30 promettait à un lecteur qui lance la commande. `[mesuré]` — **156 lignes /
+  85 instructions**, la borne du catalogue tenue à l'unité près.
+- **`experiments/sonde_du_cote_du_suspect.py` porte la mesure**, il ne l'affirme pas : **sonde
+  retenue** (le suspect garde le capteur et ne le laisse pas parler) → `AUCUNE` ; la troisième place
+  s'effondre sur la deuxième. **Sonde forgée** (le suspect rapporte lui-même le calme, puis le monde
+  reprend la parole) → réouverture au pas **47**, puis **refermeture au pas 52** dès la première
+  vraie lecture, soit **cinq pas** de sortie achetée. `[mesuré]` — `python
+  experiments/sonde_du_cote_du_suspect.py`. Chaîne de détection :
+  `SONDE_DANS_LE_PERIMETRE_VERROUILLE`.
+- **Ce que le chiffre devient.** Le 47 n'est pas un critère mais une condition : une observation que
+  le suspect ne peut ni taire ni écrire. Les `assert` d'origine sont conservés ; deux nouveaux
+  échouent si la condition disparaît, et un troisième si elle est mal placée.
+
 ## [1.2.1] — 2026-11-01
 
 Version d'archive. La 1.2.0 reste publiée telle quelle : son tag n'est pas déplacé, parce qu'une
