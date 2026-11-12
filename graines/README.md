@@ -29,9 +29,12 @@ Le contrôle d'identité binaire entre gist et dépôt (téléchargement des cin
 Le gist diffère du dépôt par la forme du fichier, un octet par ligne (CRLF servi par GitHub
 contre LF du dépôt) : même texte.
 
-Le gist de la **neuvième** a été créé le 2026-11-12, mécaniquement, depuis le fichier du dépôt
-(commit `1ad8735`) : il n'a donc pas été comparé, il a été **copié**. Les graines 7 et 8 n'ont pas
-de gist — le dépôt est canonique, un gist est un confort de lecture, pas un doublon obligatoire.
+Le gist de la **neuvième** a été créé le 2026-11-12 mécaniquement depuis le fichier du dépôt
+(commit `1ad8735`), puis **relu et comparé octet à octet** le même jour : `IDENTIQUE`, **7 242
+octets** de part et d'autre, **147 CRLF des deux côtés** — le fichier du dépôt porte déjà des fins
+de ligne Windows, donc l'écart d'un octet par ligne constaté le 2026-11-01 ne s'applique pas ici.
+Les graines 7 et 8 n'ont pas de gist — le dépôt est canonique, un gist est un confort de lecture,
+pas un doublon obligatoire.
 
 ## Ne pas confondre avec les graines transductives
 
