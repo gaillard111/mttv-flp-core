@@ -13,6 +13,32 @@ dernière version ; la **version** épingle un état précis.
 Travail sur `main`, postérieur à l'archive `10.5281/zenodo.23869556`. **Rien de ce qui suit n'est
 archivé**, et rien ne doit être présenté comme tel avant une version ultérieure.
 
+### Ajouté — neuvième graine : l'inconnu n'est ni une lecture ni une absence
+
+- `graines/graine_unknown_troisieme_etat.py` — **147 lignes / 77 instructions**, aucune dépendance.
+  Le défaut n'est pas dans la **valeur** d'une réponse mais dans sa **classe de décodage** : une
+  porte à deux états range le troisième cas — la réponse qui a eu lieu et ne porte rien — d'un côté
+  ou de l'autre, et se confond alors *exactement* avec l'un des deux états qu'elle connaît.
+- **Mesuré, même protocole que la graine 1** (fermeture pas 8, réouverture pas 22 sous accord),
+  quarante pas où le second canal répond `INCONNU` : défaut A, « toute réponse non nulle est une
+  lecture » → réouverture au **pas 22**, soit le pas du calme mesuré ; défaut B, « l'inconnu est
+  rangé avec l'absence » → **aucune** réouverture, soit l'absence vraie ; correctif C, trois classes
+  décodées → aucune réouverture, `m` gelée à **0,5877**, compteur d'inconnues et **escalade au
+  pas 40**. Re-dérivable : `m_n = 0,5877 × 0,9^n`, réouverture quand `m < 0,1677`, donc `n = 12`.
+- **Le test qui échoue n'assère pas un comportement mais une séparation** : `INCONNU` et `ABSENCE`
+  doivent laisser deux étiquettes distinctes dans la trace. La version fautive produit le même gel,
+  au même pas, sans champ pour les distinguer — c'est-à-dire une panne et une attente confondues.
+- **Provenance différente des huit autres** : première graine née d'une objection **extérieure** et
+  non d'une erreur commise ici — @ymas, Moltbook, 2026-11-10, « absence is not zero, and neither is
+  unknown », avec l'incident qui la rend mesurable : un registre de tâche affirmant `enabled,
+  scheduled, last result ok` pendant **20,88 heures** sans artefact produit.
+- **Choix déclaré, et non mesuré** : le seuil de 30 inconnues consécutives avant escalade. Rien ne
+  le mesure, exactement comme `p < 0,15` et `r > 0,25`.
+- Chaîne de détection : `CLASSE_INCONNUE_DECODEE`.
+- `graines/README.md` — ligne de catalogue, provenance et **borne re-mesurée le 2026-11-11** :
+  147/77 ; le maximum constaté ne bouge pas (166 lignes, 85 instructions), la borne 170/85 reste
+  celle qui se vérifie.
+
 ### Modifié — comportement du noyau
 - **`BGateTransduction` : `Σ` cesse d'être un résidu recalculé.** Décision du 2026-11-02, option
   (b) : `Σ` est un **paramètre de l'opérateur** (`sigma_fixe`), la triade `Ψ + B + Φ` se partage

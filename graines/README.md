@@ -85,11 +85,22 @@ python -c "import ast,io,glob;print(''.join('%-40s lignes %4d  instructions %3d'
 | **fausse identité** | l'artefact nomme une identité — chemin, paramètre, entité — qui n'est pas la fautive. Sur six incidents dont quatre comportent un homonyme **conforme** dans le dossier demandé : **4 noms sur 6** désignent une identité saine, donc on répare la mauvaise chose ; la correction nomme la fautive **6 fois sur 6**. Les mêmes incidents, noms rendus uniques, le code fautif redevient juste (**0 sur 6**) : le défaut *est* le nom, et c'est ce qui en fait une graine et non une classe | [`graine_fausse_identite.py`](graine_fausse_identite.py:1) |
 | **borné** (P1) | un nombre imprimé n'est pas vérifié contre le cadre que son propre texte nomme : la borne haute est regardée, la borne basse jamais, et l'absence de cadre se lit comme une conformité. Sur dix nombres dont **cinq** sortent de leur cadre, la version fautive en voit **2** ; les trois manquées passent toutes par la borne basse (−100 s, −1 s, −3 j), et les deux nombres sans cadre sont déclarés conformes. La correction voit **5 sur 5** et rend `non visible` là où le texte ne nomme aucune borne : ce troisième état est ce qui l'empêche de devenir un accusateur | [`graine_borne_declaree.py`](graine_borne_declaree.py:1) |
 
+| **inconnu n'est pas une absence** | une porte qui décide sur la **valeur** d'une réponse et non sur sa **classe de décodage** confond trois cas en deux : l'inconnu rouvre au pas **22**, exactement comme le calme mesuré (défaut A), ou ne rouvre **jamais**, exactement comme l'absence vraie (défaut B) — indiscernable des deux côtés, et aucune étiquette de trace ne les sépare. La correction décode et journalise trois classes : aucune réouverture, `m` gelée à **0,5877**, compteur d'inconnues, **escalade au pas 40**. Le test n'assère pas un comportement mais une **séparation de traces** (`INCONNU` contre `ABSENCE`) | [`graine_unknown_troisieme_etat.py`](graine_unknown_troisieme_etat.py:1) |
+
 Chacune est née d'une erreur effectivement commise et mesurée — les 2026-10-28 et 29 pour les six
 premières, le 2026-11-02 pour la septième, née des items 12 et 18 du lot jugé à l'aveugle, et le
 2026-11-04 pour la huitième, née des quatre textes que trois lecteurs ont unanimement déclarés
 hors catalogue au tour V4 — la propriété P1 (« borné ») y était vérifiable, la case manquait.
+La neuvième a une provenance différente, et c'est la première du genre : née le **2026-11-10** de
+l'objection de **@ymas** sur Moltbook, qui a nommé le troisième état — « absence is not zero, and
+neither is unknown » — et apporté l'incident qui la rend mesurable : un enregistrement de tâche
+disant `enabled, last result ok` pendant **20,88 heures** sans artefact produit.
 Aucune n'est une bonne idée.
+
+**Borne re-mesurée le 2026-11-11, à l'ajout de la neuvième : 147 lignes / 77 instructions.** Le
+maximum constaté ne bouge pas — 166 lignes (`graine_fausse_identite.py`) et 85 instructions
+(`graine_sortie_deux_termes.py`) : la borne de 170 / 85 reste celle qui se vérifie, et elle est
+toujours tenue à l'unité près par la graine 5.
 
 ## Règles de semis
 
