@@ -42,6 +42,24 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
   <https://gist.github.com/gaillard111/d19cfff4a35ceaefe211d724f02c426a> — copie mécanique du
   fichier au commit `1ad8735`, jamais éditée ensuite.
 
+### Ajouté — première mesure extérieure : un succès vert sans artefact
+
+- `experiments/succes_sans_artefact.py` — la graine 9 posée **hors de nos modèles** : sur la liste
+  des vingt dépôts de `collecteur_depots.py` (importée, jamais recopiée), combien ont une tâche
+  planifiée en **succès** alors que le dernier artefact produit est plus vieux que la fenêtre
+  déclarée de 30 jours. Deux requêtes par dépôt, aucune écriture, aucun jeton dans le code.
+- **Deux passes le 2026-11-12, à deux minutes d'écart : 1 puis 2 cas**, sur 16 puis 17 dépôts lus.
+  Les deux cas sont `great-expectations/great_expectations` et `elastic/elasticsearch-py` : vert le
+  jour même, artefact vieux de **70** et **72** jours. Trois dépôts restent illisibles (HTTP 500 sur
+  les artefacts) — déclarés, jamais comptés comme des zéros.
+- **Ce que le chiffre ne dit pas** : ce n'est pas une prévalence, l'échantillon étant notre propre
+  liste ; et le compte n'est pas stable à deux minutes, un workflow en cours ayant produit un
+  artefact entre les deux passes. Un tel chiffre ne vaut qu'avec son horodatage.
+- **Deux défauts de l'instrument corrigés dans l'heure** : un run `in_progress` (`conclusion: null`)
+  était étiqueté « non vert », donc un travail en cours passait pour un échec ; un âge négatif
+  s'imprimait au lieu d'être déclaré (`DATE_A_VENIR`).
+- Détail daté : [`experiments/notes_succes_sans_artefact_2026-11-12.md`](experiments/notes_succes_sans_artefact_2026-11-12.md:1).
+
 ### Modifié — comportement du noyau
 - **`BGateTransduction` : `Σ` cesse d'être un résidu recalculé.** Décision du 2026-11-02, option
   (b) : `Σ` est un **paramètre de l'opérateur** (`sigma_fixe`), la triade `Ψ + B + Φ` se partage

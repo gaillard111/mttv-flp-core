@@ -32,6 +32,14 @@ language: fr
 > motifs lexicaux déterministes, sans modèle, qui transforment des items bruts en candidats portant
 > leur réfutation. Jugé sur un jeu de référence de 10 frictions et 30 leurres : seuil `rappel ≥ 8/10`
 > et **zéro faux positif**. État mesuré : 10/10 et 0/30. Chaîne `FRICTION_FILTER_L2`.
+>
+> **Mesure extérieure — succès vert sans artefact (2026-11-12)** —
+> [`succes_sans_artefact.py`](succes_sans_artefact.py:1) : deux requêtes par dépôt, sur la liste de
+> `collecteur_depots.py` **importée** et non recopiée. Deux passes à deux minutes d'écart : **1 puis
+> 2** cas, sur 16 puis 17 dépôts lus, où la tâche planifiée est en succès le jour même alors que le
+> dernier artefact produit date de **70** et **72** jours. C'est une **preuve d'existence**, pas un
+> taux de prévalence — la liste est choisie par nos graines. Détail daté des deux passes :
+> [`notes_succes_sans_artefact_2026-11-12.md`](notes_succes_sans_artefact_2026-11-12.md:1).
 
 **Statut : outil écrit, falsificateur fixé, contrôle de manipulation en cours.** Le présent document fixe la prédiction, la métrique et le plafond **avant** la première mesure — condition pour qu'un résultat défavorable soit lisible comme défavorable.
 
