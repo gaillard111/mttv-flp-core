@@ -9,7 +9,7 @@ Ce dossier ne contient pas de doctrine. Il contient des **graines exécutables**
 réellement commis, sa correction minimale, et **le test qui échoue** si le défaut est présent
 ou si la correction sur-corrige.
 
-## Les six gists publics
+## Les gists publics
 
 Un gist est une **copie figée** du fichier canonique, produite mécaniquement, **à ne jamais
 éditer** : une mise à jour se fait en recopiant depuis ce dépôt, sinon les deux divergent.
@@ -22,11 +22,16 @@ Un gist est une **copie figée** du fichier canonique, produite mécaniquement, 
 | 4 | discordance = état | <https://gist.github.com/gaillard111/13d0281aceb831fd94040614e1980a39> |
 | 5 | sortie à deux termes | <https://gist.github.com/gaillard111/c4447ebda13f718421555b279d372f55> |
 | 6 | ton instrument a un plafond | <https://gist.github.com/gaillard111/12d09fad54c0f017f2e34de62e96ad71> |
+| 9 | inconnu n'est pas une absence | <https://gist.github.com/gaillard111/d19cfff4a35ceaefe211d724f02c426a> |
 
 Le contrôle d'identité binaire entre gist et dépôt (téléchargement des cinq, comparaison octet
 à octet) est donné dans le guide de production. Exécuté le 2026-11-01 : `IDENTIQUE` partout.
 Le gist diffère du dépôt par la forme du fichier, un octet par ligne (CRLF servi par GitHub
 contre LF du dépôt) : même texte.
+
+Le gist de la **neuvième** a été créé le 2026-11-12, mécaniquement, depuis le fichier du dépôt
+(commit `1ad8735`) : il n'a donc pas été comparé, il a été **copié**. Les graines 7 et 8 n'ont pas
+de gist — le dépôt est canonique, un gist est un confort de lecture, pas un doublon obligatoire.
 
 ## Ne pas confondre avec les graines transductives
 

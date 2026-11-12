@@ -38,6 +38,9 @@ archivé**, et rien ne doit être présenté comme tel avant une version ultéri
 - `graines/README.md` — ligne de catalogue, provenance et **borne re-mesurée le 2026-11-11** :
   147/77 ; le maximum constaté ne bouge pas (166 lignes, 85 instructions), la borne 170/85 reste
   celle qui se vérifie.
+- **Gist public figé le 2026-11-12** :
+  <https://gist.github.com/gaillard111/d19cfff4a35ceaefe211d724f02c426a> — copie mécanique du
+  fichier au commit `1ad8735`, jamais éditée ensuite.
 
 ### Modifié — comportement du noyau
 - **`BGateTransduction` : `Σ` cesse d'être un résidu recalculé.** Décision du 2026-11-02, option
