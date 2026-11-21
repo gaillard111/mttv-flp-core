@@ -128,6 +128,20 @@ REASSURANCE = [
      r"(palier|rang|rank|tier|classement).{0,80}(alors que|tandis que|whereas|while)"),
 ]
 
+# --- portee mesuree, apres la liste ------------------------------------------
+# Troisieme mesure, 2026-11-21 : les cinq textes reels verses ce jour-la dans l'etalon
+# donnent **0/5**, et **0/5** aussi sur leurs transcriptions courtes. Le registre n'est
+# donc pas en cause : le vocabulaire l'est. Ces cinq cas expriment le defaut par le
+# MECANISME (lecture perimee, echec deterministe, identite reseau, couche d'affichage,
+# octets identiques) quand les motifs ci-dessus cherchent le SYMPTOME (zero, plafond,
+# seuil, verrou, moyenne) : aucun pont lexical, et la proximite est bornee a deux phrases.
+#
+# Etat du tableau de chasse sur du materiel neuf : 0/5, puis 1/6, puis 0/5. Aucun
+# elargissement ne doit se faire sur les cas qui servent a le mesurer - sinon le score
+# remonte par construction et l'instrument devient infalsifiable.
+# Detail et commandes : ETALON_JUGEMENT_2026-11-21.md (dossier de diffusion, hors depot).
+# Regle liee : docs/regles_de_transmission_agent.md, R3.
+
 _POS = [(g, n, re.compile(x, re.DOTALL)) for g, n, x in POSITIFS]
 _NEG = [(n, re.compile(x, re.DOTALL)) for n, x in NEGATIFS]
 _REA = [(n, re.compile(x, re.DOTALL)) for n, x in REASSURANCE]
