@@ -66,3 +66,20 @@ Un document de synthèse qui serait *seul* à porter un chiffre est un défaut, 
 
 Un défaut qui échoue l'un de ces cinq points n'est pas une graine ; il va au registre des refus. Ce
 n'est pas une perte : c'est là que le corpus range ce qu'il a appris en le refusant.
+
+## R3 bis. Tout compte déclaré se dérive, il ne se récite pas
+
+**Trois fois le 2026-11-21, un instrument a péri par son décompte et non par sa logique.**
+
+| Instrument | Ce qu'il déclarait | Ce qui était vrai |
+|---|---|---|
+| [`graines/README.md`](../graines/README.md:123) | « ces huit chaînes sont les seules valides » | le catalogue en portait **neuf** |
+| `ETALON_8_2026-11-03.md` | « un par graine, […] couvre les sept défauts » | neuf graines depuis le 2026-11-11 |
+| [`_verifier_etalon.py`](../../80_ARCHIVES/_VRAC_FLP/mttv-flp-diffusion/_verifier_etalon.py:1) | `ATTENDUS` figé à huit emplacements | neuf graines + une classe B = **dix** |
+
+Dans les trois cas la **règle** était juste et le **nombre** faux. Aucune de ces trois erreurs n'a été
+trouvée en relisant l'intention : elles ont été trouvées en exécutant (`grep`, `ast`, vérificateur).
+
+**Corollaire.** Un compte écrit dans un document ou dans un programme porte la commande qui le
+dérive, ou il reçoit ce compte **en paramètre**. Un nombre figé sans commande est une date de
+péremption que personne n'a lue.
