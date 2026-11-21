@@ -48,7 +48,7 @@ il s'écrit.
 | Refus motivés, chiffrés, datés | [`arbitrages_rmp.md`](arbitrages_rmp.md:155) §F | **oui** — c'est la trace |
 | Mesures contradictoires, re-exécutables | [`../experiments/audit_graines_post_riemann.py`](../experiments/audit_graines_post_riemann.py:1) | **oui** — la commande reproduit le chiffre |
 | Registre des chaînes de détection | [`../graines/README.md`](../graines/README.md:123) | **oui** — relevé par commande |
-| Dossiers de synthèse rédigés hors dépôt | `ARBITRAGE_POST_RIEMANN_2026-11-21/` (bureau local) | **non** — confort de lecture, pas preuve |
+| Dossiers de synthèse rédigés hors dépôt | nom de dossier daté, sur le poste de travail, non versionné | **non** — confort de lecture, pas preuve |
 
 **La distinction est celle du corpus : une trace, non un confort.** Un document de synthèse peut
 disparaître sans perte : ce qu'il contenait de probant est dans les trois premières lignes du tableau.
