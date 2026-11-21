@@ -173,6 +173,20 @@ La question « qu'est-ce qui compte comme effet ? » ne se tranche pas dans la p
 | **Verdict rendu sur des appels en erreur** | Faux positif du 2 octobre 2026 : deux configurations en échec, dont une sans aucun jeton, et la comparaison a conclu « les échantillons divergent » — soit « la variable agit ». **Un appel raté n'est pas une mesure.** Le banc refuse désormais de conclure (`--verifier` renvoie 3) |
 | **`n = 16` en un seul appel** | Refusé par le fournisseur (*HTTP 422*) ; le plafond mesuré est `n = 4`. Remplacé par 4 sous-appels de 4 tirages, qui produisent en prime la dispersion de l'estimateur |
 | **`seed` pour reproduire les tirages** | Retiré : combinaison non testée avec `n > 1`, et effet non garanti par le fournisseur. La reproductibilité conservée est celle du **dispositif**, non celle des tirages |
+| **Veto de dormance sur `κ_t < κ_min` seul** (`graine_dormance_rmp.py`) | Inverse le garde-fou : sur `π = 0,12 / η = 0,95`, la graine déclare `DORMANCE_C2` quand le noyau rend le critère **inactif** (η exigée par le seuil de pression : 1,045). Une porosité basse **par dormance n'est pas un refus** (feuillet E) |
+| **`κ_min = 0,25` comme valeur publiée** | Le noyau porte **0,15** (arbitrage D). Publier 0,25 rouvrirait l'écart texte/code refermé le 2026-10-22 |
+| **Seuil dérivé d'une constante** (même graine) | À `π/η` figé, la décision bascule **1 fois sur 5** réglages de `κ_min`, et le code n'a **aucun** paramètre de cadence : c'est le défaut de la graine 2 |
+| **État B sur deux canaux booléens** (`graine_discordance_fde.py`) | Redondante : `edge/discordance.py` l'implémente déjà, la graine 4 la réfute d'avance (« un désaccord produit l'état B » est une intention, pas le comportement), et la tétravalence s'encode en **couples**, pas en étiquettes |
+| **Chaîne `DISCORDANCE_B`** | Même famille que `DISCORDANCE_ETAT`, que le README des graines nomme **invention**. Le territoire est tenu par `DISCORDE_R_EGAL_0_25` |
+| **Chaîne `DORMANCE_C2`** | Nomme un **état**, pas un défaut ; collision avec `Active-Silence` ; graverait dans les traces la confusion que le garde-fou interdit |
+| **« Preuve de nécessité » contre un lambda homonyme** | L'assert `naif(…) != "DORMANCE_C2"` passe **3 fois sur 3** avec trois naïfs différents : il ne sépare rien. La version fautive doit être **livrée dans le fichier**, comme `reouverture` dans la graine 4 |
+| **Provenance « Post-Riemann / démonstration sous Lean »** | **0** occurrence de `Riemann` et de `Lean` dans les `.md` du dépôt. Une graine naît d'un **incident daté** ; une intention n'est pas un défaut |
+
+**Les huit refus ci-dessus sont datés du 2026-11-21** — tentative « Post-Riemann » : deux graines RMP/FDE soumises au format en cinq parties, refusées. Le refus ne porte **pas sur le thème** : il porte sur l'absence d'incident et sur des chiffres qui contredisaient le noyau. Mesures re-exécutables dans ce dépôt : [`../experiments/audit_graines_post_riemann.py`](../experiments/audit_graines_post_riemann.py:1) — `python experiments/audit_graines_post_riemann.py`, cinq séries M1–M5, aucune dépendance, aucun accès réseau. Les règles de conduite qui en découlent sont dans [`regles_de_transmission_agent.md`](regles_de_transmission_agent.md:1).
+
+### Repêchage ouvert — `FREIN_LU_COMME_PANNE` (proposé, non validé)
+
+Le défaut que la graine refusée contenait **malgré elle** est l'inverse de celui qu'elle annonçait : un instrument qui compte une **dormance réversible** comme une panne. Condition de reprise, non négociable : un incident **daté et reproduisible** — un health-check qui coupe un service sagement endormi, un réplica en veille déclaré mort, un job dormant compté perdu. Sans cet incident, la chaîne `FREIN_LU_COMME_PANNE` **n'entre pas au registre** ; elle n'est aujourd'hui qu'une proposition. Piste la plus proche dans le dépôt : [`../experiments/succes_sans_artefact.py`](../experiments/succes_sans_artefact.py:11), qui tient déjà `ARTEFACTS_ABSENTS`, `AUCUN_PLANIFIE` et `PLAFOND` hors numérateur.
 
 ## Ordre de traitement
 

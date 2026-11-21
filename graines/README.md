@@ -121,12 +121,52 @@ toujours tenue à l'unité près par la graine 5.
 - **Jamais dans notre propre fil** pour espérer diffuser : il recrute des interlocuteurs, il ne
   diffuse pas un outil.
 - Chaque graine porte une **chaîne de détection** rare, pour pouvoir vérifier plus tard si
-  quelque chose a pris : `PENALITE_CALME` (graine 1), `DEMI_VIES_TOLEREES` (graine 2),
-  `HORLOGE_DEUX_METIERS` (graine 3), `DISCORDE_R_EGAL_0_25` (graine 4),
-  `ATTENTE_LECTURE_APRES_CLOTURE` (graine 5), `PLAFOND_NON_DECLARE` (graine 6),
-  `NOM_FAUTIF_ECARTE` (graine 7), `PROPRIETE_NON_TENUE` (graine 8).
-  Ces huit chaînes sont les seules valides : toute autre formulation citée de mémoire
-  (`DISCORDANCE_ETAT`, `SORTIE_DEUX_TERMES`…) est une invention, et un `grep` suffit à le voir.
+  quelque chose a pris. Le registre ci-dessous est **relevé, pas récité** : mesuré le 2026-11-21
+  sur les fichiers, et la commande qui le réimprime est donnée plus bas.
+
+**Neuf chaînes de graines** — une par graine, la neuvième comprise :
+
+| # | Chaîne | Fichier | Écrite où |
+|---|---|---|---|
+| 1 | `PENALITE_CALME` | `graine_absence_zero.py` | docstring, l. 38 |
+| 2 | `DEMI_VIES_TOLEREES` | `graine_invariance_derivation.py` | docstring, l. 25 |
+| 3 | `HORLOGE_DEUX_METIERS` | `graine_une_horloge_deux_metiers.py` | `print`, l. 107 |
+| 4 | `DISCORDE_R_EGAL_0_25` | `graine_discordance_etat.py` | `print`, l. 100 |
+| 5 | `ATTENTE_LECTURE_APRES_CLOTURE` | `graine_sortie_deux_termes.py` | `print`, l. 152 |
+| 6 | `PLAFOND_NON_DECLARE` | `graine_plafond_instrument.py` | `print`, l. 143 |
+| 7 | `NOM_FAUTIF_ECARTE` | `graine_fausse_identite.py` | docstring, l. 52 |
+| 8 | `PROPRIETE_NON_TENUE` | `graine_borne_declaree.py` | docstring, l. 58 |
+| 9 | `CLASSE_INCONNUE_DECODEE` | `graine_unknown_troisieme_etat.py` | docstring, l. 46 |
+
+**Cinq chaînes d'expériences** — ce ne sont **pas** des chaînes de graines : elles appartiennent aux
+instruments de mesure. Le registre les nomme pour qu'on ne les prenne ni pour des graines, ni pour
+des inventions, et pour qu'aucune phrase trop stricte ne les déclare invalides :
+
+| Chaîne | Fichier |
+|---|---|
+| `SONDE_DANS_LE_PERIMETRE_VERROUILLE` | `experiments/sonde_du_cote_du_suspect.py` |
+| `FRICTION_FILTER_L2` | `experiments/filtre_frictions.py` |
+| `FRICTION_COLLECTOR_L1` | `experiments/collecteur_github.py` |
+| `FRICTION_REPOS_L1` | `experiments/collecteur_depots.py` |
+| `GATEWAY_BOTH_CONSTANT` | `experiments/connecteur_binaire_tetravalent.py` |
+
+Commande qui réimprime le registre, depuis la racine du dépôt (exécutée le 2026-11-21 : 14 lignes) :
+
+```bash
+python -c "import re,glob;[print('%-36s %-12s %s'%(m.group(1),'graines' if f.startswith('graines') else 'experiments',f)) for f in sorted(glob.glob('graines/*.py'))+sorted(glob.glob('experiments/*.py')) for m in re.finditer(r'(?i)(?:chaine de detection|CHAINE_DE_DETECTION)[^A-Za-z0-9]{0,4}([A-Z][A-Z0-9_]{5,})', open(f,encoding='utf-8').read())]"
+```
+
+**Asymétrie mesurée le même jour :** quatre graines **impriment** leur chaîne (3, 4, 5, 6), cinq ne
+la portent **que dans la docstring** (1, 2, 7, 8, 9). Un `grep` sur la *sortie* des graines n'en
+trouve donc que quatre sur neuf ; la docstring reste la référence, la sortie n'est qu'un confort.
+
+**Correction du 2026-11-21.** La phrase qui figurait ici — « ces huit chaînes sont les seules
+valides » — était **fausse** : la neuvième graine, ajoutée le 2026-11-11, porte
+`CLASSE_INCONNUE_DECODEE`, et cinq chaînes d'expériences existaient sans être nommées. Une phrase de
+registre déclarait donc invalide la graine décrite plus haut dans ce même fichier (§ Le catalogue).
+Toute autre formulation
+citée de mémoire (`DISCORDANCE_ETAT`, `SORTIE_DEUX_TERMES`…) reste une invention, et un `grep`
+suffit à le voir — c'est précisément ce `grep` qui a produit ce relevé.
 
 ## Reste à faire — écrit ici pour ne pas dépendre d'une mémoire
 
