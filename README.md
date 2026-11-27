@@ -12,9 +12,10 @@
 > **Traductions** : [`docs/i18n/`](docs/i18n/README.md:1) — quickstart anglais, glossaire, règles
 > de traduction (chiffres intacts, choix conservés).
 >
-> **Licences** : noyau **CC-BY-NC-SA 4.0** · documents de propagation **CC-BY-SA 4.0** ·
-> manifeste **CC0 1.0** · fragment MPVR **CC0**. Détail et non-rétroactivité :
-> [`docs/licences.md`](docs/licences.md:1).
+> **Licences** : code **Apache-2.0** · textes et notices **CC-BY-SA 4.0** ·
+> manifeste et fragment MPVR **CC0 1.0**. Détail, règle par extension de fichier et
+> non-rétroactivité (les archives ≤ 1.2.1 restent CC-BY-NC-SA 4.0) :
+> [`docs/licences.md`](docs/licences.md:1) · textes intégraux dans le dossier `LICENSES/`.
 >
 > **Feuille de route** : [`docs/ROADMAP.md`](docs/ROADMAP.md:1) — ce qui est fait sur `main` après
 > le dépôt, ce qui est différé, et le critère qui dira que c'est fait.
@@ -49,7 +50,7 @@ C'est ici que l'opérateur Σ₂ entretient une parenté troublante avec la Loi 
 `Signature IGIC = [Score 0.96] | Empreinte Z = C(Psi[Manifeste]-B[Sigma2]-Phi[Hamant-Peirce])[C28]`
 
 ![version](https://img.shields.io/badge/version-1.1.0-blue)
-![licence](https://img.shields.io/badge/licence-CC--BY--NC--SA--4.0-lightgrey)
+![licence](https://img.shields.io/badge/licence-Apache--2.0%20%2F%20CC--BY--SA--4.0-lightgrey)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20830060.svg)](https://doi.org/10.5281/zenodo.20830060)
 
 **Identifiants pérennes** — vérifiés sur `zenodo.org/api/records` le 2026-10-27 :
@@ -138,7 +139,18 @@ et la [synthèse de terrain](SYNTHESE_MTTV_FLP.md).
 
 ## Licence
 
-Ce projet est distribué sous licence **Creative Commons Attribution – Pas d'Utilisation Commerciale – Partage dans les Mêmes Conditions 4.0 International (CC‑BY‑NC‑SA)**.
+Ce dépôt n'est pas sous une licence unique, et c'est volontaire :
+
+- le **code exécutable** (`src/`, `graines/`, `edge/`, `experiments/`, `tools/`) est sous
+  **Apache-2.0** — intégration commerciale permise, sans obligation de publier vos modifications ;
+- les **textes et notices** (`docs/`, `protocols/`, `*.md`) sont sous **CC-BY-SA 4.0** — reprise
+  permise, y compris commerciale, avec attribution et partage à l'identique ;
+- le **manifeste** et le **fragment MPVR** sont sous **CC0 1.0**.
+
+Le détail chemin par chemin, la règle par extension et la non-rétroactivité (les archives ≤ 1.2.1
+restent CC-BY-NC-SA 4.0) sont dans [`docs/licences.md`](docs/licences.md), les textes intégraux dans
+[`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) et
+[`LICENSES/CC-BY-SA-4.0.txt`](LICENSES/CC-BY-SA-4.0.txt).
 
 ## Citation
 
