@@ -13,6 +13,20 @@ dernière version ; la **version** épingle un état précis.
 Travail sur `main`, postérieur à l'archive `10.5281/zenodo.23869556`. **Rien de ce qui suit n'est
 archivé**, et rien ne doit être présenté comme tel avant une version ultérieure.
 
+### Modifié — licences : le noyau passe en Apache-2.0, les textes restent en CC-BY-SA
+
+- `LICENSE` devient un **aiguillage** vers `docs/licences.md` et `LICENSES/`. Un `LICENSE` unique
+  aurait déclaré, pour une partie du dépôt, plus de droits qu'il n'en est accordé — et un
+  élargissement ne se reprend pas.
+- **Noyau** (`src/`, `graines/`, `edge/`, `experiments/`, `tools/`) : CC-BY-NC-SA 4.0 → **Apache-2.0**.
+  **Textes, notices et protocoles** : CC-BY-NC-SA 4.0 → **CC-BY-SA 4.0**. Manifeste et fragment MPVR
+  restent **CC0 1.0**. Règle applicable : par extension de fichier.
+- `docs/licences.md` réécrit : décision du 2026-11-27, deux exceptions CC0, non-rétroactivité, et la
+  liste de contrôle de ce qu'il faudra changer **au dépôt** (DOI de concept `10.5281/zenodo.20830060`,
+  `.zenodo.json`, `CITATION.cff`).
+- **Aucune version déposée n'est concernée** : 1.0.0 → 1.2.1 restent CC-BY-NC-SA 4.0, tags et DOI
+  figés (`CONTRIBUTING.md` §1.2 et §1.3).
+
 ### Ajouté — neuvième graine : l'inconnu n'est ni une lecture ni une absence
 
 - `graines/graine_unknown_troisieme_etat.py` — **147 lignes / 77 instructions**, aucune dépendance.
